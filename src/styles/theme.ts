@@ -1,10 +1,14 @@
 const theme = {
   colors: {
     dark: "#312e38",
-    white: "#f4ede8"
+    darkSecondary: "#232129",
+    white: "#f4ede8",
+    yellow: "#ff9000",
+    gray: "#666360"
   },
   fonts: {
-    medium: 'RobotoSlab-Medium'
+    medium: 'RobotoSlab-Medium',
+    regular: 'RobotoSlab-Regular'
   }
 }
 
