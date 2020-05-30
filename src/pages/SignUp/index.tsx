@@ -64,20 +64,23 @@ const SignUp: React.FC = () => {
                   returnKeyType="next"
                   autoCapitalize="words"
                   autoCompleteType="name"
+                  autoCorrect={false}
                 />
                 <Input
                   name="email"
                   icon="mail"
                   placeholder="Email"
                   returnKeyType="next"
+                  keyboardType="email-address"
                   autoCapitalize="none"
                   autoCompleteType="email"
+                  autoCorrect={false}
                 />
                 <Input
                   name="password"
                   icon="lock"
                   placeholder="Password"
-                  returnKeyType="done"
+                  returnKeyType="send"
                   autoCompleteType="password"
                   textContentType="newPassword"
                   secureTextEntry
