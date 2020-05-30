@@ -1,7 +1,13 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import { useField } from '@unform/core';
-import { ThemeContext } from 'styled-components'
-import { TextInputProperties, TextInput } from 'react-native'
+import { ThemeContext } from 'styled-components';
+import { TextInputProperties, TextInput } from 'react-native';
 
 import { Container, StyledTextInput, Icon } from './styles';
 
@@ -10,13 +16,23 @@ interface InputProps extends TextInputProperties {
   icon: string;
 };
 
-interface InputRefValue {
-  value: string
+interface InputValueRef {
+  value: string;
 };
 
-const Input: React.FC<InputProps> = ({ name, icon, ...rest }) => {
-  const inputValueRef = useRef<InputRefValue>({ value: '' });
-  const inputElementRef = useRef<TextInput>(null);
+interface InputElementRef extends TextInput, InputValueRef {
+};
+
+interface InputFowardRef {
+  focus(): void;
+};
+
+const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
+  { name, icon, ...rest },
+  ref,
+) => {
+  const inputValueRef = useRef<InputValueRef>({ value: '' });
+  const inputElementRef = useRef<InputElementRef>(null);
 
   const { fieldName, registerField, defaultValue, error } = useField(name);
   const theme = useContext(ThemeContext);
@@ -26,24 +42,30 @@ const Input: React.FC<InputProps> = ({ name, icon, ...rest }) => {
       name: fieldName,
       ref: inputValueRef.current,
       path: 'value',
-      setValue(ref: any, value){
+      setValue(ref: InputElementRef, value) {
         ref.value = value;
         inputElementRef.current?.setNativeProps({ text: value });
       },
-      clearValue(ref: any) {
+      clearValue(ref: InputElementRef) {
         ref.value = '';
         inputElementRef.current?.clear();
-      }
-    })
+      },
+    });
   }, []);
 
-  const handleInputChange = (value: InputRefValue['value']): void => {
-    inputValueRef.current.value = value
+  useImperativeHandle<InputFowardRef, InputFowardRef>(ref, () => ({
+    focus: () => {
+      inputElementRef.current?.focus();
+    }
+  }));
+
+  const handleInputChange = (value: InputValueRef['value']): void => {
+    inputValueRef.current.value = value;
   };
 
   return (
     <Container>
-      <Icon name={icon} size={20} color={theme.colors.gray}/>
+      <Icon name={icon} size={20} color={theme.colors.gray} />
       <StyledTextInput
         ref={inputElementRef}
         defaultValue={defaultValue}
@@ -52,7 +74,7 @@ const Input: React.FC<InputProps> = ({ name, icon, ...rest }) => {
         {...rest}
       />
     </Container>
-  )
+  );
 };
 
-export default Input;
+export default forwardRef(Input);
