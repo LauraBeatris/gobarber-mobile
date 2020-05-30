@@ -1,5 +1,12 @@
 import React, { useContext, useRef } from 'react';
-import { Image, KeyboardAvoidingView, Platform, View, ScrollView } from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  View,
+  ScrollView,
+  TextInput
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
@@ -9,7 +16,7 @@ import Icon from 'react-native-vector-icons/Feather'
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import logo from '../../assets/logo.png';
-import { SIGN_UP_ROUTE } from '../../router/routes';
+import { SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from '../../router/routes';
 
 import {
   Container,
@@ -23,19 +30,29 @@ import {
 
 const SignIn: React.FC = () => {
   const theme = useContext(ThemeContext);
-  const formRef = useRef<FormHandles>(null);
   const navigation = useNavigation();
+
+  const formRef = useRef<FormHandles>(null);
+  const passwordInputRef = useRef<TextInput>(null);
 
   const handleSubmit = (): void => {
     formRef?.current?.submitForm();
+  };
+
+  const signIn = (): void => {
+    // TODO - Send signin data to API
   };
 
   const handleNavigationToSignUp = (): void => {
     navigation.navigate(SIGN_UP_ROUTE);
   };
 
-  const signIn = (): void => {
-    // TODO - Send signin data to API
+  const handleNavigationToForgotPassword = (): void => {
+    navigation.navigate(FORGOT_PASSWORD_ROUTE);
+  };
+
+  const handlePasswordFocus = (): void => {
+    passwordInputRef.current?.focus();
   };
 
   return (
@@ -69,15 +86,17 @@ const SignIn: React.FC = () => {
                   autoCapitalize="none"
                   autoCompleteType="email"
                   autoCorrect={false}
+                  onSubmitEditing={handlePasswordFocus}
                 />
                 <Input
+                  ref={passwordInputRef}
                   name="password"
                   icon="lock"
                   placeholder="Password"
                   returnKeyType="send"
                   autoCompleteType="password"
-                  onSubmitEditing={handleSubmit}
                   autoCorrect={false}
+                  onSubmitEditing={handleSubmit}
                   secureTextEntry
                 />
 
@@ -89,7 +108,9 @@ const SignIn: React.FC = () => {
               </Form>
 
               <ForgotPassword>
-                <ForgotPasswordText>
+                <ForgotPasswordText
+                  onPress={handleNavigationToForgotPassword}
+                >
                   Forgot password
                 </ForgotPasswordText>
               </ForgotPassword>
