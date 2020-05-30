@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { Platform } from 'react-native';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 export const Container = styled.SafeAreaView`
@@ -40,7 +41,7 @@ export const CreateAccount = styled.TouchableOpacity`
   align-items: center;
   border-top-width: 2px;
   border-top-color: ${({theme}) => theme.colors.darkSecondary};
-  padding: 16px 0 ${getBottomSpace()}px;
+  padding: 16px 0 ${Platform.OS === 'ios' && `${getBottomSpace()}px`};
 `;
 
 export const CreateAccountText = styled.Text`
