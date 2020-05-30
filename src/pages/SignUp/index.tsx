@@ -1,10 +1,17 @@
 import React, { useContext, useRef } from 'react';
-import { Image, KeyboardAvoidingView, Platform, View, ScrollView } from 'react-native';
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  View,
+  ScrollView,
+  TextInput
+} from 'react-native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from 'styled-components';
-import Icon from 'react-native-vector-icons/Feather'
+import Icon from 'react-native-vector-icons/Feather';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
@@ -20,19 +27,30 @@ import {
 
 const SignUp: React.FC = () => {
   const theme = useContext(ThemeContext);
-  const formRef = useRef<FormHandles>(null);
   const navigation = useNavigation();
+
+  const formRef = useRef<FormHandles>(null);
+  const emailInputRef = useRef<TextInput>(null);
+  const passwordInputRef = useRef<TextInput>(null);
 
   const handleSubmit = (): void => {
     formRef?.current?.submitForm();
+  };
+
+  const signUp = (): void => {
+    // TODO - Send account data to API
   };
 
   const handleNavigationToSignIn = (): void => {
     navigation.goBack();
   };
 
-  const signUp = (): void => {
-    // TODO - Send account data to API
+  const handleEmailFocus = (): void => {
+    emailInputRef.current?.focus();
+  };
+
+  const handlePasswordFocus = (): void => {
+    passwordInputRef.current?.focus();
   };
 
   return (
@@ -65,8 +83,10 @@ const SignUp: React.FC = () => {
                   autoCapitalize="words"
                   autoCompleteType="name"
                   autoCorrect={false}
+                  onSubmitEditing={handleEmailFocus}
                 />
                 <Input
+                  ref={emailInputRef}
                   name="email"
                   icon="mail"
                   placeholder="Email"
@@ -75,14 +95,18 @@ const SignUp: React.FC = () => {
                   autoCapitalize="none"
                   autoCompleteType="email"
                   autoCorrect={false}
+                  onSubmitEditing={handlePasswordFocus}
                 />
                 <Input
+                  ref={passwordInputRef}
                   name="password"
                   icon="lock"
                   placeholder="Password"
                   returnKeyType="send"
                   autoCompleteType="password"
                   textContentType="newPassword"
+                  autoCorrect={false}
+                  onSubmitEditing={signUp}
                   secureTextEntry
                 />
 
