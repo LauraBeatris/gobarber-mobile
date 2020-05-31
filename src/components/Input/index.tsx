@@ -1,9 +1,11 @@
 import React, {
   useContext,
   useEffect,
-  useRef,
   forwardRef,
+  useState,
   useImperativeHandle,
+  useRef,
+  useMemo,
 } from 'react';
 import { useField } from '@unform/core';
 import { ThemeContext } from 'styled-components';
@@ -14,23 +16,25 @@ import { Container, StyledTextInput, Icon } from './styles';
 interface InputProps extends TextInputProperties {
   name: string;
   icon: string;
-};
+}
 
 interface InputValueRef {
   value: string;
-};
+}
 
-interface InputElementRef extends TextInput, InputValueRef {
-};
+interface InputElementRef extends TextInput, InputValueRef {}
 
 interface InputFowardRef {
   focus(): void;
-};
+}
 
 const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
   { name, icon, ...rest },
   ref,
 ) => {
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
+
   const inputValueRef = useRef<InputValueRef>({ value: '' });
   const inputElementRef = useRef<InputElementRef>(null);
 
@@ -56,21 +60,37 @@ const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
   useImperativeHandle<InputFowardRef, InputFowardRef>(ref, () => ({
     focus: () => {
       inputElementRef.current?.focus();
-    }
+    },
   }));
 
-  const handleInputChange = (value: InputValueRef['value']): void => {
+  const handleChange = (value: InputValueRef['value']): void => {
     inputValueRef.current.value = value;
   };
 
+  const handleFocus = (): void => {
+    setIsFocused(true);
+  };
+
+  const handleBlur = (): void => {
+    setIsFocused(false);
+    setIsFilled(!!inputValueRef.current?.value);
+  };
+
+  const iconColor = useMemo(
+    () => (isFilled || isFocused ? theme.colors.yellow : theme.colors.gray),
+    [isFocused, isFilled],
+  );
+
   return (
-    <Container>
-      <Icon name={icon} size={20} color={theme.colors.gray} />
+    <Container isFocused={isFocused}>
+      <Icon name={icon} size={20} color={iconColor} />
       <StyledTextInput
         ref={inputElementRef}
         defaultValue={defaultValue}
         placeholderTextColor={theme.colors.gray}
-        onChangeText={handleInputChange}
+        onChangeText={handleChange}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
         {...rest}
       />
     </Container>
