@@ -38,4 +38,5 @@ export const SignInButtonText = styled.Text`
   color: ${({theme}) => theme.colors.yellow};
   font-size: 18px;
   font-family: ${({theme}) => theme.fonts.regular};
+  margin-left: 8px;
 `;
