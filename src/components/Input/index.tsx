@@ -6,20 +6,21 @@ import React, {
   useImperativeHandle,
   useRef,
   useMemo,
-} from 'react';
-import { useField } from '@unform/core';
-import { ThemeContext } from 'styled-components';
+} from "react";
+import { useField } from "@unform/core";
+import { ThemeContext } from "styled-components";
 
-import { DEFAULT, ERROR, FOCUSED, FILLED } from '../../constants/inputStates';
-import getInputStateColor, { InputStates } from '../../constants/inputStateColors';
-
-import { Container, StyledTextInput, Icon } from './styles';
+import { DEFAULT, ERROR, FOCUSED, FILLED } from "../../constants/inputStates";
+import getInputStateColor, {
+  InputStates,
+} from "../../constants/inputStateColors";
+import { Container, StyledTextInput, Icon } from "./styles";
 import {
   InputProps,
   InputValueRef,
   InputElementRef,
-  InputFowardRef
-} from './types';
+  InputFowardRef,
+} from "./types";
 
 const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
   { name, icon, ...rest },
@@ -27,32 +28,27 @@ const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
 ) => {
   const [inputState, setInputState] = useState<InputStates>(DEFAULT);
 
-  const inputValueRef = useRef<InputValueRef>({ value: '' });
+  const inputValueRef = useRef<InputValueRef>({ value: "" });
   const inputElementRef = useRef<InputElementRef>(null);
 
-  const {
-    fieldName,
-    registerField,
-    defaultValue,
-    error
-  } = useField(name);
+  const { fieldName, registerField, defaultValue, error } = useField(name);
   const theme = useContext(ThemeContext);
 
   useEffect(() => {
     registerField<string>({
       name: fieldName,
       ref: inputValueRef.current,
-      path: 'value',
-      setValue(ref: InputElementRef, value) {
-        ref.value = value;
+      path: "value",
+      setValue(inputRef: InputElementRef, value) {
+        inputRef.value = value;
         inputElementRef.current?.setNativeProps({ text: value });
       },
-      clearValue(ref: InputElementRef) {
-        ref.value = '';
+      clearValue(inputRef: InputElementRef) {
+        inputRef.value = "";
         inputElementRef.current?.clear();
       },
     });
-  }, []);
+  }, [fieldName, registerField]);
 
   useImperativeHandle<InputFowardRef, InputFowardRef>(ref, () => ({
     focus: () => {
@@ -60,7 +56,7 @@ const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
     },
   }));
 
-  const handleChange = (value: InputValueRef['value']): void => {
+  const handleChange = (value: InputValueRef["value"]): void => {
     inputValueRef.current.value = value;
   };
 
@@ -78,10 +74,9 @@ const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
     }
   };
 
-  const inputStateColor = useMemo(
-    () => getInputStateColor(inputState),
-    [error, inputState],
-  );
+  const inputStateColor = useMemo(() => getInputStateColor(inputState), [
+    inputState,
+  ]);
 
   useEffect(() => {
     if (error) {

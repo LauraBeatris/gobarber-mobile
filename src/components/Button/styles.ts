@@ -1,10 +1,10 @@
-import styled from 'styled-components/native';
-import { RectButton } from 'react-native-gesture-handler';
+import styled from "styled-components/native";
+import { RectButton } from "react-native-gesture-handler";
 
 export const Container = styled(RectButton)`
   width: 100%;
   height: 60px;
-  background: ${({theme}) => theme.colors.yellow};
+  background: ${({ theme }) => theme.colors.yellow};
   border-radius: 10px;
 
   justify-content: center;
@@ -13,7 +13,7 @@ export const Container = styled(RectButton)`
 `;
 
 export const ButtonText = styled.Text`
-  font-family: ${({theme}) => theme.fonts.medium};
-  color: ${({theme}) => theme.colors.dark};
+  font-family: ${({ theme }) => theme.fonts.medium};
+  color: ${({ theme }) => theme.colors.dark};
   font-size: 18px;
-`
+`;

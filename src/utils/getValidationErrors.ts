@@ -1,4 +1,4 @@
-import { ValidationError } from 'yup';
+import { ValidationError } from "yup";
 
 interface ValidationErrors {
   [key: string]: string;
@@ -8,8 +8,8 @@ const getValidationErrors = (error: ValidationError) => {
   const errors: ValidationErrors = {};
 
   error.inner.forEach(fieldError => {
-    errors[fieldError.path] = fieldError.message
-  })
+    errors[fieldError.path] = fieldError.message;
+  });
 
   return errors;
 };
