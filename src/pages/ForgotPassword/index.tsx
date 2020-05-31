@@ -4,17 +4,22 @@ import {
   KeyboardAvoidingView,
   Platform,
   View,
-  ScrollView
+  ScrollView,
+  Alert
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
 import { useNavigation } from '@react-navigation/native';
 import { ThemeContext } from 'styled-components';
-import Icon from 'react-native-vector-icons/Feather';
+import { ValidationError } from 'yup';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import logo from '../../assets/logo.png';
+import getValidationErrors from '../../utils/getValidationErrors';
+
+import schema from './schema';
 
 import {
   Container,
@@ -23,6 +28,10 @@ import {
   SignInButton,
   SignInButtonText
 } from './styles';
+
+interface ForgotPasswordFormData {
+  email: string;
+}
 
 const ForgotPassword: React.FC = () => {
   const theme = useContext(ThemeContext);
@@ -34,8 +43,27 @@ const ForgotPassword: React.FC = () => {
     formRef?.current?.submitForm();
   };
 
-  const handleForgotPasswordRequest = (): void => {
-    // TODO - Send account data to API
+  const handleForgotPasswordRequest = async (data: ForgotPasswordFormData): void => {
+    try {
+      formRef.current?.setErrors({});
+
+      await schema.validate(data, {
+        abortEarly: false
+      });
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        const errors = getValidationErrors(error);
+
+        formRef.current?.setErrors(errors);
+
+        return;
+      }
+
+      Alert.alert(
+        'An error occured while sending the forgot password request',
+        'Please, verify your email and try it again'
+      );
+    }
   };
 
   const handleNavigationToSignIn = (): void => {

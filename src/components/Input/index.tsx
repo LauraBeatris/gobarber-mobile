@@ -9,36 +9,33 @@ import React, {
 } from 'react';
 import { useField } from '@unform/core';
 import { ThemeContext } from 'styled-components';
-import { TextInputProperties, TextInput } from 'react-native';
+
+import { DEFAULT, ERROR, FOCUSED, FILLED } from '../../constants/inputStates';
+import getInputStateColor, { InputStates } from '../../constants/inputStateColors';
 
 import { Container, StyledTextInput, Icon } from './styles';
-
-interface InputProps extends TextInputProperties {
-  name: string;
-  icon: string;
-}
-
-interface InputValueRef {
-  value: string;
-}
-
-interface InputElementRef extends TextInput, InputValueRef {}
-
-interface InputFowardRef {
-  focus(): void;
-}
+import {
+  InputProps,
+  InputValueRef,
+  InputElementRef,
+  InputFowardRef
+} from './types';
 
 const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
   { name, icon, ...rest },
   ref,
 ) => {
-  const [isFocused, setIsFocused] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
+  const [inputState, setInputState] = useState<InputStates>(DEFAULT);
 
   const inputValueRef = useRef<InputValueRef>({ value: '' });
   const inputElementRef = useRef<InputElementRef>(null);
 
-  const { fieldName, registerField, defaultValue, error } = useField(name);
+  const {
+    fieldName,
+    registerField,
+    defaultValue,
+    error
+  } = useField(name);
   const theme = useContext(ThemeContext);
 
   useEffect(() => {
@@ -68,22 +65,33 @@ const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
   };
 
   const handleFocus = (): void => {
-    setIsFocused(true);
+    setInputState(FOCUSED);
   };
 
   const handleBlur = (): void => {
-    setIsFocused(false);
-    setIsFilled(!!inputValueRef.current?.value);
+    if (!error) {
+      if (inputValueRef.current?.value) {
+        setInputState(FILLED);
+      } else {
+        setInputState(DEFAULT);
+      }
+    }
   };
 
-  const iconColor = useMemo(
-    () => (isFilled || isFocused ? theme.colors.yellow : theme.colors.gray),
-    [isFocused, isFilled],
+  const inputStateColor = useMemo(
+    () => getInputStateColor(inputState),
+    [error, inputState],
   );
 
+  useEffect(() => {
+    if (error) {
+      setInputState(ERROR);
+    }
+  }, [error]);
+
   return (
-    <Container isFocused={isFocused}>
-      <Icon name={icon} size={20} color={iconColor} />
+    <Container inputStateColor={inputStateColor}>
+      <Icon name={icon} size={20} color={inputStateColor} />
       <StyledTextInput
         ref={inputElementRef}
         defaultValue={defaultValue}

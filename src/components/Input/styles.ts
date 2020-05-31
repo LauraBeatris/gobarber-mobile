@@ -1,8 +1,10 @@
 import styled, { css } from 'styled-components/native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
+import { ERROR, FOCUSED } from '../../constants/inputStates';
+import { InputStates } from '../../constants/inputStateColors';
 interface ContainerProps {
-  isFocused: boolean
+  inputStateColor: string,
 }
 
 export const Container = styled.View<ContainerProps>`
@@ -16,8 +18,8 @@ export const Container = styled.View<ContainerProps>`
   flex-direction: row;
   align-items: center;
 
-  ${({isFocused}) => isFocused && css`
-    border: 2px solid ${({theme}) => theme.colors.yellow};
+  ${({ inputStateColor }) => inputStateColor && css`
+    border: 2px solid ${inputStateColor};
   `};
 `
 

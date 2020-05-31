@@ -4,7 +4,8 @@ const theme = {
     darkSecondary: "#232129",
     white: "#f4ede8",
     yellow: "#ff9000",
-    gray: "#666360"
+    gray: "#666360",
+    red: "#c53030"
   },
   fonts: {
     medium: 'RobotoSlab-Medium',

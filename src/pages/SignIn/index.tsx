@@ -5,17 +5,20 @@ import {
   Platform,
   View,
   ScrollView,
-  TextInput
+  TextInput,
+  Alert
 } from 'react-native';
+import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { FormHandles } from '@unform/core';
 import { Form } from '@unform/mobile';
 import { ThemeContext } from 'styled-components';
-import Icon from 'react-native-vector-icons/Feather'
+import { ValidationError } from 'yup';
 
 import Button from '../../components/Button';
 import Input from '../../components/Input';
 import logo from '../../assets/logo.png';
+import getValidationErrors from '../../utils/getValidationErrors';
 import { SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from '../../router/routes';
 
 import {
@@ -27,6 +30,12 @@ import {
   CreateAccount,
   CreateAccountText
 } from './styles';
+import schema from './schema';
+
+interface SignInFormData {
+  email: string;
+  password: string;
+}
 
 const SignIn: React.FC = () => {
   const theme = useContext(ThemeContext);
@@ -39,8 +48,28 @@ const SignIn: React.FC = () => {
     formRef?.current?.submitForm();
   };
 
-  const signIn = (): void => {
-    // TODO - Send signin data to API
+  const handleSignIn = async (data: SignInFormData): Promise<void> => {
+    try {
+      formRef.current?.setErrors({});
+
+      await schema.validate(data, {
+        abortEarly: false
+      });
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        const errors = getValidationErrors(error);
+
+        formRef.current?.setErrors(errors);
+
+        return;
+      };
+
+      Alert.alert(
+        'Sigin error',
+        `It happened an error during the account sigin,
+        please verify your credencials`
+      );
+    }
   };
 
   const handleNavigationToSignUp = (): void => {
@@ -75,28 +104,29 @@ const SignIn: React.FC = () => {
 
               <Form
                 ref={formRef}
-                onSubmit={signIn}
+                onSubmit={handleSignIn}
               >
                 <Input
                   name="email"
                   icon="mail"
                   placeholder="Email"
-                  returnKeyType="next"
                   keyboardType="email-address"
-                  autoCapitalize="none"
                   autoCompleteType="email"
-                  autoCorrect={false}
+                  returnKeyType="next"
+                  autoCapitalize="none"
                   onSubmitEditing={handlePasswordFocus}
+                  autoCorrect={false}
                 />
                 <Input
                   ref={passwordInputRef}
                   name="password"
                   icon="lock"
                   placeholder="Password"
-                  returnKeyType="send"
                   autoCompleteType="password"
-                  autoCorrect={false}
+                  textContentType="password"
+                  returnKeyType="send"
                   onSubmitEditing={handleSubmit}
+                  autoCorrect={false}
                   secureTextEntry
                 />
 
