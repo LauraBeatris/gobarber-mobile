@@ -12,6 +12,7 @@ import { SignInCredentials, AuthState } from "./types";
 
 const AuthContainer: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>({} as AuthState);
+  const [loading, setLoading] = useState(true);
 
   const signIn = useCallback(async (credentials: SignInCredentials): Promise<
     void
@@ -27,8 +28,10 @@ const AuthContainer: React.FC = ({ children }) => {
     setData({ user, token });
   }, []);
 
-  const signOut = useCallback((): void => {
+  const signOut = useCallback(async (): Promise<void> => {
     AsyncStorage.multiRemove([TOKEN_STORAGE_KEY, USER_STORAGE_KEY]);
+
+    setData({} as AuthState);
   }, []);
 
   const loadStoragedAuthData = useCallback(async (): Promise<void> => {
@@ -38,6 +41,8 @@ const AuthContainer: React.FC = ({ children }) => {
     if (token && user) {
       setData({ token, user: JSON.parse(user) });
     }
+
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -49,8 +54,9 @@ const AuthContainer: React.FC = ({ children }) => {
       user: data?.user,
       signIn,
       signOut,
+      loading,
     }),
-    [data, signIn, signOut],
+    [data, signIn, signOut, loading],
   );
 
   return <AuthProvider value={contextValue}>{children}</AuthProvider>;

@@ -1,35 +1,19 @@
-import React, { useContext } from "react";
-import { ThemeContext } from "styled-components";
-import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
 
-import SignIn from "../pages/SignIn";
-import SignUp from "../pages/SignUp";
-import ForgotPassword from "../pages/ForgotPassword";
-import { SIGN_IN_ROUTE, SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from "./routes";
+import { useAuth } from "../contexts/auth/AuthContext";
+import Loading from "../components/Loading";
 
-const Stack = createStackNavigator();
+import AppRouter from "./app.routes";
+import AuthRouter from "./auth.routes";
 
 const Router: React.FC = () => {
-  const theme = useContext(ThemeContext);
+  const { user, loading } = useAuth();
 
-  return (
-    <Stack.Navigator
-      initialRouteName={SIGN_IN_ROUTE}
-      screenOptions={{
-        headerShown: false,
-        cardShadowEnabled: true,
-        animationEnabled: true,
-        gestureEnabled: true,
-        cardStyle: {
-          backgroundColor: theme.colors.dark,
-        },
-      }}
-    >
-      <Stack.Screen name={SIGN_IN_ROUTE} component={SignIn} />
-      <Stack.Screen name={SIGN_UP_ROUTE} component={SignUp} />
-      <Stack.Screen name={FORGOT_PASSWORD_ROUTE} component={ForgotPassword} />
-    </Stack.Navigator>
-  );
+  if (loading) {
+    return <Loading />;
+  }
+
+  return user ? <AppRouter /> : <AuthRouter />;
 };
 
 export default Router;
