@@ -81,14 +81,6 @@
     ],
     "radix": [2, "as-needed"],
     "react/prefer-stateless-function": [2, { "ignorePureComponents": false }],
-    "import/order": ["error", {
-      "newlines-between": "always",
-      "groups": [
-        ["external", "builtin"],
-        ["internal"],
-        ["parent", "sibling", "index"]
-      ]
-    }],
     "no-multiple-empty-lines": ["error", { "max": 1 }]
   },
   "settings": {
