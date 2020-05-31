@@ -6,13 +6,16 @@ import { ThemeProvider } from "styled-components";
 
 import Routes from "./router";
 import theme from "./styles/theme";
+import AuthContainer from "./contexts/auth/AuthContainer";
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <NavigationContainer>
       <ThemeProvider theme={theme}>
-        <StatusBar barStyle="light-content" backgroundColor="#312e38" />
-        <Routes />
+        <AuthContainer>
+          <StatusBar barStyle="light-content" backgroundColor="#312e38" />
+          <Routes />
+        </AuthContainer>
       </ThemeProvider>
     </NavigationContainer>
   );
