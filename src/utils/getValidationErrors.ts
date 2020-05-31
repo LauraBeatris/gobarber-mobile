@@ -1,11 +1,16 @@
 import { ValidationError } from "yup";
 
-interface ValidationErrors {
+interface Errors {
   [key: string]: string;
 }
 
-const getValidationErrors = (error: ValidationError) => {
-  const errors: ValidationErrors = {};
+/**
+ * Returns a object with the paths and messages of
+ * a Yup validation error.
+ * @param {ValidationError} error ValidationError
+ */
+const getValidationErrors = (error: ValidationError): Errors => {
+  const errors: Errors = {};
 
   error.inner.forEach(fieldError => {
     errors[fieldError.path] = fieldError.message;
