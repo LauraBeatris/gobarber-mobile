@@ -57,7 +57,9 @@ const SignUp: React.FC = () => {
         abortEarly: false,
       });
 
-      await api.post("/users", data);
+      console.log(data);
+
+      await api.post("/users", { ...data, is_provider: false });
 
       navigation.goBack();
 
@@ -139,8 +141,6 @@ const SignUp: React.FC = () => {
                 name="password"
                 icon="lock"
                 placeholder="Password"
-                autoCompleteType="password"
-                textContentType="newPassword"
                 returnKeyType="send"
                 onSubmitEditing={handleSignUp}
                 autoCorrect={false}

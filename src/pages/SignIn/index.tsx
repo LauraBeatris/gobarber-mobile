@@ -122,8 +122,6 @@ const SignIn: React.FC = () => {
                 name="password"
                 icon="lock"
                 placeholder="Password"
-                autoCompleteType="password"
-                textContentType="password"
                 returnKeyType="send"
                 onSubmitEditing={handleSubmit}
                 autoCorrect={false}
