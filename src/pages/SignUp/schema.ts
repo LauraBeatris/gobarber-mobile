@@ -1,17 +1,9 @@
-import * as yup from 'yup';
+import * as yup from "yup";
 
 const signUpSchema = yup.object().shape({
-  name: yup
-    .string()
-    .required(),
-  email: yup
-    .string()
-    .email()
-    .required(),
-  password: yup
-    .string()
-    .min(6)
-    .required()
+  name: yup.string().required(),
+  email: yup.string().email().required(),
+  password: yup.string().required(),
 });
 
 export default signUpSchema;
