@@ -15,11 +15,11 @@ import { ThemeContext } from "styled-components";
 import Icon from "react-native-vector-icons/Feather";
 import { ValidationError } from "yup";
 
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import logo from "../../assets/logo.png";
-import getValidationErrors from "../../utils/getValidationErrors";
-import api from "../../config/api";
+import Button from "~/components/Button";
+import Input from "~/components/Input";
+import logo from "~/assets/logo.png";
+import getValidationErrors from "~/utils/getValidationErrors";
+import api from "~/config/api";
 import schema from "./schema";
 import {
   Container,

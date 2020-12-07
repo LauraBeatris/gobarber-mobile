@@ -15,12 +15,12 @@ import { Form } from "@unform/mobile";
 import { ThemeContext } from "styled-components";
 import { ValidationError } from "yup";
 
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import logo from "../../assets/logo.png";
-import getValidationErrors from "../../utils/getValidationErrors";
-import { SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from "../../router/routes";
-import { useAuth } from "../../contexts/auth/AuthContext";
+import Button from "~/components/Button";
+import Input from "~/components/Input";
+import logo from "~/assets/logo.png";
+import getValidationErrors from "~/utils/getValidationErrors";
+import { SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from "~/router/routes";
+import { useAuth } from "~/contexts/auth/AuthContext";
 import {
   Container,
   Content,

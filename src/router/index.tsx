@@ -1,7 +1,8 @@
 import React from "react";
 
-import { useAuth } from "../contexts/auth/AuthContext";
-import Loading from "../components/Loading";
+import { useAuth } from "~/contexts/auth/AuthContext";
+import Loading from "~/components/Loading";
+
 import AppRouter from "./app.routes";
 import AuthRouter from "./auth.routes";
 

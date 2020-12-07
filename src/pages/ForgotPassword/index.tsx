@@ -14,10 +14,10 @@ import { useNavigation } from "@react-navigation/native";
 import { ThemeContext } from "styled-components";
 import { ValidationError } from "yup";
 
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import logo from "../../assets/logo.png";
-import getValidationErrors from "../../utils/getValidationErrors";
+import Button from "~/components/Button";
+import Input from "~/components/Input";
+import logo from "~/assets/logo.png";
+import getValidationErrors from "~/utils/getValidationErrors";
 import schema from "./schema";
 import {
   Container,

@@ -1,6 +1,9 @@
-import theme from "../styles/theme";
+import theme from "~/styles/theme";
 import {
-  DEFAULT, ERROR, FOCUSED, FILLED,
+  DEFAULT,
+  FOCUSED,
+  FILLED,
+  ERROR,
 } from "./inputStates";
 
 export const inputStateColors = {
@@ -12,6 +15,8 @@ export const inputStateColors = {
 
 export type InputStates = keyof typeof inputStateColors;
 
-const getInputStateColor = (state: InputStates): string => inputStateColors[state] || inputStateColors[DEFAULT];
+const getInputStateColor = (state: InputStates): string => (
+  inputStateColors[state] || inputStateColors[DEFAULT]
+);
 
 export default getInputStateColor;

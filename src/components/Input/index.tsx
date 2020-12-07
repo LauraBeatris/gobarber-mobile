@@ -11,17 +11,20 @@ import { useField } from "@unform/core";
 import { ThemeContext } from "styled-components";
 
 import {
-  DEFAULT, ERROR, FOCUSED, FILLED,
-} from "../../constants/inputStates";
+  ERROR,
+  FILLED,
+  DEFAULT,
+  FOCUSED,
+} from "~/constants/inputStates";
 import getInputStateColor, {
   InputStates,
-} from "../../constants/inputStateColors";
+} from "~/constants/inputStateColors";
 import { Container, StyledTextInput, Icon } from "./styles";
 import {
   InputProps,
   InputValueRef,
-  InputElementRef,
   InputFowardRef,
+  InputElementRef,
 } from "./types";
 
 const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (

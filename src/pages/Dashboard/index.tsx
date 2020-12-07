@@ -1,7 +1,7 @@
 import React from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 
-import { useAuth } from "../../contexts/auth/AuthContext";
+import { useAuth } from "~/contexts/auth/AuthContext";
 
 const Dashboard: React.FC = () => {
   const { signOut } = useAuth();
