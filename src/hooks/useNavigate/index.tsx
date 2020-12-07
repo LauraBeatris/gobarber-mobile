@@ -9,7 +9,7 @@ const useNavigate = () => {
 
   return (
     routeName: string,
-    params: Record<string, unknown>,
+    params?: Record<string, unknown>,
   ) => () => navigate(routeName, params);
 };
 
