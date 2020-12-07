@@ -1,15 +1,17 @@
+import { User } from "~/shared/types/apiSchema";
+
 export interface SignInCredentials {
   email: string;
   password: string;
 }
 
 export interface AuthState {
-  user: object;
+  user: User;
   token: string;
 }
 
 export interface AuthContextData {
-  user: object;
+  user: User;
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut: () => void;
   loading: boolean;
