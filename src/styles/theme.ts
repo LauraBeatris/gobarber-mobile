@@ -5,7 +5,9 @@ const theme = {
     white: "#f4ede8",
     yellow: "#ff9000",
     gray: "#666360",
+    grayLight: "#999591",
     red: "#c53030",
+    blackMedium: "#28262E",
   },
   fonts: {
     medium: "RobotoSlab-Medium",
