@@ -20,9 +20,7 @@ import Input from "../../components/Input";
 import logo from "../../assets/logo.png";
 import getValidationErrors from "../../utils/getValidationErrors";
 import api from "../../config/api";
-
 import schema from "./schema";
-
 import {
   Container,
   Content,
@@ -56,8 +54,6 @@ const SignUp: React.FC = () => {
       await schema.validate(data, {
         abortEarly: false,
       });
-
-      console.log(data);
 
       await api.post("/users", { ...data, is_provider: false });
 

@@ -1,6 +1,6 @@
-import styled from 'styled-components/native';
-import { Platform } from 'react-native';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
+import styled from "styled-components/native";
+import { Platform } from "react-native";
+import { getBottomSpace } from "react-native-iphone-x-helper";
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -14,8 +14,8 @@ export const Content = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-family: ${({theme}) => theme.fonts.medium};
-  color: ${({theme}) => theme.colors.white};
+  font-family: ${({ theme }) => theme.fonts.medium};
+  color: ${({ theme }) => theme.colors.white};
   font-size: 24px;
   margin: 64px 0 24px;
 `;
@@ -30,13 +30,13 @@ export const SignInButton = styled.TouchableOpacity`
   justify-content: center;
   align-items: center;
   border-top-width: 2px;
-  border-top-color: ${({theme}) => theme.colors.darkSecondary};
-  padding: 16px 0 ${Platform.OS === 'ios' && `${getBottomSpace()}px`};
+  border-top-color: ${({ theme }) => theme.colors.darkSecondary};
+  padding: 16px 0 ${Platform.OS === "ios" && `${getBottomSpace()}px`};
 `;
 
 export const SignInButtonText = styled.Text`
-  color: ${({theme}) => theme.colors.yellow};
+  color: ${({ theme }) => theme.colors.yellow};
   font-size: 18px;
-  font-family: ${({theme}) => theme.fonts.regular};
+  font-family: ${({ theme }) => theme.fonts.regular};
   margin-left: 8px;
 `;

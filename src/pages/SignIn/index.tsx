@@ -21,7 +21,6 @@ import logo from "../../assets/logo.png";
 import getValidationErrors from "../../utils/getValidationErrors";
 import { SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from "../../router/routes";
 import { useAuth } from "../../contexts/auth/AuthContext";
-
 import {
   Container,
   Content,

@@ -10,7 +10,9 @@ import React, {
 import { useField } from "@unform/core";
 import { ThemeContext } from "styled-components";
 
-import { DEFAULT, ERROR, FOCUSED, FILLED } from "../../constants/inputStates";
+import {
+  DEFAULT, ERROR, FOCUSED, FILLED,
+} from "../../constants/inputStates";
 import getInputStateColor, {
   InputStates,
 } from "../../constants/inputStateColors";
@@ -31,7 +33,9 @@ const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
   const inputValueRef = useRef<InputValueRef>({ value: "" });
   const inputElementRef = useRef<InputElementRef>(null);
 
-  const { fieldName, registerField, defaultValue, error } = useField(name);
+  const {
+    fieldName, registerField, defaultValue, error,
+  } = useField(name);
   const theme = useContext(ThemeContext);
 
   useEffect(() => {

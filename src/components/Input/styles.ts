@@ -16,9 +16,8 @@ export const Container = styled.View<ContainerProps>`
   flex-direction: row;
   align-items: center;
 
-  ${({ inputStateColor }) =>
-    inputStateColor &&
-    css`
+  ${({ inputStateColor }) => inputStateColor
+    && css`
       border: 2px solid ${inputStateColor};
     `};
 `;

@@ -1,4 +1,6 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useState, useEffect, useCallback, useMemo,
+} from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import {
@@ -6,7 +8,6 @@ import {
   USER_STORAGE_KEY,
 } from "../../constants/asyncStorage";
 import api from "../../config/api";
-
 import { AuthProvider } from "./AuthContext";
 import { SignInCredentials, AuthState } from "./types";
 
