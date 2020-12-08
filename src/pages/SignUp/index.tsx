@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -22,9 +22,9 @@ import getValidationErrors from "~/utils/getValidationErrors";
 import api from "~/config/api";
 import schema from "./schema";
 import {
-  Container,
-  Content,
   Title,
+  Content,
+  Container,
   SignInButton,
   SignInButtonText,
 } from "./styles";
@@ -43,12 +43,16 @@ const SignUp: React.FC = () => {
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = (): void => {
     formRef?.current?.submitForm();
   };
 
   const handleSignUp = async (data: SignUpFormData): Promise<void> => {
     try {
+      setLoading(true);
+
       formRef.current?.setErrors({});
 
       await schema.validate(data, {
@@ -76,6 +80,8 @@ const SignUp: React.FC = () => {
         "Registration error",
         "It happened an error during the account registration, please verify your data",
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -143,7 +149,12 @@ const SignUp: React.FC = () => {
                 secureTextEntry
               />
 
-              <Button onPress={handleSubmit}>Create</Button>
+              <Button
+                loading={loading}
+                onPress={handleSubmit}
+              >
+                Create
+              </Button>
             </Form>
           </Content>
         </ScrollView>

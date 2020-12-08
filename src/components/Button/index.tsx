@@ -1,15 +1,26 @@
 import React from "react";
-import { RectButtonProperties } from "react-native-gesture-handler";
+import { ActivityIndicator } from "react-native";
+import theme from "~/styles/theme";
 
 import { Container, ButtonText } from "./styles";
+import { ButtonProps } from "./types";
 
-interface ButtonProps extends RectButtonProperties {
-  children: string;
-}
-
-const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
+const Button: React.FC<ButtonProps> = ({
+  children,
+  loading,
+  ...rest
+}) => (
   <Container {...rest}>
-    <ButtonText>{children}</ButtonText>
+    {
+      loading ? (
+        <ActivityIndicator color={theme.colors.dark} />
+      ) : (
+        <ButtonText>
+          {" "}
+          {children}
+        </ButtonText>
+      )
+    }
   </Container>
 );
 

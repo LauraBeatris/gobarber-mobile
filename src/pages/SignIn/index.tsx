@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useState, useRef } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -22,9 +22,9 @@ import getValidationErrors from "~/utils/getValidationErrors";
 import { SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from "~/router/routes";
 import { useAuth } from "~/contexts/auth/AuthContext";
 import {
-  Container,
-  Content,
   Title,
+  Content,
+  Container,
   ForgotPassword,
   ForgotPasswordText,
   CreateAccount,
@@ -42,6 +42,8 @@ const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const { signIn } = useAuth();
 
+  const [loading, setLoading] = useState(false);
+
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
@@ -51,6 +53,8 @@ const SignIn: React.FC = () => {
 
   const handleSignIn = async (data: SignInFormData): Promise<void> => {
     try {
+      setLoading(true);
+
       formRef.current?.setErrors({});
 
       await schema.validate(data, {
@@ -71,6 +75,8 @@ const SignIn: React.FC = () => {
         "Authentication Error",
         "It happened an error while trying to authenticate, please verify your credencials",
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -127,7 +133,12 @@ const SignIn: React.FC = () => {
                 secureTextEntry
               />
 
-              <Button onPress={handleSubmit}>Login</Button>
+              <Button
+                loading={loading}
+                onPress={handleSubmit}
+              >
+                Login
+              </Button>
             </Form>
 
             <ForgotPassword>
