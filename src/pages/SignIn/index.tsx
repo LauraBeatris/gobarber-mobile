@@ -134,6 +134,7 @@ const SignIn: React.FC = () => {
               />
 
               <Button
+                enabled={loading}
                 loading={loading}
                 onPress={handleSubmit}
               >

@@ -150,6 +150,7 @@ const SignUp: React.FC = () => {
               />
 
               <Button
+                enabled={loading}
                 loading={loading}
                 onPress={handleSubmit}
               >
