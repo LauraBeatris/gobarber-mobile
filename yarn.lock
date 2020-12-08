@@ -1249,12 +1249,6 @@
     color "^3.1.2"
     react-native-iphone-x-helper "^1.2.1"
 
-"@types/@react-native-community/async-storage":
-  version "1.11.0"
-  resolved "https://codeload.github.com/react-native-community/async-storage/tar.gz/de1668d13aa82d53d099c7f11c001cf531c103da"
-  dependencies:
-    deep-assign "^3.0.0"
-
 "@types/axios@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@types/axios/-/axios-0.14.0.tgz#ec2300fbe7d7dddd7eb9d3abf87999964cafce46"

@@ -20,6 +20,7 @@ import Input from "~/components/Input";
 import logo from "~/assets/logo.png";
 import getValidationErrors from "~/utils/getValidationErrors";
 import api from "~/config/api";
+
 import schema from "./schema";
 import {
   Title,
@@ -45,11 +46,11 @@ const SignUp: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (): void => {
+  const handleSubmit = () => {
     formRef?.current?.submitForm();
   };
 
-  const handleSignUp = async (data: SignUpFormData): Promise<void> => {
+  const handleSignUp = async (data: SignUpFormData) => {
     try {
       setLoading(true);
 
@@ -85,15 +86,15 @@ const SignUp: React.FC = () => {
     }
   };
 
-  const handleNavigationToSignIn = (): void => {
+  const handleNavigationToSignIn = () => {
     navigation.goBack();
   };
 
-  const handleEmailFocus = (): void => {
+  const handleEmailFocus = () => {
     emailInputRef.current?.focus();
   };
 
-  const handlePasswordFocus = (): void => {
+  const handlePasswordFocus = () => {
     passwordInputRef.current?.focus();
   };
 
@@ -144,7 +145,7 @@ const SignUp: React.FC = () => {
                 icon="lock"
                 placeholder="Password"
                 returnKeyType="send"
-                onSubmitEditing={handleSignUp}
+                onSubmitEditing={handleSubmit}
                 autoCorrect={false}
                 secureTextEntry
               />

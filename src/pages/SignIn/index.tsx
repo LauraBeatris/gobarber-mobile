@@ -47,11 +47,11 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const handleSubmit = (): void => {
+  const handleSubmit = () => {
     formRef?.current?.submitForm();
   };
 
-  const handleSignIn = async (data: SignInFormData): Promise<void> => {
+  const handleSignIn = async (data: SignInFormData) => {
     try {
       setLoading(true);
 
@@ -80,15 +80,15 @@ const SignIn: React.FC = () => {
     }
   };
 
-  const handleNavigationToSignUp = (): void => {
+  const handleNavigationToSignUp = () => {
     navigation.navigate(SIGN_UP_ROUTE);
   };
 
-  const handleNavigationToForgotPassword = (): void => {
+  const handleNavigationToForgotPassword = () => {
     navigation.navigate(FORGOT_PASSWORD_ROUTE);
   };
 
-  const handlePasswordFocus = (): void => {
+  const handlePasswordFocus = () => {
     passwordInputRef.current?.focus();
   };
 

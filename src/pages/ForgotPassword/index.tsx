@@ -1,10 +1,10 @@
 import React, { useContext, useRef } from "react";
 import {
-  Image,
   KeyboardAvoidingView,
-  Platform,
-  View,
   ScrollView,
+  Platform,
+  Image,
+  View,
   Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
@@ -37,13 +37,13 @@ const ForgotPassword: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = (): void => {
+  const handleSubmit = () => {
     formRef?.current?.submitForm();
   };
 
   const handleForgotPasswordRequest = async (
     data: ForgotPasswordFormData,
-  ): void => {
+  ) => {
     try {
       formRef.current?.setErrors({});
 
@@ -66,7 +66,7 @@ const ForgotPassword: React.FC = () => {
     }
   };
 
-  const handleNavigationToSignIn = (): void => {
+  const handleNavigationToSignIn = () => {
     navigation.goBack();
   };
 
@@ -98,7 +98,6 @@ const ForgotPassword: React.FC = () => {
                 autoCapitalize="none"
                 autoCompleteType="email"
                 autoCorrect={false}
-                onSubmitEditing={handleForgotPasswordRequest}
               />
 
               <Button onPress={handleSubmit}>Create</Button>
