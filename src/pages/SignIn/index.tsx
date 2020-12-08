@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useState, useRef } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -15,17 +15,16 @@ import { Form } from "@unform/mobile";
 import { ThemeContext } from "styled-components";
 import { ValidationError } from "yup";
 
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import logo from "../../assets/logo.png";
-import getValidationErrors from "../../utils/getValidationErrors";
-import { SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from "../../router/routes";
-import { useAuth } from "../../contexts/auth/AuthContext";
-
+import Button from "~/components/Button";
+import Input from "~/components/Input";
+import logo from "~/assets/logo.png";
+import getValidationErrors from "~/utils/getValidationErrors";
+import { SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from "~/router/routes";
+import { useAuth } from "~/contexts/auth/AuthContext";
 import {
-  Container,
-  Content,
   Title,
+  Content,
+  Container,
   ForgotPassword,
   ForgotPasswordText,
   CreateAccount,
@@ -43,15 +42,19 @@ const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const { signIn } = useAuth();
 
+  const [loading, setLoading] = useState(false);
+
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const handleSubmit = (): void => {
+  const handleSubmit = () => {
     formRef?.current?.submitForm();
   };
 
-  const handleSignIn = async (data: SignInFormData): Promise<void> => {
+  const handleSignIn = async (data: SignInFormData) => {
     try {
+      setLoading(true);
+
       formRef.current?.setErrors({});
 
       await schema.validate(data, {
@@ -72,18 +75,20 @@ const SignIn: React.FC = () => {
         "Authentication Error",
         "It happened an error while trying to authenticate, please verify your credencials",
       );
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleNavigationToSignUp = (): void => {
+  const handleNavigationToSignUp = () => {
     navigation.navigate(SIGN_UP_ROUTE);
   };
 
-  const handleNavigationToForgotPassword = (): void => {
+  const handleNavigationToForgotPassword = () => {
     navigation.navigate(FORGOT_PASSWORD_ROUTE);
   };
 
-  const handlePasswordFocus = (): void => {
+  const handlePasswordFocus = () => {
     passwordInputRef.current?.focus();
   };
 
@@ -128,7 +133,13 @@ const SignIn: React.FC = () => {
                 secureTextEntry
               />
 
-              <Button onPress={handleSubmit}>Login</Button>
+              <Button
+                enabled={loading}
+                loading={loading}
+                onPress={handleSubmit}
+              >
+                Login
+              </Button>
             </Form>
 
             <ForgotPassword>

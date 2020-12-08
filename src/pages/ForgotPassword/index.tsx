@@ -1,33 +1,31 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef } from "react";
 import {
-  Image,
   KeyboardAvoidingView,
-  Platform,
-  View,
   ScrollView,
-  Alert
-} from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-import { FormHandles } from '@unform/core';
-import { Form } from '@unform/mobile';
-import { useNavigation } from '@react-navigation/native';
-import { ThemeContext } from 'styled-components';
-import { ValidationError } from 'yup';
+  Platform,
+  Image,
+  View,
+  Alert,
+} from "react-native";
+import Icon from "react-native-vector-icons/Feather";
+import { FormHandles } from "@unform/core";
+import { Form } from "@unform/mobile";
+import { useNavigation } from "@react-navigation/native";
+import { ThemeContext } from "styled-components";
+import { ValidationError } from "yup";
 
-import Button from '../../components/Button';
-import Input from '../../components/Input';
-import logo from '../../assets/logo.png';
-import getValidationErrors from '../../utils/getValidationErrors';
-
-import schema from './schema';
-
+import Button from "~/components/Button";
+import Input from "~/components/Input";
+import logo from "~/assets/logo.png";
+import getValidationErrors from "~/utils/getValidationErrors";
+import schema from "./schema";
 import {
   Container,
   Content,
   Title,
   SignInButton,
-  SignInButtonText
-} from './styles';
+  SignInButtonText,
+} from "./styles";
 
 interface ForgotPasswordFormData {
   email: string;
@@ -39,16 +37,18 @@ const ForgotPassword: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = (): void => {
+  const handleSubmit = () => {
     formRef?.current?.submitForm();
   };
 
-  const handleForgotPasswordRequest = async (data: ForgotPasswordFormData): void => {
+  const handleForgotPasswordRequest = async (
+    data: ForgotPasswordFormData,
+  ) => {
     try {
       formRef.current?.setErrors({});
 
       await schema.validate(data, {
-        abortEarly: false
+        abortEarly: false,
       });
     } catch (error) {
       if (error instanceof ValidationError) {
@@ -60,72 +60,58 @@ const ForgotPassword: React.FC = () => {
       }
 
       Alert.alert(
-        'An error occured while sending the forgot password request',
-        'Please, verify your email and try it again'
+        "An error occured while sending the forgot password request",
+        "Please, verify your email and try it again",
       );
     }
   };
 
-  const handleNavigationToSignIn = (): void => {
+  const handleNavigationToSignIn = () => {
     navigation.goBack();
   };
 
   return (
     <Container>
       <KeyboardAvoidingView
-        style={{flex: 1}}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
         enabled
       >
         <ScrollView
-          contentContainerStyle={{flex: 1}}
+          contentContainerStyle={{ flex: 1 }}
           keyboardShouldPersistTaps="handled"
         >
           <Content>
-              <Image source={logo} />
+            <Image source={logo} />
 
-              <View>
-                <Title>Forgot Password</Title>
-              </View>
+            <View>
+              <Title>Forgot Password</Title>
+            </View>
 
-              <Form
-                ref={formRef}
-                onSubmit={handleForgotPasswordRequest}
-              >
-                <Input
-                  name="email"
-                  icon="mail"
-                  placeholder="Email"
-                  returnKeyType="send"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  autoCompleteType="email"
-                  autoCorrect={false}
-                  onSubmitEditing={handleForgotPasswordRequest}
-                />
+            <Form ref={formRef} onSubmit={handleForgotPasswordRequest}>
+              <Input
+                name="email"
+                icon="mail"
+                placeholder="Email"
+                returnKeyType="send"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCompleteType="email"
+                autoCorrect={false}
+              />
 
-                <Button
-                  onPress={handleSubmit}
-                >
-                  Create
-                </Button>
-              </Form>
+              <Button onPress={handleSubmit}>Create</Button>
+            </Form>
           </Content>
         </ScrollView>
       </KeyboardAvoidingView>
 
       <SignInButton onPress={handleNavigationToSignIn}>
-        <Icon
-          name="arrow-left"
-          color={theme.colors.white}
-          size={16}
-        />
-        <SignInButtonText>
-          Back to login
-        </SignInButtonText>
+        <Icon name="arrow-left" color={theme.colors.white} size={16} />
+        <SignInButtonText>Back to login</SignInButtonText>
       </SignInButton>
     </Container>
-  )
+  );
 };
 
 export default ForgotPassword;

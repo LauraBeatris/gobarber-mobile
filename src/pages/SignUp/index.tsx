@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -15,18 +15,17 @@ import { ThemeContext } from "styled-components";
 import Icon from "react-native-vector-icons/Feather";
 import { ValidationError } from "yup";
 
-import Button from "../../components/Button";
-import Input from "../../components/Input";
-import logo from "../../assets/logo.png";
-import getValidationErrors from "../../utils/getValidationErrors";
-import api from "../../config/api";
+import Button from "~/components/Button";
+import Input from "~/components/Input";
+import logo from "~/assets/logo.png";
+import getValidationErrors from "~/utils/getValidationErrors";
+import api from "~/config/api";
 
 import schema from "./schema";
-
 import {
-  Container,
-  Content,
   Title,
+  Content,
+  Container,
   SignInButton,
   SignInButtonText,
 } from "./styles";
@@ -45,19 +44,21 @@ const SignUp: React.FC = () => {
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const handleSubmit = (): void => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = () => {
     formRef?.current?.submitForm();
   };
 
-  const handleSignUp = async (data: SignUpFormData): Promise<void> => {
+  const handleSignUp = async (data: SignUpFormData) => {
     try {
+      setLoading(true);
+
       formRef.current?.setErrors({});
 
       await schema.validate(data, {
         abortEarly: false,
       });
-
-      console.log(data);
 
       await api.post("/users", { ...data, is_provider: false });
 
@@ -80,18 +81,20 @@ const SignUp: React.FC = () => {
         "Registration error",
         "It happened an error during the account registration, please verify your data",
       );
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleNavigationToSignIn = (): void => {
+  const handleNavigationToSignIn = () => {
     navigation.goBack();
   };
 
-  const handleEmailFocus = (): void => {
+  const handleEmailFocus = () => {
     emailInputRef.current?.focus();
   };
 
-  const handlePasswordFocus = (): void => {
+  const handlePasswordFocus = () => {
     passwordInputRef.current?.focus();
   };
 
@@ -142,12 +145,18 @@ const SignUp: React.FC = () => {
                 icon="lock"
                 placeholder="Password"
                 returnKeyType="send"
-                onSubmitEditing={handleSignUp}
+                onSubmitEditing={handleSubmit}
                 autoCorrect={false}
                 secureTextEntry
               />
 
-              <Button onPress={handleSubmit}>Create</Button>
+              <Button
+                enabled={loading}
+                loading={loading}
+                onPress={handleSubmit}
+              >
+                Create
+              </Button>
             </Form>
           </Content>
         </ScrollView>

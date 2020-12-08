@@ -1,18 +1,15 @@
 import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
 
-import { useAuth } from "../../contexts/auth/AuthContext";
+import DashboardHeader from "./DashboardHeader";
+import DashboardProvidersList from "./DashboardProvidersList";
 
-const Dashboard: React.FC = () => {
-  const { signOut } = useAuth();
+import { Container } from "./styles";
 
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <TouchableOpacity onPress={signOut}>
-        <Text>Exit</Text>
-      </TouchableOpacity>
-    </View>
-  );
-};
+const Dashboard: React.FC = () => (
+  <Container>
+    <DashboardHeader />
+    <DashboardProvidersList />
+  </Container>
+);
 
 export default Dashboard;

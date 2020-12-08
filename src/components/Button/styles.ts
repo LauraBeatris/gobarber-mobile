@@ -1,4 +1,5 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
+import { transparentize } from "polished";
 import { RectButton } from "react-native-gesture-handler";
 
 export const Container = styled(RectButton)`
@@ -10,6 +11,10 @@ export const Container = styled(RectButton)`
   justify-content: center;
   align-items: center;
   margin-top: 8px;
+
+  ${({ enabled, theme }) => enabled && css`
+    background: ${transparentize(0.4, theme.colors.yellow)};
+  `}
 `;
 
 export const ButtonText = styled.Text`

@@ -2,11 +2,10 @@ import React, { useContext } from "react";
 import { ThemeContext } from "styled-components";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import Dashboard from "../pages/Dashboard";
-import CreateAppointment from "../pages/CreateAppointment";
-import CreateAppointmentSuccess from "../pages/CreateAppointmentSuccess";
-import Profile from "../pages/Profile";
-
+import Dashboard from "~/pages/Dashboard";
+import CreateAppointment from "~/pages/CreateAppointment";
+import CreateAppointmentSuccess from "~/pages/CreateAppointmentSuccess";
+import Profile from "~/pages/Profile";
 import {
   DASHBOARD_ROUTE,
   PROFILE_ROUTE,

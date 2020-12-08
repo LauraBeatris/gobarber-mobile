@@ -1,12 +1,16 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import {
   TOKEN_STORAGE_KEY,
   USER_STORAGE_KEY,
-} from "../../constants/asyncStorage";
-import api from "../../config/api";
-
+} from "~/constants/asyncStorage";
+import api, { assignDefaultAuthToken } from "~/config/api";
 import { AuthProvider } from "./AuthContext";
 import { SignInCredentials, AuthState } from "./types";
 
@@ -19,6 +23,8 @@ const AuthContainer: React.FC = ({ children }) => {
   > => {
     const response = await api.post<AuthState>("sessions", credentials);
     const { user, token } = response.data;
+
+    assignDefaultAuthToken(token);
 
     AsyncStorage.multiSet([
       [USER_STORAGE_KEY, JSON.stringify(user)],
@@ -39,6 +45,8 @@ const AuthContainer: React.FC = ({ children }) => {
     const user = await AsyncStorage.getItem(USER_STORAGE_KEY);
 
     if (token && user) {
+      assignDefaultAuthToken(token);
+
       setData({ token, user: JSON.parse(user) });
     }
 
