@@ -40,6 +40,7 @@ export const ProviderName = styled.Text`
   font-size: 18px;
   font-family: 'RobotoSlab-Medium';
   margin-bottom: 6px;
+  max-width: 90%;
 `;
 
 export const ProviderSchedule = styled.View`

@@ -8,7 +8,7 @@ import { PROFILE_ROUTE } from "~/router/routes";
 import {
   Header,
   UserAvatar,
-  HeaderText,
+  HeaderInfo,
   UserNameText,
   GreetingsText,
 } from "~/pages/Dashboard/styles";
@@ -20,16 +20,17 @@ const DashboardHeader: React.FC = () => {
 
   return (
     <Header>
-      <HeaderText>
+      <HeaderInfo>
         <GreetingsText>
           Welcome,
-          {" "}
-          {"\n"}
         </GreetingsText>
-        <UserNameText>
-          Laura Beatris
+        <UserNameText
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {user.name}
         </UserNameText>
-      </HeaderText>
+      </HeaderInfo>
 
       <TouchableOpacity onPress={navigate(PROFILE_ROUTE)}>
         <UserAvatar source={userAvatarURI} />

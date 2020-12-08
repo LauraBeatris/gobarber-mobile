@@ -34,7 +34,12 @@ const ProviderItem: React.FC<ProviderItemProps> = ({ item }) => {
       <ProviderAvatar source={userAvatarURI} />
 
       <ProviderInfo>
-        <ProviderName>{item.name}</ProviderName>
+        <ProviderName
+          numberOfLines={1}
+          ellipsizeMode="tail"
+        >
+          {item.name}
+        </ProviderName>
 
         <ProviderSchedule>
           <Icon
