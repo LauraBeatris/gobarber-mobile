@@ -6,7 +6,6 @@ module.exports = {
     "plugin:import/typescript"
   ],
   rules: {
-    "react/react-in-jsx-scope": "off",
     "no-underscore-dangle": "off",
     "camelcase": "off",
     "import/order": ["error", {
