@@ -1,13 +1,8 @@
 import React from "react";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
+import Header from "~/components/Header";
 import { useAuth } from "~/contexts/auth/AuthContext";
-import useNavigate from "~/hooks/useNavigate";
-import useUserAvatarURI from "~/hooks/useUserAvatarURI";
-import { PROFILE_ROUTE } from "~/router/routes";
 import {
-  Header,
-  UserAvatar,
   HeaderInfo,
   UserNameText,
   GreetingsText,
@@ -15,8 +10,6 @@ import {
 
 const DashboardHeader: React.FC = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
-  const userAvatarURI = useUserAvatarURI(user);
 
   return (
     <Header>
@@ -31,10 +24,6 @@ const DashboardHeader: React.FC = () => {
           {user.name}
         </UserNameText>
       </HeaderInfo>
-
-      <TouchableOpacity onPress={navigate(PROFILE_ROUTE)}>
-        <UserAvatar source={userAvatarURI} />
-      </TouchableOpacity>
     </Header>
   );
 };
