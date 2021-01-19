@@ -1,15 +1,15 @@
 import React from "react";
 
+import { ScreenContainer } from "~/styles/components";
+
 import DashboardHeader from "./DashboardHeader";
 import DashboardProvidersList from "./DashboardProvidersList";
 
-import { Container } from "./styles";
-
 const Dashboard: React.FC = () => (
-  <Container>
+  <ScreenContainer>
     <DashboardHeader />
     <DashboardProvidersList />
-  </Container>
+  </ScreenContainer>
 );
 
 export default Dashboard;
