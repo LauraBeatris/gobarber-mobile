@@ -30,7 +30,10 @@ const ProviderItem: React.FC<ProviderItemProps> = ({ item }) => {
   const navigate = useNavigate();
 
   return (
-    <ProviderContainer onPress={navigate(CREATE_APPOINTMENT_ROUTE, { id: item.id })}>
+    <ProviderContainer onPress={navigate(CREATE_APPOINTMENT_ROUTE, {
+      providerId: item.id,
+    })}
+    >
       <ProviderAvatar source={userAvatarURI} />
 
       <ProviderInfo>
