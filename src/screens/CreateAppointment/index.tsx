@@ -13,10 +13,10 @@ import { keyExtractorId } from "~/constants/flatLists";
 import Loading from "~/components/Base/Loading";
 
 import {
-  ProviderListItem,
-  ProviderListItemName,
+  HorizontalFlatListItem,
+  HorizontalFlatListItemName,
   ProviderListContainer,
-  ProviderListItemAvatar,
+  HorizontalFlatListItemAvatar,
   CreateAppointmentHeaderText,
 } from "./styles";
 import { CreateAppointmentScreenRouteProp } from "./types";
@@ -27,7 +27,7 @@ const CreateAppointment: React.FC = () => {
   const { providerId } = useRoute<CreateAppointmentScreenRouteProp>().params;
   const [selectedProviderId, setSelectedProviderId] = useState(providerId);
 
-  const handleProviderListItemPress = (newProviderId: number) => () => {
+  const handleHorizontalFlatListItemPress = (newProviderId: number) => () => {
     setSelectedProviderId(newProviderId);
   };
 
@@ -59,19 +59,19 @@ const CreateAppointment: React.FC = () => {
                 const isSelected = item.id === selectedProviderId;
 
                 return (
-                  <ProviderListItem
-                    onPress={handleProviderListItemPress(item.id)}
+                  <HorizontalFlatListItem
+                    onPress={handleHorizontalFlatListItemPress(item.id)}
                     isSelected={isSelected}
                   >
-                    <ProviderListItemAvatar user={item} />
-                    <ProviderListItemName
+                    <HorizontalFlatListItemAvatar user={item} />
+                    <HorizontalFlatListItemName
                       isSelected={isSelected}
                       numberOfLines={1}
                       ellipsizeMode="tail"
                     >
                       {item.name}
-                    </ProviderListItemName>
-                  </ProviderListItem>
+                    </HorizontalFlatListItemName>
+                  </HorizontalFlatListItem>
                 );
               }}
               horizontal

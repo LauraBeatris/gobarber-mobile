@@ -6,10 +6,6 @@ export type CreateAppointmentScreenParamList = {
 
 export type CreateAppointmentScreenRouteProp = RouteProp<CreateAppointmentScreenParamList, "CreateAppointment">;
 
-export interface ProviderListItemProps {
-  isSelected: boolean;
-}
-
-export interface ProviderListItemNameProps {
+export interface HorizontalFlatListItemProps {
   isSelected: boolean;
 }
