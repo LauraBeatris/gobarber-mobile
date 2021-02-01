@@ -6,8 +6,9 @@ import useNavigate from "~/hooks/useNavigate";
 import { PROFILE_ROUTE } from "~/router/routes";
 
 import { HeaderContainer, HeaderUserAvatar } from "./styles";
+import { AppHeaderProps } from "./types";
 
-const Header: React.FC = ({ children, ...rest }) => {
+const AppHeader: React.FC<AppHeaderProps> = ({ children, ...rest }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
@@ -22,4 +23,4 @@ const Header: React.FC = ({ children, ...rest }) => {
   );
 };
 
-export default Header;
+export default AppHeader;
