@@ -10,9 +10,9 @@ import theme from "~/styles/theme";
 import { daysInWeekBusinessIntervalText, hoursInDayBusinessIntervalText } from "~/constants/appointments";
 import { User } from "~/shared/types/apiSchema";
 import { CREATE_APPOINTMENT_ROUTE } from "~/router/routes";
+import { Title } from "~/styles/components";
 
 import {
-  Title,
   Container,
   ProviderInfo,
   ProviderName,
@@ -107,6 +107,7 @@ const DashboardProvidersList: React.FC = () => {
                 No providers available
               </NoProvidersAvailableText>
             )}
+            showsVerticalScrollIndicator={false}
           />
         )
       }

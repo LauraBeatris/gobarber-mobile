@@ -9,7 +9,7 @@ const Avatar: React.FC<AvatarProps> = ({ user, ...rest }) => {
   const userAvatarURI = useUserAvatarURI(user);
 
   return (
-    <Image source={userAvatarURI} {...rest ?? {}} />
+    <Image source={userAvatarURI} {...rest} />
   );
 };
 

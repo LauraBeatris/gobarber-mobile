@@ -12,7 +12,7 @@ export const CreateAppointmentHeaderText = styled.Text`
 `;
 
 export const ProviderListContainer = styled.View`
-  padding: 32px 24px 16px;
+  padding: 32px 0px 16px;
 `;
 
 export const ProviderListItem = styled(RectButton)<ProviderListItemProps>`

@@ -7,12 +7,12 @@ import { PROFILE_ROUTE } from "~/router/routes";
 
 import { HeaderContainer, HeaderUserAvatar } from "./styles";
 
-const Header: React.FC = ({ children }) => {
+const Header: React.FC = ({ children, ...rest }) => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
   return (
-    <HeaderContainer>
+    <HeaderContainer {...rest}>
       {children}
 
       <TouchableOpacity onPress={navigate(PROFILE_ROUTE)}>

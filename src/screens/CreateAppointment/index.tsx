@@ -4,14 +4,14 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Feather";
 
-import Header from "~/components/Header";
+import Header from "~/components/Layout/AppHeader";
 import theme from "~/styles/theme";
 import useProviders from "~/hooks/useProviders";
 import { ScreenContainer } from "~/styles/components";
 import { User } from "~/shared/types/apiSchema";
 import { keyExtractorId } from "~/constants/flatLists";
-
 import Loading from "~/components/Loading";
+
 import {
   ProviderListItem,
   ProviderListItemName,
@@ -76,6 +76,8 @@ const CreateAppointment: React.FC = () => {
               }}
               horizontal
               keyExtractor={keyExtractorId}
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: 24 }}
             />
           )
         }

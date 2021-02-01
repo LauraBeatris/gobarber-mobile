@@ -41,7 +41,7 @@ export const CreateAccount = styled.TouchableOpacity`
   align-items: center;
   border-top-width: 2px;
   border-top-color: ${({ theme }) => theme.colors.darkSecondary};
-  padding: 16px 0 ${Platform.OS === "ios" && `${getBottomSpace()}px`};
+  padding: 16px 0 ${Platform.OS === "ios" && `${getBottomSpace() ? getBottomSpace() : 20}px`};
 `;
 
 export const CreateAccountText = styled.Text`

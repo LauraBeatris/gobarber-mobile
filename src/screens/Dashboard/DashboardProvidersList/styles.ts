@@ -6,13 +6,6 @@ export const Container = styled.View`
   padding: 32px 24px 16px;
 `;
 
-export const Title = styled.Text`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 25px;
-  font-family: 'RobotoSlab-Medium';
-  margin-bottom: 24px;
-`;
-
 export const ProviderContainer = styled(RectButton)`
   width: 100%;
   padding: 20px;

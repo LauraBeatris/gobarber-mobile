@@ -12,7 +12,7 @@ const Loading: React.FC<ActivityIndicatorProps> = (props) => {
       <ActivityIndicator
         size="large"
         color={theme.colors.white}
-        {...props ?? {}}
+        {...props}
       />
     </Container>
   );

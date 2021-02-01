@@ -1,12 +1,12 @@
 import React from "react";
 
-import Header from "~/components/Header";
+import Header from "~/components/Layout/AppHeader";
 import { useAuth } from "~/contexts/auth/AuthContext";
 import {
   HeaderInfo,
   UserNameText,
   GreetingsText,
-} from "~/pages/Dashboard/styles";
+} from "~/screens/Dashboard/styles";
 
 const DashboardHeader: React.FC = () => {
   const { user } = useAuth();
