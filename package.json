@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.11.0",
+    "@react-native-community/datetimepicker": "^3.0.9",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.4.3",
     "@react-navigation/stack": "^5.4.0",
@@ -50,6 +51,7 @@
     "@typescript-eslint/eslint-plugin": "^4.9.0",
     "@typescript-eslint/parser": "^4.9.0",
     "babel-jest": "^24.9.0",
+    "babel-plugin-root-import": "^6.6.0",
     "eslint": "7.11.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-import-resolver-typescript": "^2.3.0",
