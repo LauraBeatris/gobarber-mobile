@@ -5,12 +5,12 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Feather";
 
 import Header from "~/components/Layout/AppHeader";
-import theme from "~/styles/theme";
+import Loading from "~/components/Base/Loading";
 import useProviders from "~/hooks/useProviders";
-import { ScreenContainer } from "~/styles/components";
+import theme from "~/styles/theme";
+import { ScreenContainer, Title } from "~/styles/components";
 import { User } from "~/shared/types/apiSchema";
 import { keyExtractorId } from "~/constants/flatLists";
-import Loading from "~/components/Base/Loading";
 
 import {
   HorizontalFlatListItem,
@@ -82,6 +82,8 @@ const CreateAppointment: React.FC = () => {
           )
         }
       </ProviderListContainer>
+
+      <Title>Escolha a data</Title>
     </ScreenContainer>
   );
 };

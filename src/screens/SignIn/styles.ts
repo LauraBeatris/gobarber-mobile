@@ -13,13 +13,6 @@ export const Content = styled.View`
   padding: 0 20px;
 `;
 
-export const Title = styled.Text`
-  font-family: ${({ theme }) => theme.fonts.medium};
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 24px;
-  margin: 64px 0 24px;
-`;
-
 export const ForgotPassword = styled.TouchableOpacity`
   margin-top: 24px;
 `;

@@ -7,10 +7,10 @@ import useProviders from "~/hooks/useProviders";
 import useUserAvatarURI from "~/hooks/useUserAvatarURI";
 import useNavigate from "~/hooks/useNavigate";
 import theme from "~/styles/theme";
+import { Title } from "~/styles/components";
 import { daysInWeekBusinessIntervalText, hoursInDayBusinessIntervalText } from "~/constants/appointments";
 import { User } from "~/shared/types/apiSchema";
 import { CREATE_APPOINTMENT_ROUTE } from "~/router/routes";
-import { Title } from "~/styles/components";
 
 import {
   Container,

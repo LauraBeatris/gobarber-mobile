@@ -9,10 +9,10 @@ import {
 import Icon from "react-native-vector-icons/Feather";
 import { ThemeContext } from "styled-components";
 
+import { Title } from "~/styles/components";
 import logo from "~/assets/logo.png";
 
 import {
-  Title,
   Content,
   Container,
   FooterButton,
