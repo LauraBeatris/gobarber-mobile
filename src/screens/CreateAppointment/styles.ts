@@ -50,3 +50,7 @@ export const HorizontalFlatListItemAvatar = styled(Avatar)`
   margin-right: 8px;
   border-radius: ${PROVIDER_LIST_ITEM_AVATAR_LENGTH / 2}px;
 `;
+
+export const CreateAppointmentContent = styled.View`
+  padding: 20px 24px 0px;
+`;

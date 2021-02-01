@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FlatList, RefreshControl } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { keyExtractorId } from "~/constants/flatLists";
@@ -6,12 +6,12 @@ import { keyExtractorId } from "~/constants/flatLists";
 import useProviders from "~/hooks/useProviders";
 import useUserAvatarURI from "~/hooks/useUserAvatarURI";
 import useNavigate from "~/hooks/useNavigate";
-import theme from "~/styles/theme";
 import { Title } from "~/styles/components";
 import { daysInWeekBusinessIntervalText, hoursInDayBusinessIntervalText } from "~/constants/appointments";
 import { User } from "~/shared/types/apiSchema";
 import { CREATE_APPOINTMENT_ROUTE } from "~/router/routes";
 
+import { ThemeContext } from "styled-components";
 import {
   Container,
   ProviderInfo,
@@ -28,6 +28,7 @@ import { ProviderItemProps } from "./types";
 const ProviderItem: React.FC<ProviderItemProps> = ({ item }) => {
   const userAvatarURI = useUserAvatarURI(item);
   const navigate = useNavigate();
+  const theme = useContext(ThemeContext);
 
   return (
     <ProviderContainer onPress={navigate(CREATE_APPOINTMENT_ROUTE, {
@@ -75,6 +76,7 @@ const ProviderItem: React.FC<ProviderItemProps> = ({ item }) => {
 const DashboardProvidersList: React.FC = () => {
   const { providers, loading, fetchProviders } = useProviders();
   const [refreshing, setRefreshing] = useState(false);
+  const theme = useContext(ThemeContext);
 
   const handleRefresh = () => {
     setRefreshing(true);
@@ -89,7 +91,10 @@ const DashboardProvidersList: React.FC = () => {
 
       {
         loading ? (
-          <ProvidersListActivityIndicator size="large" />
+          <ProvidersListActivityIndicator
+            color={theme.colors.white}
+            size="large"
+          />
         ) : (
           <FlatList<User>
             data={providers}

@@ -10,12 +10,14 @@ export const Content = styled.View`
   flex: 1;
   padding: 40px 20px 10px;
   align-items: center;
+  justify-content: space-between;
 `;
 
 export const AuthFormContainer = styled.View`
   align-items: center;
   justify-content: center;
   margin-bottom: auto;
+  padding-top: 40px;
 `;
 
 export const FormBottomButton = styled.TouchableOpacity`

@@ -12,10 +12,12 @@ import { ScreenContainer, Title } from "~/styles/components";
 import { User } from "~/shared/types/apiSchema";
 import { keyExtractorId } from "~/constants/flatLists";
 
+import DatePicker from "~/components/Base/DatePicker";
 import {
   HorizontalFlatListItem,
-  HorizontalFlatListItemName,
   ProviderListContainer,
+  CreateAppointmentContent,
+  HorizontalFlatListItemName,
   HorizontalFlatListItemAvatar,
   CreateAppointmentHeaderText,
 } from "./styles";
@@ -27,8 +29,14 @@ const CreateAppointment: React.FC = () => {
   const { providerId } = useRoute<CreateAppointmentScreenRouteProp>().params;
   const [selectedProviderId, setSelectedProviderId] = useState(providerId);
 
+  const [, setAppointmentDate] = useState(new Date());
+
   const handleHorizontalFlatListItemPress = (newProviderId: number) => () => {
     setSelectedProviderId(newProviderId);
+  };
+
+  const handleAppointmentDateChange = (value: Date) => {
+    setAppointmentDate(value);
   };
 
   return (
@@ -83,7 +91,11 @@ const CreateAppointment: React.FC = () => {
         }
       </ProviderListContainer>
 
-      <Title>Escolha a data</Title>
+      <CreateAppointmentContent>
+        <Title>Escolha a data</Title>
+
+        <DatePicker onChange={handleAppointmentDateChange} />
+      </CreateAppointmentContent>
     </ScreenContainer>
   );
 };
