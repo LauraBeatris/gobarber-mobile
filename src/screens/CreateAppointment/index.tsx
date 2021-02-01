@@ -10,7 +10,7 @@ import useProviders from "~/hooks/useProviders";
 import { ScreenContainer } from "~/styles/components";
 import { User } from "~/shared/types/apiSchema";
 import { keyExtractorId } from "~/constants/flatLists";
-import Loading from "~/components/Loading";
+import Loading from "~/components/Base/Loading";
 
 import {
   ProviderListItem,

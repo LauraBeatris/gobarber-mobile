@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { getStatusBarHeight } from "react-native-iphone-x-helper";
 
-import Avatar from "~/components/Avatar";
+import Avatar from "~/components/Base/Avatar";
 
 export const HeaderContainer = styled.View<AppHeaderProps>`
   width: 100%;

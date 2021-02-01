@@ -4,8 +4,8 @@ import { FormHandles } from "@unform/core";
 import { Form } from "@unform/mobile";
 import { ValidationError } from "yup";
 
-import Button from "~/components/Button";
-import Input from "~/components/Input";
+import Button from "~/components/Base/Button";
+import Input from "~/components/Base/Input";
 import getValidationErrors from "~/utils/getValidationErrors";
 import api from "~/config/api";
 
