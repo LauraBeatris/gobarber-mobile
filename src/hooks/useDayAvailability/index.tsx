@@ -50,6 +50,22 @@ const useDayAvailability = ({
     providerId,
     appointmentDate,
   ]);
+
+  const updateDayAvailability = useCallback((availabilityHour: number, available: boolean) => {
+    setDayAvailability(prev => prev.map(availability => {
+      const shouldUpdate = availability.hour === availabilityHour;
+
+      if (!shouldUpdate) {
+        return availability;
+      }
+
+      return {
+        ...availability,
+        available,
+      };
+    }));
+  }, []);
+
   useEffect(() => {
     fetchAvailability();
   }, [
@@ -69,9 +85,11 @@ const useDayAvailability = ({
     loading,
     morningAvailability,
     afternoonAvailability,
+    updateDayAvailability,
   }), [
     loading,
     morningAvailability,
+    updateDayAvailability,
     afternoonAvailability,
   ]);
 
