@@ -8,7 +8,7 @@ export const Container = styled.SafeAreaView`
 
 export const Content = styled.View`
   flex: 1;
-  padding: 40px 20px 10px;
+  padding: 80px 20px 10px;
   align-items: center;
   justify-content: space-between;
 `;
@@ -16,7 +16,7 @@ export const Content = styled.View`
 export const AuthFormContainer = styled.View`
   align-items: center;
   justify-content: center;
-  margin-bottom: auto;
+  margin-bottom: 50%;
   padding-top: 40px;
 `;
 

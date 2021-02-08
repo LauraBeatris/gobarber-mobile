@@ -1,43 +1,61 @@
 import React, { useState } from "react";
-import { FlatList } from "react-native";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/Feather";
 
 import Header from "~/components/Layout/AppHeader";
 import Loading from "~/components/Base/Loading";
-import useProviders from "~/hooks/useProviders";
+import DatePicker from "~/components/Base/DatePicker";
 import theme from "~/styles/theme";
 import { ScreenContainer, Title } from "~/styles/components";
-import { User } from "~/shared/types/apiSchema";
-import { keyExtractorId } from "~/constants/flatLists";
+import useProviders from "~/hooks/useProviders";
+import useDayAvailability from "~/hooks/useDayAvailability";
 
-import DatePicker from "~/components/Base/DatePicker";
+import Button from "~/components/Base/Button";
+import { User } from "~/shared/types/apiSchema";
 import {
-  HorizontalFlatListItem,
+  AvailabilitySubtitle,
+  AvailabilityContainer,
   ProviderListContainer,
+  CreateAppointmentFooter,
   CreateAppointmentContent,
-  HorizontalFlatListItemName,
-  HorizontalFlatListItemAvatar,
   CreateAppointmentHeaderText,
 } from "./styles";
 import { CreateAppointmentScreenRouteProp } from "./types";
+import HorizontalProvidersList from "./HorizontalProvidersList";
+import DayAvailabilityList from "./DayAvailabilityList";
 
 const CreateAppointment: React.FC = () => {
   const { goBack } = useNavigation();
-  const { loading, providers } = useProviders();
+  const { loading: loadingProviders, providers } = useProviders();
   const { providerId } = useRoute<CreateAppointmentScreenRouteProp>().params;
+
+  const [availabilityHour, setAvailabilityHour] = useState<number | null>(null);
+  const [appointmentDate, setAppointmentDate] = useState(new Date());
   const [selectedProviderId, setSelectedProviderId] = useState(providerId);
 
-  const [, setAppointmentDate] = useState(new Date());
+  const {
+    loading: loadingDayAvailability,
+    morningAvailability,
+    afternoonAvailability,
+  } = useDayAvailability({
+    providerId,
+    appointmentDate,
+  });
 
-  const handleHorizontalFlatListItemPress = (newProviderId: number) => () => {
+  const handlePressProvider = (newProviderId: User["id"]) => () => {
     setSelectedProviderId(newProviderId);
+  };
+
+  const handlePressAvailabilityHour = (hour: number) => () => {
+    setAvailabilityHour(hour);
   };
 
   const handleAppointmentDateChange = (value: Date) => {
     setAppointmentDate(value);
   };
+
+  const shouldEnableButton = !loadingDayAvailability && !loadingProviders;
 
   return (
     <ScreenContainer>
@@ -58,34 +76,13 @@ const CreateAppointment: React.FC = () => {
 
       <ProviderListContainer>
         {
-          loading ? (
+          loadingProviders ? (
             <Loading size="small" />
           ) : (
-            <FlatList<User>
-              data={providers}
-              renderItem={({ item }) => {
-                const isSelected = item.id === selectedProviderId;
-
-                return (
-                  <HorizontalFlatListItem
-                    onPress={handleHorizontalFlatListItemPress(item.id)}
-                    isSelected={isSelected}
-                  >
-                    <HorizontalFlatListItemAvatar user={item} />
-                    <HorizontalFlatListItemName
-                      isSelected={isSelected}
-                      numberOfLines={1}
-                      ellipsizeMode="tail"
-                    >
-                      {item.name}
-                    </HorizontalFlatListItemName>
-                  </HorizontalFlatListItem>
-                );
-              }}
-              horizontal
-              keyExtractor={keyExtractorId}
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: 24 }}
+            <HorizontalProvidersList
+              providers={providers}
+              selectedProviderId={selectedProviderId}
+              handlePressProvider={handlePressProvider}
             />
           )
         }
@@ -96,6 +93,44 @@ const CreateAppointment: React.FC = () => {
 
         <DatePicker onChange={handleAppointmentDateChange} />
       </CreateAppointmentContent>
+
+      <CreateAppointmentContent>
+        <Title>Escolha o horário</Title>
+      </CreateAppointmentContent>
+
+      {
+        loadingDayAvailability ? (
+          <Loading size="small" />
+        ) : (
+          <>
+            <AvailabilityContainer>
+              <AvailabilitySubtitle>Manhã</AvailabilitySubtitle>
+
+              <DayAvailabilityList
+                availability={morningAvailability}
+                availabilityHour={availabilityHour}
+                handlePressAvailabilityHour={handlePressAvailabilityHour}
+              />
+            </AvailabilityContainer>
+
+            <AvailabilityContainer>
+              <AvailabilitySubtitle>Tarde</AvailabilitySubtitle>
+
+              <DayAvailabilityList
+                availability={afternoonAvailability}
+                availabilityHour={availabilityHour}
+                handlePressAvailabilityHour={handlePressAvailabilityHour}
+              />
+            </AvailabilityContainer>
+          </>
+        )
+      }
+
+      <CreateAppointmentFooter>
+        <Button enabled={shouldEnableButton}>
+          Agendar
+        </Button>
+      </CreateAppointmentFooter>
     </ScreenContainer>
   );
 };

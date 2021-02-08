@@ -11,6 +11,7 @@ import { DatePickerProps } from "./types";
 
 const isIOS = Platform.OS === "ios";
 const display = isIOS ? "spinner" : "default";
+const now = new Date();
 
 const DatePicker: React.FC<DatePickerProps> = ({ onChange }) => {
   const [value, setValue] = useState<Date>(new Date());
@@ -55,14 +56,17 @@ const DatePicker: React.FC<DatePickerProps> = ({ onChange }) => {
         ) : null
       }
 
-      {isOpen ? (
-        <DateTimePicker
-          value={value}
-          display={display}
-          textColor={theme.colors.white}
-          onChange={handleDatePickerChange}
-        />
-      ) : null}
+      {
+        isOpen ? (
+          <DateTimePicker
+            value={value}
+            display={display}
+            textColor={theme.colors.white}
+            onChange={handleDatePickerChange}
+            minimumDate={now}
+          />
+        ) : null
+      }
     </View>
   );
 };

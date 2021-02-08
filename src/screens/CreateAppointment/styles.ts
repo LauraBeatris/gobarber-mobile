@@ -15,10 +15,9 @@ export const ProviderListContainer = styled.View`
   padding: 32px 0px 16px;
 `;
 
-export const HorizontalFlatListItem = styled(RectButton)<HorizontalFlatListItemProps>`
+export const BaseHorizontalFlatListItem = styled(RectButton)<HorizontalFlatListItemProps>`
   height: 100%;
   height: 48px;
-  width: 175px;
   padding: 8px;
   align-items: center;
   flex-direction: row;
@@ -31,7 +30,7 @@ export const HorizontalFlatListItem = styled(RectButton)<HorizontalFlatListItemP
   margin-right: 18px;
 `;
 
-export const HorizontalFlatListItemName = styled.Text<HorizontalFlatListItemProps>`
+export const HorizontalFlatListItemText = styled.Text<HorizontalFlatListItemProps>`
   flex: 1;
   font-size: 14px;
   font-family: 'RobotoSlab-Medium';
@@ -53,4 +52,19 @@ export const HorizontalFlatListItemAvatar = styled(Avatar)`
 
 export const CreateAppointmentContent = styled.View`
   padding: 20px 24px 0px;
+`;
+
+export const AvailabilityContainer = styled.View`
+  padding-bottom: 20px;
+`;
+
+export const AvailabilitySubtitle = styled.Text`
+  color: ${({ theme }) => theme.colors.grayLight};
+  font-size: 16px;
+  padding: 0 0 12px 24px;
+  font-family: 'RobotoSlab-Medium';
+`;
+
+export const CreateAppointmentFooter = styled.View`
+  padding: 10px 20px 20px;
 `;
