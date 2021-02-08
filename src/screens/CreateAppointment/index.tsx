@@ -12,8 +12,8 @@ import { ScreenContainer, Title } from "~/styles/components";
 import theme from "~/styles/theme";
 import useProviders from "~/hooks/useProviders";
 import useDayAvailability from "~/hooks/useDayAvailability";
-import { APPOINTMENT_TYPES_LIST } from "~/constants/appointments";
-import { AppointmentType, User } from "~/shared/types/apiSchema";
+import { APPOINTMENT_TYPES_LIST, AppointmentType } from "~/constants/appointments";
+import { User } from "~/shared/types/apiSchema";
 
 import { useCreateAppointment } from "~/hooks/useCreateAppointment";
 import {
@@ -33,9 +33,9 @@ import AppointmentTypeList from "./AppointmentTypeList";
 const CreateAppointment: React.FC = () => {
   const { goBack } = useNavigation();
   const { loading: loadingProviders, providers } = useProviders();
-  const { providerId } = useRoute<CreateAppointmentScreenRouteProp>().params;
+  const { provider } = useRoute<CreateAppointmentScreenRouteProp>().params;
 
-  const [selectedProviderId, setSelectedProviderId] = useState(providerId);
+  const [selectedProviderId, setSelectedProviderId] = useState(provider.id);
   const [selectedAppointmentType, setSelectedAppointmentType] = useState(
     APPOINTMENT_TYPES_LIST[0].value,
   );
@@ -80,7 +80,10 @@ const CreateAppointment: React.FC = () => {
     createAppointment({
       date: setHours(selectedAppointmentDate, selectedAvailabilityHour),
       type: selectedAppointmentType,
-      providerId: selectedProviderId,
+      provider: {
+        ...provider,
+        id: selectedProviderId,
+      },
     });
   };
 

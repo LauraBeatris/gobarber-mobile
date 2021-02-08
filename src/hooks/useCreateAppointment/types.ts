@@ -1,7 +1,8 @@
-import { AppointmentType, User } from "~/shared/types/apiSchema";
+import { AppointmentType } from "~/constants/appointments";
+import { User } from "~/shared/types/apiSchema";
 
 export interface CreateAppointmentPayload {
   date: Date;
   type: AppointmentType;
-  providerId: User["id"];
+  provider: Pick<User, "id" | "name">;
 }

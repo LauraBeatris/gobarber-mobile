@@ -1,5 +1,3 @@
-import { AppointmentType } from "~/shared/types/apiSchema";
-
 export const daysInWeekBusinessIntervalText = "Segunda à sexta";
 
 export const hoursInDayBusinessIntervalText = "8h às 18h";
@@ -9,6 +7,8 @@ export const APPOINTMENT_TYPE = {
   HAIR_WASHING: "HAIR_WASHING",
   CLASSIC_SHAVING: "CLASSIC_SHAVING",
 } as const;
+
+export type AppointmentType = keyof typeof APPOINTMENT_TYPE
 
 export const APPOINTMENT_TYPES_LIST = [
   {
