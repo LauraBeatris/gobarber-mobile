@@ -7,7 +7,7 @@ import { DayAvailabilityFlatListItem, DayAvailabilityFlatListItemText } from "./
 
 const DayAvailabilityList: React.FC<DayAvailabilityListProps> = ({
   availability,
-  availabilityHour,
+  selectedAvailabilityHour,
   handlePressAvailabilityHour,
 }) => (
   <FlatList
@@ -15,13 +15,14 @@ const DayAvailabilityList: React.FC<DayAvailabilityListProps> = ({
     renderItem={({ item }) => {
       const { hour, available, formattedHour } = item;
 
-      const isSelected = hour === availabilityHour;
+      const isSelected = hour === selectedAvailabilityHour;
 
       return (
         <DayAvailabilityFlatListItem
           onPress={handlePressAvailabilityHour(hour)}
-          isSelected={isSelected}
+          enabled={available}
           available={available}
+          isSelected={isSelected}
         >
           <DayAvailabilityFlatListItemText
             available={available}

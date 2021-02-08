@@ -68,3 +68,7 @@ export const AvailabilitySubtitle = styled.Text`
 export const CreateAppointmentFooter = styled.View`
   padding: 10px 20px 20px;
 `;
+
+export const ScheduleContainer = styled.View`
+  height: 200px;
+`;

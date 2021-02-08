@@ -14,6 +14,7 @@ import useDayAvailability from "~/hooks/useDayAvailability";
 import Button from "~/components/Base/Button";
 import { User } from "~/shared/types/apiSchema";
 import {
+  ScheduleContainer,
   AvailabilitySubtitle,
   AvailabilityContainer,
   ProviderListContainer,
@@ -30,7 +31,7 @@ const CreateAppointment: React.FC = () => {
   const { loading: loadingProviders, providers } = useProviders();
   const { providerId } = useRoute<CreateAppointmentScreenRouteProp>().params;
 
-  const [availabilityHour, setAvailabilityHour] = useState<number | null>(null);
+  const [selectedAvailabilityHour, setSelectedAvailabilityHour] = useState<number | null>(null);
   const [appointmentDate, setAppointmentDate] = useState(new Date());
   const [selectedProviderId, setSelectedProviderId] = useState(providerId);
 
@@ -39,7 +40,7 @@ const CreateAppointment: React.FC = () => {
     morningAvailability,
     afternoonAvailability,
   } = useDayAvailability({
-    providerId,
+    providerId: selectedProviderId,
     appointmentDate,
   });
 
@@ -48,14 +49,18 @@ const CreateAppointment: React.FC = () => {
   };
 
   const handlePressAvailabilityHour = (hour: number) => () => {
-    setAvailabilityHour(hour);
+    setSelectedAvailabilityHour(hour);
   };
 
   const handleAppointmentDateChange = (value: Date) => {
     setAppointmentDate(value);
   };
 
-  const shouldEnableButton = !loadingDayAvailability && !loadingProviders;
+  const shouldEnableButton = (
+    !loadingDayAvailability
+    && !loadingProviders
+    && Boolean(selectedAvailabilityHour)
+  );
 
   return (
     <ScreenContainer>
@@ -98,33 +103,35 @@ const CreateAppointment: React.FC = () => {
         <Title>Escolha o horário</Title>
       </CreateAppointmentContent>
 
-      {
-        loadingDayAvailability ? (
-          <Loading size="small" />
-        ) : (
-          <>
-            <AvailabilityContainer>
-              <AvailabilitySubtitle>Manhã</AvailabilitySubtitle>
+      <ScheduleContainer>
+        {
+          loadingDayAvailability ? (
+            <Loading size="small" />
+          ) : (
+            <>
+              <AvailabilityContainer>
+                <AvailabilitySubtitle>Manhã</AvailabilitySubtitle>
 
-              <DayAvailabilityList
-                availability={morningAvailability}
-                availabilityHour={availabilityHour}
-                handlePressAvailabilityHour={handlePressAvailabilityHour}
-              />
-            </AvailabilityContainer>
+                <DayAvailabilityList
+                  availability={morningAvailability}
+                  selectedAvailabilityHour={selectedAvailabilityHour}
+                  handlePressAvailabilityHour={handlePressAvailabilityHour}
+                />
+              </AvailabilityContainer>
 
-            <AvailabilityContainer>
-              <AvailabilitySubtitle>Tarde</AvailabilitySubtitle>
+              <AvailabilityContainer>
+                <AvailabilitySubtitle>Tarde</AvailabilitySubtitle>
 
-              <DayAvailabilityList
-                availability={afternoonAvailability}
-                availabilityHour={availabilityHour}
-                handlePressAvailabilityHour={handlePressAvailabilityHour}
-              />
-            </AvailabilityContainer>
-          </>
-        )
-      }
+                <DayAvailabilityList
+                  availability={afternoonAvailability}
+                  selectedAvailabilityHour={selectedAvailabilityHour}
+                  handlePressAvailabilityHour={handlePressAvailabilityHour}
+                />
+              </AvailabilityContainer>
+            </>
+          )
+        }
+      </ScheduleContainer>
 
       <CreateAppointmentFooter>
         <Button enabled={shouldEnableButton}>
