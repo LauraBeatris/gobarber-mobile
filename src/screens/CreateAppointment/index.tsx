@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { setHours } from "date-fns";
 import Icon from "react-native-vector-icons/Feather";
 
 import Header from "~/components/Layout/AppHeader";
@@ -14,6 +15,7 @@ import useDayAvailability from "~/hooks/useDayAvailability";
 import { APPOINTMENT_TYPES_LIST } from "~/constants/appointments";
 import { AppointmentType, User } from "~/shared/types/apiSchema";
 
+import { useCreateAppointment } from "~/hooks/useCreateAppointment";
 import {
   ScheduleContainer,
   AvailabilitySubtitle,
@@ -43,11 +45,14 @@ const CreateAppointment: React.FC = () => {
   const {
     loading: loadingDayAvailability,
     morningAvailability,
+    updateDayAvailability,
     afternoonAvailability,
   } = useDayAvailability({
     providerId: selectedProviderId,
     appointmentDate: selectedAppointmentDate,
   });
+
+  const { loading, createAppointment } = useCreateAppointment();
 
   const handlePressProvider = (newProviderId: User["id"]) => () => {
     setSelectedProviderId(newProviderId);
@@ -63,6 +68,20 @@ const CreateAppointment: React.FC = () => {
 
   const handleAppointmentDateChange = (value: Date) => {
     setSelectedAppointmentDate(value);
+  };
+
+  const handleCreateAppointment = () => {
+    if (!selectedAvailabilityHour) {
+      return;
+    }
+
+    updateDayAvailability(selectedAvailabilityHour, false);
+
+    createAppointment({
+      date: setHours(selectedAppointmentDate, selectedAvailabilityHour),
+      type: selectedAppointmentType,
+      providerId: selectedProviderId,
+    });
   };
 
   const shouldEnableButton = (
@@ -152,7 +171,11 @@ const CreateAppointment: React.FC = () => {
       />
 
       <CreateAppointmentFooter>
-        <Button enabled={shouldEnableButton}>
+        <Button
+          loading={loading}
+          enabled={shouldEnableButton}
+          onPress={handleCreateAppointment}
+        >
           Agendar
         </Button>
       </CreateAppointmentFooter>
