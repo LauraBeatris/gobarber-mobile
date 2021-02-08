@@ -8,7 +8,7 @@ import { User } from "~/shared/types/apiSchema";
  * Fetch service providers
  */
 const useProviders = () => {
-  const [providers, setProviders] = useState<User[]>([]);
+  const [providers, setProviders] = useState<Array<User>>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchProviders = () => api.get("/providers")

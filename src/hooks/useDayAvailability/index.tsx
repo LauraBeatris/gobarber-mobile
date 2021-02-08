@@ -30,7 +30,7 @@ const useDayAvailability = ({
   appointmentDate,
 }: UseDayAvailabilityParameters) => {
   const [loading, setLoading] = useState(false);
-  const [dayAvailability, setDayAvailability] = useState<DayAvailability[]>([]);
+  const [dayAvailability, setDayAvailability] = useState<Array<DayAvailability>>([]);
 
   const fetchAvailability = useCallback(() => {
     setLoading(true);

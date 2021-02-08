@@ -6,13 +6,14 @@ import Icon from "react-native-vector-icons/Feather";
 import Header from "~/components/Layout/AppHeader";
 import Loading from "~/components/Base/Loading";
 import DatePicker from "~/components/Base/DatePicker";
-import theme from "~/styles/theme";
+import Button from "~/components/Base/Button";
 import { ScreenContainer, Title } from "~/styles/components";
+import theme from "~/styles/theme";
 import useProviders from "~/hooks/useProviders";
 import useDayAvailability from "~/hooks/useDayAvailability";
+import { APPOINTMENT_TYPES_LIST } from "~/constants/appointments";
+import { AppointmentType, User } from "~/shared/types/apiSchema";
 
-import Button from "~/components/Base/Button";
-import { User } from "~/shared/types/apiSchema";
 import {
   ScheduleContainer,
   AvailabilitySubtitle,
@@ -25,15 +26,19 @@ import {
 import { CreateAppointmentScreenRouteProp } from "./types";
 import HorizontalProvidersList from "./HorizontalProvidersList";
 import DayAvailabilityList from "./DayAvailabilityList";
+import AppointmentTypeList from "./AppointmentTypeList";
 
 const CreateAppointment: React.FC = () => {
   const { goBack } = useNavigation();
   const { loading: loadingProviders, providers } = useProviders();
   const { providerId } = useRoute<CreateAppointmentScreenRouteProp>().params;
 
-  const [selectedAvailabilityHour, setSelectedAvailabilityHour] = useState<number | null>(null);
-  const [appointmentDate, setAppointmentDate] = useState(new Date());
   const [selectedProviderId, setSelectedProviderId] = useState(providerId);
+  const [selectedAppointmentType, setSelectedAppointmentType] = useState(
+    APPOINTMENT_TYPES_LIST[0].value,
+  );
+  const [selectedAppointmentDate, setSelectedAppointmentDate] = useState(new Date());
+  const [selectedAvailabilityHour, setSelectedAvailabilityHour] = useState<number | null>(null);
 
   const {
     loading: loadingDayAvailability,
@@ -41,7 +46,7 @@ const CreateAppointment: React.FC = () => {
     afternoonAvailability,
   } = useDayAvailability({
     providerId: selectedProviderId,
-    appointmentDate,
+    appointmentDate: selectedAppointmentDate,
   });
 
   const handlePressProvider = (newProviderId: User["id"]) => () => {
@@ -52,8 +57,12 @@ const CreateAppointment: React.FC = () => {
     setSelectedAvailabilityHour(hour);
   };
 
+  const handlePressAppointmentType = (appointmentType: AppointmentType) => () => {
+    setSelectedAppointmentType(appointmentType);
+  };
+
   const handleAppointmentDateChange = (value: Date) => {
-    setAppointmentDate(value);
+    setSelectedAppointmentDate(value);
   };
 
   const shouldEnableButton = (
@@ -132,6 +141,15 @@ const CreateAppointment: React.FC = () => {
           )
         }
       </ScheduleContainer>
+
+      <CreateAppointmentContent>
+        <Title>Escolha o tipo</Title>
+      </CreateAppointmentContent>
+
+      <AppointmentTypeList
+        selectedAppointmentType={selectedAppointmentType}
+        handlePressAppointmentType={handlePressAppointmentType}
+      />
 
       <CreateAppointmentFooter>
         <Button enabled={shouldEnableButton}>
