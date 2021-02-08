@@ -10,7 +10,6 @@ export const CreateAppointmentSuccessContainer = styled(ScreenContainer).attrs({
     justifyContent: "center",
   },
 })`
-  display: flex;
   padding: 0 14px;
 `;
 
