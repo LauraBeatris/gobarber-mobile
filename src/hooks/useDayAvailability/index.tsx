@@ -39,7 +39,7 @@ const useDayAvailability = ({
       params: {
         day: getDate(appointmentDate),
         year: getYear(appointmentDate),
-        month: getMonth(appointmentDate),
+        month: getMonth(appointmentDate) + 1,
       },
     })
       .then(({ data }) => setDayAvailability(data))
@@ -50,10 +50,13 @@ const useDayAvailability = ({
     providerId,
     appointmentDate,
   ]);
-
   useEffect(() => {
     fetchAvailability();
-  }, [fetchAvailability]);
+  }, [
+    providerId,
+    appointmentDate,
+    fetchAvailability,
+  ]);
 
   const morningAvailability = dayAvailability
     .filter(({ hour }) => hour < 12)
