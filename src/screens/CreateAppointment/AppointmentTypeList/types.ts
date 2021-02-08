@@ -1,4 +1,4 @@
-import { AppointmentType } from "~/shared/types/apiSchema";
+import { AppointmentType } from "~/constants/appointments";
 
 export interface AppointmentTypeListProps {
   selectedAppointmentType: AppointmentType;

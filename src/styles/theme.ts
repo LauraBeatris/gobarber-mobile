@@ -9,6 +9,7 @@ const theme = {
     red: "#C53030",
     blackMedium: "#28262E",
     shape: "#3E3B47",
+    green: "#04D361",
   },
   fonts: {
     medium: "RobotoSlab-Medium",

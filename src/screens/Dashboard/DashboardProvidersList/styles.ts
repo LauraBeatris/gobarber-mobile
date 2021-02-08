@@ -36,7 +36,6 @@ export const ProviderName = styled.Text`
 `;
 
 export const ProviderSchedule = styled.View`
-  display: flex;
   margin-top: 6px;
   flex-direction: row;
   align-items: center;

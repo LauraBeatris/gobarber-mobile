@@ -17,7 +17,10 @@ export const useCreateAppointment = () => {
     const {
       date,
       type,
-      providerId: provider_id,
+      provider: {
+        id: provider_id,
+        name: providerName,
+      },
     } = payload;
 
     api.post("/appointments", {
@@ -25,7 +28,10 @@ export const useCreateAppointment = () => {
       type,
       provider_id,
     })
-      .then(() => navigate(CREATE_APPOINTMENT_SUCCESS_ROUTE))
+      .then(() => navigate(CREATE_APPOINTMENT_SUCCESS_ROUTE, {
+        date,
+        providerName,
+      }))
       .catch(() => Alert.alert("Error", "Error while creating appointment, please, try again"))
       .finally(() => setLoading(false));
   }, [navigate]);
