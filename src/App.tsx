@@ -12,7 +12,11 @@ const App: React.FC = () => (
   <NavigationContainer>
     <ThemeProvider theme={theme}>
       <AuthContainer>
-        <StatusBar barStyle="light-content" backgroundColor="#312e38" />
+        <StatusBar
+          translucent
+          barStyle="light-content"
+          backgroundColor="#312e38"
+        />
         <Routes />
       </AuthContainer>
     </ThemeProvider>

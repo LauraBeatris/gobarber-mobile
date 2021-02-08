@@ -2,9 +2,9 @@ import React, { useContext } from "react";
 import { ThemeContext } from "styled-components";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import SignIn from "~/pages/SignIn";
-import SignUp from "~/pages/SignUp";
-import ForgotPassword from "~/pages/ForgotPassword";
+import SignIn from "~/screens/SignIn";
+import SignUp from "~/screens/SignUp";
+import ForgotPassword from "~/screens/ForgotPassword";
 import { SIGN_IN_ROUTE, SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from "./routes";
 
 const Stack = createStackNavigator();

@@ -2,7 +2,7 @@
    <img src=".github/logo-docs.gif" width="300"/>
 </p>
 
-# Go Barber
+# GoBarber Mobile
 
 
 [![Author](https://img.shields.io/badge/author-LauraBeatris-AD1256?style=flat-square)](https://github.com/LauraBeatris)
@@ -67,11 +67,11 @@ Run the following command in order to start the application in a development env
 
 **Question:** What are the tecnologies used in this project?
 
-**Answer:** The tecnologies used in this project are [React Native](https://reactnative.dev/) + [Styled Components](https://styled-components.com/) to handle scoped CSS.
+**Answer:** The technologies used in this project are [React Native](https://reactnative.dev/) + [Styled Components](https://styled-components.com/) to handle scoped CSS.
 
 # :bug: Issues
 
-Feel free to **file a new issue** with a respective title and description on the the [Gympoint Mobile](https://github.com/LauraBeatris/gobarber-mobile/issues) repository. If you already found a solution to your problem, **i would love to review your pull request**! Have a look at our [contribution guidelines](https://github.com/LauraBeatris/gobarber-mobile/blob/master/CONTRIBUTING.md) to find out about the coding standards.
+Feel free to **file a new issue** with a respective title and description on the the [GoBarber Mobile](https://github.com/LauraBeatris/gobarber-mobile/issues) repository. If you already found a solution to your problem, **i would love to review your pull request**! Have a look at our [contribution guidelines](https://github.com/LauraBeatris/gobarber-mobile/blob/master/CONTRIBUTING.md) to find out about the coding standards.
 
 # :tada: Contributing
 

@@ -22,6 +22,7 @@ const AuthContainer: React.FC = ({ children }) => {
     void
   > => {
     const response = await api.post<AuthState>("sessions", credentials);
+
     const { user, token } = response.data;
 
     assignDefaultAuthToken(token);
@@ -67,7 +68,11 @@ const AuthContainer: React.FC = ({ children }) => {
     [data, signIn, signOut, loading],
   );
 
-  return <AuthProvider value={contextValue}>{children}</AuthProvider>;
+  return (
+    <AuthProvider value={contextValue}>
+      {children}
+    </AuthProvider>
+  );
 };
 
 export default AuthContainer;
