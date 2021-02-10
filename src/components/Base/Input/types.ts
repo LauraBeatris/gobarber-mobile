@@ -1,8 +1,9 @@
-import { TextInputProperties, TextInput } from "react-native";
+import { TextInput, TextInputProps } from "react-native";
 
-export interface InputProps extends TextInputProperties {
+export interface InputProps extends TextInputProps {
   name: string;
   icon: string;
+  containerStyle?: TextInputProps["style"];
 }
 
 export interface InputValueRef {
@@ -11,6 +12,6 @@ export interface InputValueRef {
 
 export interface InputElementRef extends TextInput, InputValueRef {}
 
-export interface InputFowardRef {
+export interface InputForwardRef {
   focus(): void;
 }

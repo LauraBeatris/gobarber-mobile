@@ -1,12 +1,12 @@
 /* eslint-disable no-param-reassign */
 import React, {
-  useContext,
-  useEffect,
-  forwardRef,
-  useState,
-  useImperativeHandle,
   useRef,
   useMemo,
+  useState,
+  useEffect,
+  useContext,
+  forwardRef,
+  useImperativeHandle,
 } from "react";
 import { useField } from "@unform/core";
 import { ThemeContext } from "styled-components";
@@ -24,12 +24,17 @@ import { Container, StyledTextInput, Icon } from "./styles";
 import {
   InputProps,
   InputValueRef,
-  InputFowardRef,
+  InputForwardRef,
   InputElementRef,
 } from "./types";
 
-const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
-  { name, icon, ...rest },
+const Input: React.RefForwardingComponent<InputForwardRef, InputProps> = (
+  {
+    name,
+    icon,
+    containerStyle,
+    ...rest
+  },
   ref,
 ) => {
   const [inputState, setInputState] = useState<InputStates>(DEFAULT);
@@ -58,7 +63,7 @@ const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
     });
   }, [fieldName, registerField]);
 
-  useImperativeHandle<InputFowardRef, InputFowardRef>(ref, () => ({
+  useImperativeHandle<InputForwardRef, InputForwardRef>(ref, () => ({
     focus: () => {
       inputElementRef.current?.focus();
     },
@@ -93,7 +98,7 @@ const Input: React.RefForwardingComponent<InputFowardRef, InputProps> = (
   }, [error]);
 
   return (
-    <Container inputStateColor={inputStateColor}>
+    <Container style={containerStyle} inputStateColor={inputStateColor}>
       <Icon name={icon} size={20} color={inputStateColor} />
       <StyledTextInput
         ref={inputElementRef}
