@@ -3,13 +3,13 @@ import { Alert } from "react-native";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/mobile";
 import { useNavigation } from "@react-navigation/native";
-import { ValidationError } from "yup";
 
 import Button from "~/components/Base/Button";
 import Input from "~/components/Base/Input";
-import getValidationErrors from "~/utils/getValidationErrors";
 
 import AuthScreenLayout from "~/components/Layout/AuthScreenLayout";
+import performSchemaValidation from "~/utils/performSchemaValidation";
+import api from "~/config/api";
 import schema from "./schema";
 import { ForgotPasswordFormData } from "./types";
 
@@ -25,26 +25,23 @@ const ForgotPassword: React.FC = () => {
   const handleForgotPasswordRequest = async (
     data: ForgotPasswordFormData,
   ) => {
-    try {
-      formRef.current?.setErrors({});
-
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        const errors = getValidationErrors(error);
-
-        formRef.current?.setErrors(errors);
-
-        return;
-      }
-
-      Alert.alert(
-        "An error occured while sending the forgot password request",
-        "Please, verify your email and try it again",
-      );
-    }
+    performSchemaValidation({
+      formRef,
+      schema,
+      data,
+    })
+      .then(() => (
+        api.post("/password/recover-request", data)
+          .then(() => {
+            Alert.alert(
+              "Recover request email successfully sent",
+            );
+          })
+          .catch(() => Alert.alert(
+            "An error occured while sending the forgot password request",
+            "Please, verify your email and try it again",
+          ))
+      ));
   };
 
   return (
@@ -63,6 +60,7 @@ const ForgotPassword: React.FC = () => {
           autoCapitalize="none"
           autoCompleteType="email"
           autoCorrect={false}
+          onSubmitEditing={handleSubmit}
         />
 
         <Button onPress={handleSubmit}>Create</Button>

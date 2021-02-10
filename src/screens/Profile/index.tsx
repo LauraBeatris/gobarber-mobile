@@ -7,16 +7,19 @@ import {
 } from "react-native";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/mobile";
+import { useTheme } from "styled-components";
 
 import Input from "~/components/Base/Input";
 import Button from "~/components/Base/Button";
 import TitleHeader from "~/components/Layout/Header/TitleHeader";
 import BackButton from "~/components/Base/Button/BackButton";
 import SignOutButton from "~/components/Base/Button/SignOutButton";
-
 import { useAuth } from "~/contexts/auth/AuthContext";
-import { useTheme } from "styled-components";
+
+import performSchemaValidation from "~/utils/performSchemaValidation";
 import { Content, Container, ProfileFormContainer } from "./styles";
+import { UpdateProfileFormData } from "./types";
+import schema from "./schema";
 
 const Profile: React.FC = () => {
   const { user } = useAuth();
@@ -32,8 +35,15 @@ const Profile: React.FC = () => {
     formRef?.current?.submitForm();
   };
 
-  const handleUpdateProfile = async () => {
-    // TODO - Update profile
+  const handleUpdateProfile = (data: UpdateProfileFormData) => {
+    performSchemaValidation({
+      formRef,
+      schema,
+      data,
+    })
+      .then(() => {
+        // TODO - Update profile data by sending a POST request to /profile route
+      });
   };
 
   const handleEmailInputFocus = () => {
@@ -79,7 +89,7 @@ const Profile: React.FC = () => {
               >
                 <Input
                   name="name"
-                  icon="mail"
+                  icon="user"
                   placeholder="Full Name"
                   autoCorrect={false}
                   returnKeyType="next"
@@ -134,7 +144,7 @@ const Profile: React.FC = () => {
               </Form>
             </ProfileFormContainer>
 
-            <Button>Confirm changes</Button>
+            <Button enabled onPress={handleSubmit}>Confirm changes</Button>
           </Content>
         </ScrollView>
       </Container>

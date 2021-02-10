@@ -1,16 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { TextInput, Alert } from "react-native";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/mobile";
-import { ValidationError } from "yup";
 
 import Button from "~/components/Base/Button";
 import Input from "~/components/Base/Input";
-import getValidationErrors from "~/utils/getValidationErrors";
 import api from "~/config/api";
 
 import { useNavigation } from "@react-navigation/native";
 import AuthScreenLayout from "~/components/Layout/AuthScreenLayout";
+import performSchemaValidation from "~/utils/performSchemaValidation";
 import schema from "./schema";
 import { SignUpFormData } from "./types";
 
@@ -21,46 +20,24 @@ const SignUp: React.FC = () => {
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const [loading, setLoading] = useState(false);
-
   const handleSubmit = () => {
     formRef?.current?.submitForm();
   };
 
   const handleSignUp = async (data: SignUpFormData) => {
-    try {
-      setLoading(true);
-
-      formRef.current?.setErrors({});
-
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-
-      await api.post("/users", { ...data, is_provider: false });
-
-      navigation.goBack();
-
-      Alert.alert(
-        "Account created",
-        "Your account was successfully created, congratulations!",
-      );
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        const errors = getValidationErrors(error);
-
-        formRef.current?.setErrors(errors);
-
-        return;
-      }
-
-      Alert.alert(
-        "Registration error",
-        "It happened an error during the account registration, please verify your data",
-      );
-    } finally {
-      setLoading(false);
-    }
+    performSchemaValidation({
+      formRef,
+      schema,
+      data,
+    })
+      .then(() => (
+        api.post("/users", { ...data, is_provider: false })
+          .then(() => navigation.goBack())
+          .catch(() => Alert.alert(
+            "Account created",
+            "Your account was successfully created, congratulations!",
+          ))
+      ));
   };
 
   const handleEmailInputFocus = () => {
@@ -111,11 +88,7 @@ const SignUp: React.FC = () => {
           secureTextEntry
         />
 
-        <Button
-          enabled={loading}
-          loading={loading}
-          onPress={handleSubmit}
-        >
+        <Button onPress={handleSubmit}>
           Create
         </Button>
       </Form>
