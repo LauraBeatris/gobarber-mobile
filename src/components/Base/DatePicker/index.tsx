@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Platform } from "react-native";
 import { format } from "date-fns";
 import DateTimePicker, { Event } from "@react-native-community/datetimepicker";
-import { ThemeContext } from "styled-components";
+import { useTheme } from "styled-components";
 
 import Button from "~/components/Base/Button";
 
@@ -16,7 +16,7 @@ const now = new Date();
 const DatePicker: React.FC<DatePickerProps> = ({ onChange }) => {
   const [value, setValue] = useState<Date>(new Date());
   const [isOpen, setIsOpen] = useState(isIOS);
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   const handleDatePickerChange = (_event: Event, date?: Date) => {
     if (!isIOS) {

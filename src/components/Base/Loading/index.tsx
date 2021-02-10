@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
-import { ThemeContext } from "styled-components";
+import React from "react";
+import { useTheme } from "styled-components";
 import { ActivityIndicator, ActivityIndicatorProps } from "react-native";
 
 import { Container } from "./styles";
 
 const Loading: React.FC<ActivityIndicatorProps> = (props) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
     <Container>

@@ -1,8 +1,9 @@
 import React, { useState, useContext } from "react";
 import { FlatList, RefreshControl } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
-import { keyExtractorId } from "~/constants/flatLists";
+import { useTheme } from "styled-components";
 
+import { keyExtractorId } from "~/constants/flatLists";
 import useProviders from "~/hooks/useProviders";
 import useUserAvatarURI from "~/hooks/useUserAvatarURI";
 import useNavigate from "~/hooks/useNavigate";
@@ -11,7 +12,6 @@ import { daysInWeekBusinessIntervalText, hoursInDayBusinessIntervalText } from "
 import { User } from "~/shared/types/apiSchema";
 import { CREATE_APPOINTMENT_ROUTE } from "~/router/routes";
 
-import { ThemeContext } from "styled-components";
 import {
   Container,
   ProviderInfo,
@@ -28,7 +28,7 @@ import { ProviderItemProps } from "./types";
 const ProviderItem: React.FC<ProviderItemProps> = ({ item }) => {
   const userAvatarURI = useUserAvatarURI(item);
   const navigate = useNavigate();
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   const { id, name } = item;
 
@@ -81,7 +81,7 @@ const ProviderItem: React.FC<ProviderItemProps> = ({ item }) => {
 const DashboardProvidersList: React.FC = () => {
   const { providers, loading, fetchProviders } = useProviders();
   const [refreshing, setRefreshing] = useState(false);
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   const handleRefresh = () => {
     setRefreshing(true);

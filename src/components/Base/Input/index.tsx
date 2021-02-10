@@ -4,12 +4,11 @@ import React, {
   useMemo,
   useState,
   useEffect,
-  useContext,
   forwardRef,
   useImperativeHandle,
 } from "react";
 import { useField } from "@unform/core";
-import { ThemeContext } from "styled-components";
+import { useTheme } from "styled-components";
 
 import {
   ERROR,
@@ -45,7 +44,7 @@ const Input: React.RefForwardingComponent<InputForwardRef, InputProps> = (
   const {
     fieldName, registerField, defaultValue, error,
   } = useField(name);
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   useEffect(() => {
     registerField<string>({

@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { ThemeContext } from "styled-components";
+import React from "react";
+import { useTheme } from "styled-components";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import Dashboard from "~/screens/Dashboard";
@@ -16,7 +16,7 @@ import {
 const Stack = createStackNavigator();
 
 const AppRouter: React.FC = () => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
     <Stack.Navigator
