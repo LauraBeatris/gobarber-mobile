@@ -63,11 +63,11 @@ const SignUp: React.FC = () => {
     }
   };
 
-  const handleEmailFocus = () => {
+  const handleEmailInputFocus = () => {
     emailInputRef.current?.focus();
   };
 
-  const handlePasswordFocus = () => {
+  const handlePasswordInputFocus = () => {
     passwordInputRef.current?.focus();
   };
 
@@ -86,7 +86,7 @@ const SignUp: React.FC = () => {
           autoCapitalize="words"
           autoCompleteType="name"
           autoCorrect={false}
-          onSubmitEditing={handleEmailFocus}
+          onSubmitEditing={handleEmailInputFocus}
         />
         <Input
           ref={emailInputRef}
@@ -97,7 +97,7 @@ const SignUp: React.FC = () => {
           autoCompleteType="email"
           returnKeyType="next"
           autoCapitalize="none"
-          onSubmitEditing={handlePasswordFocus}
+          onSubmitEditing={handlePasswordInputFocus}
           autoCorrect={false}
         />
         <Input

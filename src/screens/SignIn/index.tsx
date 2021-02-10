@@ -58,7 +58,7 @@ const SignIn: React.FC = () => {
     }
   };
 
-  const handlePasswordFocus = () => {
+  const handlePasswordInputFocus = () => {
     passwordInputRef.current?.focus();
   };
 
@@ -79,7 +79,7 @@ const SignIn: React.FC = () => {
           autoCompleteType="email"
           returnKeyType="next"
           autoCapitalize="none"
-          onSubmitEditing={handlePasswordFocus}
+          onSubmitEditing={handlePasswordInputFocus}
           autoCorrect={false}
         />
         <Input
