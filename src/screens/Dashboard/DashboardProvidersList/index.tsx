@@ -92,7 +92,7 @@ const DashboardProvidersList: React.FC = () => {
 
   return (
     <Container>
-      <Title>Cabeleireiros</Title>
+      <Title>Hairdressers</Title>
 
       {
         loading ? (

@@ -1,6 +1,6 @@
-export const daysInWeekBusinessIntervalText = "Segunda à sexta";
+export const daysInWeekBusinessIntervalText = "Monday to Friday";
 
-export const hoursInDayBusinessIntervalText = "8h às 18h";
+export const hoursInDayBusinessIntervalText = "8am to 6pm";
 
 export const APPOINTMENT_TYPE = {
   HAIR_CARE: "HAIR_CARE",

@@ -1,9 +1,7 @@
-/* eslint-disable import/no-duplicates */
 import React, { useEffect } from "react";
 import { useNavigation, useRoute, useNavigationState } from "@react-navigation/native";
 import { useTheme } from "styled-components";
 import { format } from "date-fns";
-import { ptBR } from "date-fns/locale";
 import Icon from "react-native-vector-icons/Feather";
 
 import { CREATE_APPOINTMENT_SUCCESS_ROUTE, DASHBOARD_ROUTE } from "~/router/routes";
@@ -24,13 +22,7 @@ const CreateAppointmentSuccess: React.FC = () => {
   const { reset } = useNavigation();
   const navigationState = useNavigationState(state => state);
 
-  const formattedDate = format(
-    date,
-    "EEEE', dia' dd 'de' MMMM 'de' yyyy 'às' HH:mm'h'",
-    {
-      locale: ptBR,
-    },
-  );
+  const formattedDate = format(date, "EEEE, MMMM 'at' HH:mmbbb");
 
   const navigateToDashboard = () => {
     reset({
@@ -62,13 +54,13 @@ const CreateAppointmentSuccess: React.FC = () => {
         <Icon name="check" size={70} color={theme.colors.green} />
 
         <CreateAppointmentSuccessTitle>
-          Agendamento concluído
+          Scheduling complete
         </CreateAppointmentSuccessTitle>
 
         <CreateAppointmentSuccessDescription>
           {formattedDate}
           {" "}
-          com
+          with
           {" "}
           {providerName}
         </CreateAppointmentSuccessDescription>
