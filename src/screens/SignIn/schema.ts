@@ -1,9 +1,13 @@
-import * as yup from "yup";
+import * as Yup from "yup";
 
-const signInSchema = yup.object().shape({
-  email: yup.string().email()
+const signInSchema = Yup.object().shape({
+  email: Yup
+    .string()
+    .email()
     .required(),
-  password: yup.string().required(),
+  password: Yup
+    .string()
+    .required(),
 });
 
 export default signInSchema;
