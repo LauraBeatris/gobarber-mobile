@@ -42,9 +42,16 @@ const Input: React.RefForwardingComponent<InputForwardRef, InputProps> = (
   const inputElementRef = useRef<InputElementRef>(null);
 
   const {
-    fieldName, registerField, defaultValue, error,
+    error,
+    fieldName,
+    registerField,
+    defaultValue,
   } = useField(name);
   const theme = useTheme();
+
+  useEffect(() => {
+    inputValueRef.current.value = defaultValue;
+  }, [defaultValue, inputValueRef]);
 
   useEffect(() => {
     registerField<string>({
