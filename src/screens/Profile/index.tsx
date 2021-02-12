@@ -1,6 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import {
-  Alert,
   Platform,
   TextInput,
   ScrollView,
@@ -15,21 +14,23 @@ import Button from "~/components/Base/Button";
 import TitleHeader from "~/components/Layout/Header/TitleHeader";
 import BackButton from "~/components/Base/Button/BackButton";
 import SignOutButton from "~/components/Base/Button/SignOutButton";
-import { useAuth } from "~/contexts/auth/AuthContext";
 import performSchemaValidation from "~/utils/performSchemaValidation";
-import api from "~/config/api";
 
 import noop from "~/utils/noop";
 import { DASHBOARD_ROUTE } from "~/router/routes";
-import { useNavigation } from "@react-navigation/native";
+import useUpdateProfile from "~/hooks/useUpdateProfile";
+import useNavigate from "~/hooks/useNavigate";
+import { useAuth } from "~/contexts/auth/AuthContext";
+
 import { Content, Container, ProfileFormContainer } from "./styles";
 import { UpdateProfileFormData } from "./types";
 import schema from "./schema";
 
 const Profile: React.FC = () => {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const { colors } = useTheme();
-  const { user, updateUser } = useAuth();
-  const { navigate } = useNavigation();
+  const { loading, updateProfile } = useUpdateProfile();
 
   const formRef = useRef<FormHandles>(null);
   const emailInputRef = useRef<TextInput>(null);
@@ -37,46 +38,17 @@ const Profile: React.FC = () => {
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
 
-  const [loading, setLoading] = useState(false);
-
   const handleSubmit = () => {
     formRef?.current?.submitForm();
   };
 
   const handleUpdateProfile = (data: UpdateProfileFormData) => {
-    const {
-      password_confirmation: _password_confirmation,
-      old_password,
-      ...rest
-    } = data;
-
-    const hasWrittenInvalidOldPassword = old_password !== user.password;
-
-    if (hasWrittenInvalidOldPassword) {
-      Alert.alert("Invalid Old Password");
-
-      return;
-    }
-
     performSchemaValidation({
       formRef,
       schema,
       data,
     })
-      .then(() => {
-        setLoading(true);
-
-        api.put("/profile", data)
-          .then(async () => {
-            await updateUser(rest);
-
-            Alert.alert("Profile successfully updated");
-
-            navigate(DASHBOARD_ROUTE);
-          })
-          .catch(() => Alert.alert("Error while updating profile. Please, try again later and verify your credentials."))
-          .finally(() => setLoading(false));
-      })
+      .then(() => updateProfile(data, navigate(DASHBOARD_ROUTE)))
       .catch(noop);
   };
 
