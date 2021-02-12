@@ -15,4 +15,5 @@ export interface AuthContextData {
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut: () => void;
   loading: boolean;
+  updateUser: (user: Partial<User>) => Promise<void>;
 }
