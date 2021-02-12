@@ -1,5 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import {
+  Alert,
   Platform,
   TextInput,
   ScrollView,
@@ -15,15 +16,20 @@ import TitleHeader from "~/components/Layout/Header/TitleHeader";
 import BackButton from "~/components/Base/Button/BackButton";
 import SignOutButton from "~/components/Base/Button/SignOutButton";
 import { useAuth } from "~/contexts/auth/AuthContext";
-
 import performSchemaValidation from "~/utils/performSchemaValidation";
+import api from "~/config/api";
+
+import noop from "~/utils/noop";
+import { DASHBOARD_ROUTE } from "~/router/routes";
+import { useNavigation } from "@react-navigation/native";
 import { Content, Container, ProfileFormContainer } from "./styles";
 import { UpdateProfileFormData } from "./types";
 import schema from "./schema";
 
 const Profile: React.FC = () => {
-  const { user } = useAuth();
   const { colors } = useTheme();
+  const { user, updateUser } = useAuth();
+  const { navigate } = useNavigation();
 
   const formRef = useRef<FormHandles>(null);
   const emailInputRef = useRef<TextInput>(null);
@@ -31,19 +37,47 @@ const Profile: React.FC = () => {
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
 
+  const [loading, setLoading] = useState(false);
+
   const handleSubmit = () => {
     formRef?.current?.submitForm();
   };
 
   const handleUpdateProfile = (data: UpdateProfileFormData) => {
+    const {
+      password_confirmation: _password_confirmation,
+      old_password,
+      ...rest
+    } = data;
+
+    const hasWrittenInvalidOldPassword = old_password !== user.password;
+
+    if (hasWrittenInvalidOldPassword) {
+      Alert.alert("Invalid Old Password");
+
+      return;
+    }
+
     performSchemaValidation({
       formRef,
       schema,
       data,
     })
       .then(() => {
-        // TODO - Update profile data by sending a POST request to /profile route
-      });
+        setLoading(true);
+
+        api.put("/profile", data)
+          .then(async () => {
+            await updateUser(rest);
+
+            Alert.alert("Profile successfully updated");
+
+            navigate(DASHBOARD_ROUTE);
+          })
+          .catch(() => Alert.alert("Error while updating profile. Please, try again later and verify your credentials."))
+          .finally(() => setLoading(false));
+      })
+      .catch(noop);
   };
 
   const handleEmailInputFocus = () => {
@@ -61,6 +95,9 @@ const Profile: React.FC = () => {
   const handlePasswordConfirmationInputFocus = () => {
     passwordConfirmationInputRef.current?.focus();
   };
+
+  const { name, email } = user;
+  const initialData = { name, email };
 
   return (
     <KeyboardAvoidingView
@@ -85,7 +122,7 @@ const Profile: React.FC = () => {
               <Form
                 ref={formRef}
                 onSubmit={handleUpdateProfile}
-                initialData={user}
+                initialData={initialData}
               >
                 <Input
                   name="name"
@@ -144,7 +181,12 @@ const Profile: React.FC = () => {
               </Form>
             </ProfileFormContainer>
 
-            <Button enabled onPress={handleSubmit}>Confirm changes</Button>
+            <Button
+              enabled={!loading}
+              onPress={handleSubmit}
+            >
+              Confirm changes
+            </Button>
           </Content>
         </ScrollView>
       </Container>
