@@ -1,6 +1,6 @@
 import React from "react";
 
-import { HeaderContainer } from "~/components/Layout/Header/styles";
+import HeaderContainer  from "~/components/Layout/Header/HeaderContainer";
 
 import { TitleHeaderProps } from "./types";
 import { HeaderTitleText } from "./styles";
@@ -11,7 +11,7 @@ const TitleHeader: React.FC<TitleHeaderProps> = ({
   secondTouchable,
   ...rest
 }) => (
-  <HeaderContainer {...rest}>
+  <HeaderContainer  {...rest}>
     {firstTouchable}
 
     <HeaderTitleText>
