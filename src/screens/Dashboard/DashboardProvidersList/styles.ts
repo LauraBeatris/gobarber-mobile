@@ -1,5 +1,5 @@
 import { RectButton } from "react-native-gesture-handler";
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 
 export const Container = styled.View`
   flex: 1;
@@ -28,11 +28,13 @@ export const ProviderInfo = styled.View`
 `;
 
 export const ProviderName = styled.Text`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 18px;
-  font-family: 'RobotoSlab-Medium';
-  margin-bottom: 6px;
-  max-width: 90%;
+  ${({ theme }) => css`
+    color: ${theme.colors.white};
+    font-size: 18px;
+    font-family: ${theme.fonts.medium};
+    margin-bottom: 6px;
+    max-width: 90%;
+ `}
 `;
 
 export const ProviderSchedule = styled.View`
@@ -42,18 +44,22 @@ export const ProviderSchedule = styled.View`
 `;
 
 export const ProviderScheduleText = styled.Text`
-  color: ${({ theme }) => theme.colors.grayLight};
-  font-size: 14px;
-  font-family: 'RobotoSlab-Regular';
-  margin-left: 10px;
+  ${({ theme }) => css`
+    color: ${theme.colors.grayLight};
+    font-size: 14px;
+    font-family: ${theme.fonts.regular};
+    margin-left: 10px;
+ `}
 `;
 
 export const NoProvidersAvailableText = styled.Text`
-  color: ${({ theme }) => theme.colors.grayLight};
-  font-size: 18px;
-  font-family: 'RobotoSlab-Regular';
-  text-align: center;
-  margin-top: 20px;
+  ${({ theme }) => css`
+    color: ${theme.colors.grayLight};
+    font-size: 18px;
+    font-family: ${theme.fonts.regular};
+    text-align: center;
+    margin-top: 20px;
+ `}
 `;
 
 export const ProvidersListActivityIndicator = styled.ActivityIndicator`

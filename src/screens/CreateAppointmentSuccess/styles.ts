@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 
 import Button from "~/components/Base/Button";
 import { Title, ScreenContainer } from "~/styles/components";
@@ -25,11 +25,13 @@ export const CreateAppointmentSuccessTitle = styled(Title)`
 `;
 
 export const CreateAppointmentSuccessDescription = styled.Text`
-  color: ${({ theme }) => theme.colors.grayLight};
-  font-size: 14px;
-  max-width: 265px;
-  font-family: 'RobotoSlab-Regular';
-  text-align: center;
+  ${({ theme }) => css`
+    color: ${theme.colors.grayLight};
+    font-size: 14px;
+    max-width: 265px;
+    font-family: ${theme.fonts.regular};
+    text-align: center;
+ `}
 `;
 
 export const CreateAppointmentSuccessButton = styled(Button)`

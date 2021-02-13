@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 
 export const ScreenContainer = styled.ScrollView`
   flex: 1;
@@ -6,8 +6,10 @@ export const ScreenContainer = styled.ScrollView`
 `;
 
 export const Title = styled.Text`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 25px;
-  font-family: 'RobotoSlab-Medium';
-  margin-bottom: 20px;
+  ${({ theme }) => css`
+    color: ${theme.colors.white};
+    font-size: 25px;
+    font-family: ${theme.fonts.medium};
+    margin-bottom: 20px;
+ `}
 `;

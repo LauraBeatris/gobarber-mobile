@@ -1,4 +1,4 @@
-import styled from "styled-components/native";
+import styled, { css } from "styled-components/native";
 import { RectButton } from "react-native-gesture-handler";
 
 import Avatar from "~/components/Base/Avatar";
@@ -25,14 +25,15 @@ export const BaseHorizontalFlatListItem = styled(RectButton)<HorizontalFlatListI
 `;
 
 export const HorizontalFlatListItemText = styled.Text<HorizontalFlatListItemProps>`
-  flex: 1;
-  font-size: 14px;
-  font-family: 'RobotoSlab-Medium';
-  color: ${({ theme, isSelected }) => (
+  ${({ theme, isSelected }) => css`
+    flex: 1;
+    font-size: 14px;
+    font-family: ${theme.fonts.medium};
+    color: ${(
     isSelected
       ? theme.colors.darkSecondary
       : theme.colors.white
-  )};
+  )};`}
 `;
 
 const PROVIDER_LIST_ITEM_AVATAR_LENGTH = 32;
@@ -53,10 +54,12 @@ export const AvailabilityContainer = styled.View`
 `;
 
 export const AvailabilitySubtitle = styled.Text`
-  color: ${({ theme }) => theme.colors.grayLight};
-  font-size: 16px;
-  padding: 0 0 12px 24px;
-  font-family: 'RobotoSlab-Medium';
+ ${({ theme }) => css`
+    color: ${theme.colors.grayLight};
+    font-size: 16px;
+    padding: 0 0 12px 24px;
+    font-family: ${theme.fonts.medium};
+ `}
 `;
 
 export const CreateAppointmentFooter = styled.View`
