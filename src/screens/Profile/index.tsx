@@ -18,9 +18,7 @@ import SignOutButton from "~/components/Base/Button/SignOutButton";
 import performSchemaValidation from "~/utils/performSchemaValidation";
 
 import noop from "~/utils/noop";
-import { DASHBOARD_ROUTE } from "~/router/routes";
 import useUpdateProfile from "~/hooks/useUpdateProfile";
-import useNavigate from "~/hooks/useNavigate";
 import { useAuth } from "~/contexts/auth/AuthContext";
 
 import { useUpdateUserAvatar } from "~/hooks/useUpdateUserAvatar";
