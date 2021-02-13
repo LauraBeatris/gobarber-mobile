@@ -1,3 +1,3 @@
-export interface ForgotPasswordFormData {
+export type ForgotPasswordFormData = {
   email: string;
 }

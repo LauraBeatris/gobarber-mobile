@@ -1,3 +1,3 @@
-export interface DatePickerProps {
+export type DatePickerProps = {
   onChange?: (value: Date) => void;
 }

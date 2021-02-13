@@ -5,7 +5,7 @@ import { Shape, ObjectSchema } from "yup";
 
 import getValidationErrors from "./getValidationErrors";
 
-export interface PerformSchemaValidationParameters {
+export type PerformSchemaValidationParameters = {
   formRef: React.RefObject<FormHandles>;
   schema: ObjectSchema<Shape<any, any>>;
   data: any;

@@ -1,6 +1,6 @@
 import { AppointmentType } from "~/constants/appointments";
 
-export interface AppointmentTypeListProps {
+export type AppointmentTypeListProps = {
   selectedAppointmentType: AppointmentType;
   handlePressAppointmentType: (appointmentType: AppointmentType) => () => void;
 }

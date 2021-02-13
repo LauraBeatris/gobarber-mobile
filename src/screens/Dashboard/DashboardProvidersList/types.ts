@@ -1,5 +1,5 @@
 import { User } from "~/shared/types/apiSchema";
 
-export interface ProviderItemProps {
+export type ProviderItemProps = {
   item: User;
 }

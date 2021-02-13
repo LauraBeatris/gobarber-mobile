@@ -1,5 +1,5 @@
 import { ViewProps } from "react-native";
 
-export interface HeaderContainerProps extends ViewProps {
+export type HeaderContainerProps = ViewProps & {
   backgroundColor?: string;
 }
