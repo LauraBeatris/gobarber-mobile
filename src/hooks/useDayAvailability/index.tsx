@@ -1,21 +1,12 @@
-import {
-  useMemo,
-  useState,
-  useEffect,
-  useCallback,
-} from "react";
+import { useEffect, useMemo } from "react";
 import { Alert } from "react-native";
-import {
-  format,
-  getDate,
-  getMonth,
-  getYear,
-} from "date-fns";
+import { useQuery } from "react-query";
+import { format } from "date-fns";
 
-import api from "~/config/api";
 import { DayAvailability } from "~/shared/types/apiSchema";
 
-import { UseDayAvailabilityParameters } from "./types";
+import { getDayAvailabilityQuery } from "~/api/queries";
+import { GetDayAvailabilityQueryData } from "~/api/types";
 
 const formatAvailability = (availability: DayAvailability) => ({
   ...availability,
@@ -26,71 +17,44 @@ const formatAvailability = (availability: DayAvailability) => ({
  * Fetches the day availability according to a given date and provider id
  */
 const useDayAvailability = ({
-  providerId,
+  provider_id,
   appointmentDate,
-}: UseDayAvailabilityParameters) => {
-  const [loading, setLoading] = useState(false);
-  const [dayAvailability, setDayAvailability] = useState<Array<DayAvailability>>([]);
-
-  const fetchAvailability = useCallback(() => {
-    setLoading(true);
-
-    api.get(`/providers/${providerId}/day-availability`, {
-      params: {
-        day: getDate(appointmentDate),
-        year: getYear(appointmentDate),
-        month: getMonth(appointmentDate) + 1,
-      },
-    })
-      .then(({ data }) => setDayAvailability(data))
-      .catch(() => Alert.alert("Error", "Error while fetching day availability, please, try again"))
-      .finally(() => setLoading(false));
-  },
-  [
-    providerId,
+}: GetDayAvailabilityQueryData) => {
+  const { data = [], refetch, ...rest } = useQuery<Array<DayAvailability>>("day-availability", () => getDayAvailabilityQuery({
+    provider_id,
     appointmentDate,
-  ]);
+  }), {
+    enabled: false,
+    onError: () => Alert.alert("Error", "Error while fetching day availability, please, try again"),
+  });
 
-  const updateDayAvailability = useCallback((availabilityHour: number, available: boolean) => {
-    setDayAvailability(prev => prev.map(availability => {
-      const shouldUpdate = availability.hour === availabilityHour;
-
-      if (!shouldUpdate) {
-        return availability;
-      }
-
-      return {
-        ...availability,
-        available,
-      };
-    }));
-  }, []);
-
-  useEffect(() => {
-    fetchAvailability();
-  }, [
-    providerId,
-    appointmentDate,
-    fetchAvailability,
-  ]);
-
-  const morningAvailability = dayAvailability
+  const morningAvailability = data
     .filter(({ hour }) => hour < 12)
     .map(formatAvailability);
-  const afternoonAvailability = dayAvailability
+  const afternoonAvailability = data
     .filter(({ hour }) => hour >= 12)
     .map(formatAvailability);
 
+  useEffect(() => {
+    if (!appointmentDate) {
+      return;
+    }
+
+    refetch();
+  }, [
+    refetch,
+    provider_id,
+    appointmentDate,
+  ]);
+
   const payload = useMemo(() => ({
-    loading,
     morningAvailability,
     afternoonAvailability,
-    updateDayAvailability,
+    ...rest,
   }), [
-    loading,
     morningAvailability,
-    updateDayAvailability,
     afternoonAvailability,
+    rest,
   ]);
 
   return payload;

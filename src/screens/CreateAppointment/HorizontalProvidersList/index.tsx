@@ -19,7 +19,7 @@ const HorizontalProvidersList: React.FC<HorizontalProvidersListProps> = ({
 
       return (
         <ProviderFlatListItem
-          onPress={handlePressProvider(item.id)}
+          onPress={handlePressProvider(item)}
           isSelected={isSelected}
         >
           <HorizontalFlatListItemAvatar />

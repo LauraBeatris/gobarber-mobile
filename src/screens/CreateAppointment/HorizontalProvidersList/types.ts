@@ -1,7 +1,7 @@
 import { User } from "~/shared/types/apiSchema";
 
 export type HorizontalProvidersListProps = {
-  providers: Array<User>;
+  providers?: Array<User>;
   selectedProviderId: User["id"];
-  handlePressProvider: (newProviderId: User["id"]) => () => void;
+  handlePressProvider: (newProvider: User) => () => void;
 }

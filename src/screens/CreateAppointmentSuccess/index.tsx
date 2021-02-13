@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigation, useRoute, useNavigationState } from "@react-navigation/native";
 import { useTheme } from "styled-components";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import Icon from "react-native-vector-icons/Feather";
 
 import { CREATE_APPOINTMENT_SUCCESS_ROUTE, DASHBOARD_ROUTE } from "~/router/routes";
@@ -22,7 +22,7 @@ const CreateAppointmentSuccess: React.FC = () => {
   const { reset } = useNavigation();
   const navigationState = useNavigationState(state => state);
 
-  const formattedDate = format(date, "EEEE, MMMM 'at' HH:mmbbb");
+  const formattedDate = format(parseISO(date), "EEEE, MMMM 'at' HH:mmbbb");
 
   const navigateToDashboard = () => {
     reset({

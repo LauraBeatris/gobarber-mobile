@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import { FlatList, RefreshControl } from "react-native";
+import React from "react";
+import { FlatList } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { useTheme } from "styled-components";
 
 import { keyExtractorId } from "~/constants/flatLists";
-import useProviders from "~/hooks/useProviders";
+import { daysInWeekBusinessIntervalText, hoursInDayBusinessIntervalText } from "~/constants/appointments";
 import useUserAvatarURI from "~/hooks/useUserAvatarURI";
 import useNavigate from "~/hooks/useNavigate";
 import { Title } from "~/styles/components";
-import { daysInWeekBusinessIntervalText, hoursInDayBusinessIntervalText } from "~/constants/appointments";
 import { User } from "~/shared/types/apiSchema";
 import { CREATE_APPOINTMENT_ROUTE } from "~/router/routes";
 
@@ -23,7 +22,7 @@ import {
   NoProvidersAvailableText,
   ProvidersListActivityIndicator,
 } from "./styles";
-import { ProviderItemProps } from "./types";
+import { ProviderItemProps, DashboardProvidersListProps } from "./types";
 
 const ProviderItem: React.FC<ProviderItemProps> = ({ item }) => {
   const userAvatarURI = useUserAvatarURI(item);
@@ -78,24 +77,18 @@ const ProviderItem: React.FC<ProviderItemProps> = ({ item }) => {
   );
 };
 
-const DashboardProvidersList: React.FC = () => {
-  const { providers, loading, fetchProviders } = useProviders();
-  const [refreshing, setRefreshing] = useState(false);
+const DashboardProvidersList: React.FC<DashboardProvidersListProps> = ({
+  providers,
+  isLoading,
+}) => {
   const theme = useTheme();
-
-  const handleRefresh = () => {
-    setRefreshing(true);
-
-    fetchProviders()
-      .finally(() => setRefreshing(false));
-  };
 
   return (
     <Container>
       <Title>Hairdressers</Title>
 
       {
-        loading ? (
+        isLoading ? (
           <ProvidersListActivityIndicator
             color={theme.colors.white}
             size="large"
@@ -103,13 +96,6 @@ const DashboardProvidersList: React.FC = () => {
         ) : (
           <FlatList<User>
             data={providers}
-            refreshControl={(
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={handleRefresh}
-                tintColor={theme.colors.white}
-              />
-            )}
             renderItem={({ item }) => <ProviderItem item={item} />}
             keyExtractor={keyExtractorId}
             ListEmptyComponent={(
@@ -118,6 +104,7 @@ const DashboardProvidersList: React.FC = () => {
               </NoProvidersAvailableText>
             )}
             showsVerticalScrollIndicator={false}
+            nestedScrollEnabled
           />
         )
       }

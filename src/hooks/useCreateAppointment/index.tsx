@@ -1,48 +1,21 @@
-import { useMemo, useState, useCallback } from "react";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useMutation } from "react-query";
 
-import api from "~/config/api";
 import { CREATE_APPOINTMENT_SUCCESS_ROUTE } from "~/router/routes";
 
-import { CreateAppointmentPayload } from "./types";
+import { createAppointmentMutation } from "~/api/mutations";
 
-export const useCreateAppointment = () => {
-  const [loading, setLoading] = useState(false);
+export const useCreateAppointment = (providerName: string) => {
   const { navigate } = useNavigation();
 
-  const createAppointment = useCallback((payload: CreateAppointmentPayload) => {
-    setLoading(true);
-
-    const {
+  const payload = useMutation(createAppointmentMutation, {
+    onError: () => Alert.alert("Error", "Error while creating appointment, please, try again"),
+    onSuccess: ({ date }) => navigate(CREATE_APPOINTMENT_SUCCESS_ROUTE, {
       date,
-      type,
-      provider: {
-        id: provider_id,
-        name: providerName,
-      },
-    } = payload;
-
-    api.post("/appointments", {
-      date,
-      type,
-      provider_id,
-    })
-      .then(() => navigate(CREATE_APPOINTMENT_SUCCESS_ROUTE, {
-        date,
-        providerName,
-      }))
-      .catch(() => Alert.alert("Error", "Error while creating appointment, please, try again"))
-      .finally(() => setLoading(false));
-  }, [navigate]);
-
-  const payload = useMemo(() => ({
-    loading,
-    createAppointment,
-  }), [
-    loading,
-    createAppointment,
-  ]);
+      providerName,
+    }),
+  });
 
   return payload;
 };

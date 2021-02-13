@@ -1,45 +1,29 @@
 import { Alert } from "react-native";
-import { useMemo, useState, useCallback } from "react";
+import { useMutation } from "react-query";
 
 import { useAuth } from "~/contexts/auth/AuthContext";
-import api from "~/config/api";
-import { UpdateProfileFormData } from "~/screens/Profile/types";
+import { updateProfileMutation } from "~/api/mutations";
+import { useNavigation } from "@react-navigation/native";
+import { DASHBOARD_ROUTE } from "~/router/routes";
 
 /**
  * Updates the user profile on the API and AsyncStorage
  */
 const useUpdateProfile = () => {
   const { updateUser } = useAuth();
-  const [loading, setLoading] = useState(false);
+  const { navigate } = useNavigation();
 
-  const updateProfile = useCallback((
-    data: UpdateProfileFormData,
-    onUpdateProfile: () => void,
-  ) => {
-    setLoading(true);
+  const payload = useMutation(updateProfileMutation, {
+    onSuccess: async (data) => {
+      const { name, email } = data;
 
-    api.put("/profile", data)
-      .then(async () => {
-        const { name, email } = data;
+      await updateUser({ name, email });
 
-        await updateUser({ name, email });
+      Alert.alert("Profile successfully updated");
 
-        Alert.alert("Profile successfully updated");
-
-        onUpdateProfile?.();
-      })
-      .catch(() => Alert.alert("Error while updating profile. Please, try again later and verify your credentials."))
-      .finally(() => setLoading(false));
-  }, [
-    updateUser]);
-
-  const payload = useMemo(() => ({
-    loading,
-    updateProfile,
-  }), [
-    loading,
-    updateProfile,
-  ]);
+      navigate(DASHBOARD_ROUTE);
+    },
+  });
 
   return payload;
 };

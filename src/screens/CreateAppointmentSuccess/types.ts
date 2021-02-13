@@ -4,7 +4,7 @@ import { User } from "~/shared/types/apiSchema";
 
 export type CreateAppointmentSuccessScreenParamsList = {
   CreateAppointment: {
-    date: Date;
+    date: string;
     providerName: User["name"];
   };
 };
