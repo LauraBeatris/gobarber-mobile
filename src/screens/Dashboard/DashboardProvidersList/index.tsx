@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { FlatList, RefreshControl } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
 import { useTheme } from "styled-components";

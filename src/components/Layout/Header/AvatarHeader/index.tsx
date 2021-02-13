@@ -1,10 +1,9 @@
 import React from "react";
-import { SafeAreaView } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import useNavigate from "~/hooks/useNavigate";
 import { PROFILE_ROUTE } from "~/router/routes";
-import  HeaderContainer from "~/components/Layout/Header/HeaderContainer";
+import HeaderContainer from "~/components/Layout/Header/HeaderContainer";
 
 import { HeaderUserAvatar } from "./styles";
 import { AvatarHeaderProps } from "./types";
