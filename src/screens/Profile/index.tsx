@@ -8,6 +8,7 @@ import {
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/mobile";
 import { useTheme } from "styled-components";
+import Icon from "react-native-vector-icons/Feather";
 
 import Input from "~/components/Base/Input";
 import Button from "~/components/Base/Button";
@@ -22,7 +23,16 @@ import useUpdateProfile from "~/hooks/useUpdateProfile";
 import useNavigate from "~/hooks/useNavigate";
 import { useAuth } from "~/contexts/auth/AuthContext";
 
-import { Content, Container, ProfileFormContainer } from "./styles";
+import { useUpdateUserAvatar } from "~/hooks/useUpdateUserAvatar";
+import Loading from "~/components/Base/Loading";
+import {
+  Content,
+  Container,
+  ProfileAvatar,
+  ProfileAvatarButton,
+  ProfileFormContainer,
+  ProfileAvatarContainer,
+} from "./styles";
 import { UpdateProfileFormData } from "./types";
 import schema from "./schema";
 
@@ -30,7 +40,15 @@ const Profile: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { colors } = useTheme();
-  const { loading, updateProfile } = useUpdateProfile();
+
+  const {
+    loading: loadingUpdateProfile,
+    updateProfile,
+  } = useUpdateProfile();
+  const {
+    loading: loadingUpdateUserAvatar,
+    updateUserAvatar,
+  } = useUpdateUserAvatar();
 
   const formRef = useRef<FormHandles>(null);
   const emailInputRef = useRef<TextInput>(null);
@@ -85,11 +103,22 @@ const Profile: React.FC = () => {
           backgroundColor={colors.dark}
         />
 
-        <ScrollView
-          contentContainerStyle={{ flex: 1 }}
-          keyboardShouldPersistTaps="handled"
-        >
+        <ScrollView keyboardShouldPersistTaps="handled">
           <Content>
+            <ProfileAvatarContainer>
+              <ProfileAvatar />
+
+              <ProfileAvatarButton onPress={updateUserAvatar}>
+                {
+                  loadingUpdateUserAvatar ? (
+                    <Loading size={8} color={colors.darkSecondary} />
+                  ) : (
+                    <Icon name="camera" size={20} />
+                  )
+                }
+              </ProfileAvatarButton>
+            </ProfileAvatarContainer>
+
             <ProfileFormContainer>
               <Form
                 ref={formRef}
@@ -154,7 +183,8 @@ const Profile: React.FC = () => {
             </ProfileFormContainer>
 
             <Button
-              enabled={!loading}
+              enabled={!loadingUpdateProfile}
+              loading={loadingUpdateProfile}
               onPress={handleSubmit}
             >
               Confirm changes
