@@ -11,6 +11,7 @@ import {
   USER_STORAGE_KEY,
 } from "~/constants/asyncStorage";
 import api, { assignDefaultAuthToken } from "~/config/api";
+import { User } from "~/shared/types/apiSchema";
 import { AuthProvider } from "./AuthContext";
 import { SignInCredentials, AuthState } from "./types";
 
@@ -54,7 +55,7 @@ const AuthContainer: React.FC = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const updateUser = useCallback((newUserData) => {
+  const updateUser = useCallback(async (newUserData: Partial<User>) => {
     const updatedUserData = {
       ...data.user,
       ...newUserData,
@@ -68,7 +69,7 @@ const AuthContainer: React.FC = ({ children }) => {
       },
     }));
 
-    AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(updatedUserData));
+    await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(updatedUserData));
   }, [data.user]);
 
   useEffect(() => {
