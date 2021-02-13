@@ -1,15 +1,18 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import theme from "~/styles/theme";
+import { useTheme } from "styled-components";
 
 import { HeaderContainerView } from "./styles";
 import { HeaderContainerProps } from "./types";
 
 const HeaderContainer: React.FC<HeaderContainerProps> = ({
   children,
-  backgroundColor = theme.colors.darkSecondary,
+  backgroundColor,
 }) => {
-  const viewStyle = { backgroundColor };
+  const { colors } = useTheme();
+  const viewStyle = {
+    backgroundColor: backgroundColor ?? colors.darkSecondary,
+  };
 
   return (
     <SafeAreaView style={viewStyle}>
