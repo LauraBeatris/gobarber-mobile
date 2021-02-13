@@ -9,24 +9,13 @@ import { UpdateProfileFormData } from "~/screens/Profile/types";
  * Updates the user profile on the API and AsyncStorage
  */
 const useUpdateProfile = () => {
-  const { user, updateUser } = useAuth();
+  const { updateUser } = useAuth();
   const [loading, setLoading] = useState(false);
 
   const updateProfile = useCallback((
     data: UpdateProfileFormData,
     onUpdateProfile: () => void,
   ) => {
-    const hasWrittenInvalidOldPassword = (
-      data.old_password
-      && data.old_password !== user.password
-    );
-
-    if (hasWrittenInvalidOldPassword) {
-      Alert.alert("Invalid Old Password");
-
-      return;
-    }
-
     setLoading(true);
 
     api.put("/profile", data)
@@ -42,9 +31,7 @@ const useUpdateProfile = () => {
       .catch(() => Alert.alert("Error while updating profile. Please, try again later and verify your credentials."))
       .finally(() => setLoading(false));
   }, [
-    updateUser,
-    user.password,
-  ]);
+    updateUser]);
 
   const payload = useMemo(() => ({
     loading,
