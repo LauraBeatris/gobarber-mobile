@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { TextInput, Alert } from "react-native";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/mobile";
