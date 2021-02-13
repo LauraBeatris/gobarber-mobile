@@ -1,4 +1,4 @@
-export interface UpdateProfileFormData {
+export type UpdateProfileFormData = {
   name: string;
   email: string;
   old_password?: string;

@@ -1,10 +1,10 @@
 import { DayAvailability } from "~/shared/types/apiSchema";
 
-export interface UseDayAvailabilityParameters {
+export type UseDayAvailabilityParameters = {
   providerId: number;
   appointmentDate: Date;
 }
 
-export interface FormattedDayAvailability extends DayAvailability {
+export type FormattedDayAvailability = DayAvailability & {
   formattedHour: string;
 }

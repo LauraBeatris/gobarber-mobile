@@ -1,17 +1,21 @@
 import { TextInput, TextInputProps } from "react-native";
 
-export interface InputProps extends TextInputProps {
+export type InputProps = TextInputProps & {
   name: string;
   icon: string;
   containerStyle?: TextInputProps["style"];
 }
 
-export interface InputValueRef {
+export type InputValueRef = {
   value: string;
 }
 
-export interface InputElementRef extends TextInput, InputValueRef {}
+export type InputElementRef = TextInput & InputValueRef
 
-export interface InputForwardRef {
+export type InputForwardRef = {
   focus(): void;
+}
+
+export type ContainerProps = Pick<InputProps, "containerStyle"> & {
+  inputStateColor: string;
 }

@@ -1,16 +1,16 @@
 import { User } from "~/shared/types/apiSchema";
 
-export interface SignInCredentials {
+export type SignInCredentials = {
   email: string;
   password: string;
 }
 
-export interface AuthState {
+export type AuthState = {
   user: User;
   token: string;
 }
 
-export interface AuthContextData {
+export type AuthContextData = {
   user: User;
   signIn: (credentials: SignInCredentials) => Promise<void>;
   signOut: () => void;

@@ -1,11 +1,7 @@
 import styled, { css } from "styled-components/native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
-import { InputProps } from "./types";
-
-interface ContainerProps extends Pick<InputProps, "containerStyle"> {
-  inputStateColor: string;
-}
+import { ContainerProps } from "./types";
 
 export const Container = styled.View<ContainerProps>`
   width: 100%;

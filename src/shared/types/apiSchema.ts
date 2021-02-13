@@ -1,11 +1,11 @@
-export interface User {
+export type User = {
   id: number;
   name: string;
   email: string;
   avatar_url?: string;
 }
 
-export interface DayAvailability {
+export type DayAvailability = {
   hour: number;
   available: boolean;
 }

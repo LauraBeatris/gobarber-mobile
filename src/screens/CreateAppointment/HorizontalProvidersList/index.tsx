@@ -22,7 +22,7 @@ const HorizontalProvidersList: React.FC<HorizontalProvidersListProps> = ({
           onPress={handlePressProvider(item.id)}
           isSelected={isSelected}
         >
-          <HorizontalFlatListItemAvatar user={item} />
+          <HorizontalFlatListItemAvatar />
           <HorizontalFlatListItemText
             isSelected={isSelected}
             numberOfLines={1}
