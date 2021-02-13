@@ -54,11 +54,21 @@ const AuthContainer: React.FC = ({ children }) => {
     setLoading(false);
   }, []);
 
-  const updateUser = useCallback(async (newUserData) => {
-    await AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify({
+  const updateUser = useCallback((newUserData) => {
+    const updatedUserData = {
       ...data.user,
       ...newUserData,
+    };
+
+    setData(prev => ({
+      ...prev,
+      user: {
+        ...prev.user,
+        ...newUserData,
+      },
     }));
+
+    AsyncStorage.setItem(USER_STORAGE_KEY, JSON.stringify(updatedUserData));
   }, [data.user]);
 
   useEffect(() => {
