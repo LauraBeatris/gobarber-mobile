@@ -29,10 +29,10 @@ import DayAvailabilityList from "./DayAvailabilityList";
 import AppointmentTypeList from "./AppointmentTypeList";
 
 const CreateAppointment: React.FC = () => {
-  const { loading: loadingProviders, providers } = useProviders();
+  const { isLoading: loadingProviders, data: providers } = useProviders();
   const { provider } = useRoute<CreateAppointmentScreenRouteProp>().params;
 
-  const [selectedProviderId, setSelectedProviderId] = useState(provider.id);
+  const [selectedProvider, setSelectedProvider] = useState(provider);
   const [selectedAppointmentType, setSelectedAppointmentType] = useState(
     APPOINTMENT_TYPES_LIST[0].value,
   );
@@ -40,19 +40,18 @@ const CreateAppointment: React.FC = () => {
   const [selectedAvailabilityHour, setSelectedAvailabilityHour] = useState<number | null>(null);
 
   const {
-    loading: loadingDayAvailability,
+    isLoading: loadingDayAvailability,
     morningAvailability,
-    updateDayAvailability,
     afternoonAvailability,
   } = useDayAvailability({
-    providerId: selectedProviderId,
+    provider_id: selectedProvider.id,
     appointmentDate: selectedAppointmentDate,
   });
 
-  const { loading, createAppointment } = useCreateAppointment();
+  const { isLoading, mutate: createAppointment } = useCreateAppointment(selectedProvider.name);
 
-  const handlePressProvider = (newProviderId: User["id"]) => () => {
-    setSelectedProviderId(newProviderId);
+  const handlePressProvider = (newProvider: User) => () => {
+    setSelectedProvider(newProvider);
   };
 
   const handlePressAvailabilityHour = (hour: number) => () => {
@@ -72,15 +71,10 @@ const CreateAppointment: React.FC = () => {
       return;
     }
 
-    updateDayAvailability(selectedAvailabilityHour, false);
-
     createAppointment({
       date: setHours(selectedAppointmentDate, selectedAvailabilityHour),
       type: selectedAppointmentType,
-      provider: {
-        ...provider,
-        id: selectedProviderId,
-      },
+      provider_id: selectedProvider.id,
     });
   };
 
@@ -109,7 +103,7 @@ const CreateAppointment: React.FC = () => {
             ) : (
               <HorizontalProvidersList
                 providers={providers}
-                selectedProviderId={selectedProviderId}
+                selectedProviderId={selectedProvider.id}
                 handlePressProvider={handlePressProvider}
               />
             )
@@ -167,7 +161,7 @@ const CreateAppointment: React.FC = () => {
 
         <CreateAppointmentFooter>
           <Button
-            loading={loading}
+            loading={isLoading}
             enabled={shouldEnableButton}
             onPress={handleCreateAppointment}
           >

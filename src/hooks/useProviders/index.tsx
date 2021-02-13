@@ -1,30 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
 import { Alert } from "react-native";
+import { useQuery } from "react-query";
 
-import api from "~/config/api";
+import { getProvidersQuery } from "~/api/queries";
 import { User } from "~/shared/types/apiSchema";
 
 /**
  * Fetch service providers
  */
 const useProviders = () => {
-  const [providers, setProviders] = useState<Array<User>>([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchProviders = () => api.get("/providers")
-    .then(({ data }) => setProviders(data))
-    .catch(() => Alert.alert("Error", "Error while fetching providers, please, try again"));
-
-  useEffect(() => {
-    fetchProviders()
-      .finally(() => setLoading(false));
-  }, []);
-
-  const payload = useMemo(() => ({
-    providers,
-    loading,
-    fetchProviders,
-  }), [providers, loading]);
+  const payload = useQuery<Array<User>>("providers", getProvidersQuery, {
+    onError: () => Alert.alert("Error", "Error while fetching providers, please, try again"),
+  });
 
   return payload;
 };

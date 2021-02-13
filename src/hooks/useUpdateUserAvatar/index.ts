@@ -1,14 +1,19 @@
-import { useMemo, useState, useCallback } from "react";
+import { useMemo, useCallback } from "react";
 import { Alert } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
+import { useMutation } from "react-query";
 
-import api from "~/config/api";
 import { useAuth } from "~/contexts/auth/AuthContext";
+import { updateUserAvatarMutation } from "~/api/mutations";
 
 export const useUpdateUserAvatar = () => {
-  const [loading, setLoading] = useState(false);
-
   const { updateUser } = useAuth();
+
+  const { mutate, ...rest } = useMutation(updateUserAvatarMutation, {
+    onSuccess: async ({ avatar_url }) => {
+      await updateUser({ avatar_url });
+    },
+  });
 
   const updateUserAvatar = useCallback(() => {
     launchImageLibrary({
@@ -30,33 +35,19 @@ export const useUpdateUserAvatar = () => {
         return;
       }
 
-      const formData = new FormData();
-
-      formData.append("avatar", {
+      mutate({
         uri,
         name,
         type,
       });
-
-      try {
-        setLoading(true);
-
-        const { data: { avatar_url } } = await api.patch("/users/avatar", formData);
-
-        updateUser({ avatar_url });
-      } catch (error) {
-        Alert.alert("Error while updating avatar");
-      } finally {
-        setLoading(false);
-      }
     });
-  }, [updateUser]);
+  }, [mutate]);
 
   const payload = useMemo(() => ({
-    loading,
     updateUserAvatar,
+    ...rest,
   }), [
-    loading,
+    rest,
     updateUserAvatar,
   ]);
 

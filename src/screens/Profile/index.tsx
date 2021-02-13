@@ -25,6 +25,7 @@ import { useAuth } from "~/contexts/auth/AuthContext";
 
 import { useUpdateUserAvatar } from "~/hooks/useUpdateUserAvatar";
 import Loading from "~/components/Base/Loading";
+import { UpdateProfileMutationData } from "~/api/types";
 import {
   Content,
   Container,
@@ -33,20 +34,18 @@ import {
   ProfileFormContainer,
   ProfileAvatarContainer,
 } from "./styles";
-import { UpdateProfileFormData } from "./types";
 import schema from "./schema";
 
 const Profile: React.FC = () => {
-  const navigate = useNavigate();
   const { user } = useAuth();
   const { colors } = useTheme();
 
   const {
-    loading: loadingUpdateProfile,
-    updateProfile,
+    isLoading: loadingUpdateProfile,
+    mutate: updateProfile,
   } = useUpdateProfile();
   const {
-    loading: loadingUpdateUserAvatar,
+    isLoading: loadingUpdateUserAvatar,
     updateUserAvatar,
   } = useUpdateUserAvatar();
 
@@ -60,13 +59,13 @@ const Profile: React.FC = () => {
     formRef?.current?.submitForm();
   };
 
-  const handleUpdateProfile = (data: UpdateProfileFormData) => {
+  const handleUpdateProfile = (data: UpdateProfileMutationData) => {
     performSchemaValidation({
       formRef,
       schema,
       data,
     })
-      .then(() => updateProfile(data, navigate(DASHBOARD_ROUTE)))
+      .then(() => updateProfile(data))
       .catch(noop);
   };
 
