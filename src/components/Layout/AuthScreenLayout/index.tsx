@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   View,
   Image,
@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import Icon from "react-native-vector-icons/Feather";
-import { ThemeContext } from "styled-components";
+import { useTheme } from "styled-components";
 
 import { Title } from "~/styles/components";
 import logo from "~/assets/logo.png";
@@ -31,7 +31,7 @@ const AuthScreenLayout: React.FC<AuthScreenProps> = ({
   formBottomButtonText,
   formBottomButtonNavigate,
 }) => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
     <Container>

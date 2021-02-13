@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { ThemeContext } from "styled-components";
+import React from "react";
+import { useTheme } from "styled-components";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import SignIn from "~/screens/SignIn";
@@ -10,7 +10,7 @@ import { SIGN_IN_ROUTE, SIGN_UP_ROUTE, FORGOT_PASSWORD_ROUTE } from "./routes";
 const Stack = createStackNavigator();
 
 const AuthRouter: React.FC = () => {
-  const theme = useContext(ThemeContext);
+  const theme = useTheme();
 
   return (
     <Stack.Navigator

@@ -6,10 +6,12 @@ import DashboardHeader from "./DashboardHeader";
 import DashboardProvidersList from "./DashboardProvidersList";
 
 const Dashboard: React.FC = () => (
-  <ScreenContainer>
+  <>
     <DashboardHeader />
-    <DashboardProvidersList />
-  </ScreenContainer>
+    <ScreenContainer>
+      <DashboardProvidersList />
+    </ScreenContainer>
+  </>
 );
 
 export default Dashboard;

@@ -1,24 +1,21 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { TextInput, Alert } from "react-native";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/mobile";
-import { ValidationError } from "yup";
 
 import Button from "~/components/Base/Button";
 import Input from "~/components/Base/Input";
-import getValidationErrors from "~/utils/getValidationErrors";
 import { FORGOT_PASSWORD_ROUTE, SIGN_UP_ROUTE } from "~/router/routes";
 import { useAuth } from "~/contexts/auth/AuthContext";
 import AuthScreen from "~/components/Layout/AuthScreenLayout";
 
 import useNavigate from "~/hooks/useNavigate";
+import performSchemaValidation from "~/utils/performSchemaValidation";
 import schema from "./schema";
 import { SignInFormData } from "./types";
 
 const SignIn: React.FC = () => {
   const { signIn } = useAuth();
-
-  const [loading, setLoading] = useState(false);
 
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -30,35 +27,21 @@ const SignIn: React.FC = () => {
   };
 
   const handleSignIn = async (data: SignInFormData) => {
-    try {
-      setLoading(true);
-
-      formRef.current?.setErrors({});
-
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-
-      await signIn(data);
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        const errors = getValidationErrors(error);
-
-        formRef.current?.setErrors(errors);
-
-        return;
-      }
-
-      Alert.alert(
-        "Authentication Error",
-        "It happened an error while trying to authenticate, please verify your credencials",
-      );
-    } finally {
-      setLoading(false);
-    }
+    performSchemaValidation({
+      formRef,
+      schema,
+      data,
+    })
+      .then(() => (
+        signIn(data)
+          .catch(() => Alert.alert(
+            "Authentication Error",
+            "It happened an error while trying to authenticate, please verify your credencials",
+          ))
+      ));
   };
 
-  const handlePasswordFocus = () => {
+  const handlePasswordInputFocus = () => {
     passwordInputRef.current?.focus();
   };
 
@@ -79,7 +62,7 @@ const SignIn: React.FC = () => {
           autoCompleteType="email"
           returnKeyType="next"
           autoCapitalize="none"
-          onSubmitEditing={handlePasswordFocus}
+          onSubmitEditing={handlePasswordInputFocus}
           autoCorrect={false}
         />
         <Input
@@ -94,11 +77,7 @@ const SignIn: React.FC = () => {
         />
       </Form>
 
-      <Button
-        enabled={!loading}
-        loading={loading}
-        onPress={handleSubmit}
-      >
+      <Button onPress={handleSubmit}>
         Login
       </Button>
     </AuthScreen>

@@ -1,7 +1,9 @@
 import styled, { css } from "styled-components/native";
 import FeatherIcon from "react-native-vector-icons/Feather";
 
-interface ContainerProps {
+import { InputProps } from "./types";
+
+interface ContainerProps extends Pick<InputProps, "containerStyle"> {
   inputStateColor: string;
 }
 
@@ -21,7 +23,6 @@ export const Container = styled.View<ContainerProps>`
       border: 2px solid ${inputStateColor};
     `};
 `;
-
 export const StyledTextInput = styled.TextInput`
   flex: 1;
   color: #fff;

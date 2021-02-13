@@ -5,12 +5,6 @@ import Avatar from "~/components/Base/Avatar";
 
 import { HorizontalFlatListItemProps } from "./types";
 
-export const CreateAppointmentHeaderText = styled.Text`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 20px;
-  font-family: 'RobotoSlab-Medium';
-`;
-
 export const ProviderListContainer = styled.View`
   padding: 32px 0px 16px;
 `;

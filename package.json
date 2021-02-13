@@ -30,6 +30,7 @@
     "react-native": "^0.63.4",
     "react-native-dotenv": "^0.2.0",
     "react-native-gesture-handler": "^1.6.1",
+    "react-native-image-picker": "^3.2.1",
     "react-native-iphone-x-helper": "^1.2.1",
     "react-native-reanimated": "^1.9.0",
     "react-native-safe-area-context": "^2.0.1",

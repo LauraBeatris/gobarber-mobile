@@ -1,21 +1,20 @@
 import React, { useState } from "react";
-import { useRoute, useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { useRoute } from "@react-navigation/native";
 import { setHours } from "date-fns";
-import Icon from "react-native-vector-icons/Feather";
 
-import Header from "~/components/Layout/AppHeader";
+import AvatarHeader from "~/components/Layout/Header/AvatarHeader";
 import Loading from "~/components/Base/Loading";
 import DatePicker from "~/components/Base/DatePicker";
 import Button from "~/components/Base/Button";
 import { ScreenContainer, Title } from "~/styles/components";
-import theme from "~/styles/theme";
+import BackButton from "~/components/Base/Button/BackButton";
+import { HeaderTitleText } from "~/components/Layout/Header/TitleHeader/styles";
 import useProviders from "~/hooks/useProviders";
 import useDayAvailability from "~/hooks/useDayAvailability";
+import { useCreateAppointment } from "~/hooks/useCreateAppointment";
 import { APPOINTMENT_TYPES_LIST, AppointmentType } from "~/constants/appointments";
 import { User } from "~/shared/types/apiSchema";
 
-import { useCreateAppointment } from "~/hooks/useCreateAppointment";
 import {
   ScheduleContainer,
   AvailabilitySubtitle,
@@ -23,7 +22,6 @@ import {
   ProviderListContainer,
   CreateAppointmentFooter,
   CreateAppointmentContent,
-  CreateAppointmentHeaderText,
 } from "./styles";
 import { CreateAppointmentScreenRouteProp } from "./types";
 import HorizontalProvidersList from "./HorizontalProvidersList";
@@ -31,7 +29,6 @@ import DayAvailabilityList from "./DayAvailabilityList";
 import AppointmentTypeList from "./AppointmentTypeList";
 
 const CreateAppointment: React.FC = () => {
-  const { goBack } = useNavigation();
   const { loading: loadingProviders, providers } = useProviders();
   const { provider } = useRoute<CreateAppointmentScreenRouteProp>().params;
 
@@ -94,95 +91,91 @@ const CreateAppointment: React.FC = () => {
   );
 
   return (
-    <ScreenContainer>
-      <Header>
-        <TouchableOpacity onPress={goBack}>
-          <Icon
-            name="chevron-left"
-            size={24}
-            color={theme.colors.gray}
-          />
+    <>
 
-        </TouchableOpacity>
+      <AvatarHeader>
+        <BackButton />
 
-        <CreateAppointmentHeaderText>
+        <HeaderTitleText>
           Agendamento
-        </CreateAppointmentHeaderText>
-      </Header>
+        </HeaderTitleText>
+      </AvatarHeader>
+      <ScreenContainer>
 
-      <ProviderListContainer>
-        {
-          loadingProviders ? (
-            <Loading size="small" />
-          ) : (
-            <HorizontalProvidersList
-              providers={providers}
-              selectedProviderId={selectedProviderId}
-              handlePressProvider={handlePressProvider}
-            />
-          )
-        }
-      </ProviderListContainer>
+        <ProviderListContainer>
+          {
+            loadingProviders ? (
+              <Loading size="small" />
+            ) : (
+              <HorizontalProvidersList
+                providers={providers}
+                selectedProviderId={selectedProviderId}
+                handlePressProvider={handlePressProvider}
+              />
+            )
+          }
+        </ProviderListContainer>
 
-      <CreateAppointmentContent>
-        <Title>Escolha a data</Title>
+        <CreateAppointmentContent>
+          <Title>Select a date</Title>
 
-        <DatePicker onChange={handleAppointmentDateChange} />
-      </CreateAppointmentContent>
+          <DatePicker onChange={handleAppointmentDateChange} />
+        </CreateAppointmentContent>
 
-      <CreateAppointmentContent>
-        <Title>Escolha o horário</Title>
-      </CreateAppointmentContent>
+        <CreateAppointmentContent>
+          <Title>Select an hour</Title>
+        </CreateAppointmentContent>
 
-      <ScheduleContainer>
-        {
-          loadingDayAvailability ? (
-            <Loading size="small" />
-          ) : (
-            <>
-              <AvailabilityContainer>
-                <AvailabilitySubtitle>Manhã</AvailabilitySubtitle>
+        <ScheduleContainer>
+          {
+            loadingDayAvailability ? (
+              <Loading size="small" />
+            ) : (
+              <>
+                <AvailabilityContainer>
+                  <AvailabilitySubtitle>Morning</AvailabilitySubtitle>
 
-                <DayAvailabilityList
-                  availability={morningAvailability}
-                  selectedAvailabilityHour={selectedAvailabilityHour}
-                  handlePressAvailabilityHour={handlePressAvailabilityHour}
-                />
-              </AvailabilityContainer>
+                  <DayAvailabilityList
+                    availability={morningAvailability}
+                    selectedAvailabilityHour={selectedAvailabilityHour}
+                    handlePressAvailabilityHour={handlePressAvailabilityHour}
+                  />
+                </AvailabilityContainer>
 
-              <AvailabilityContainer>
-                <AvailabilitySubtitle>Tarde</AvailabilitySubtitle>
+                <AvailabilityContainer>
+                  <AvailabilitySubtitle>Evening</AvailabilitySubtitle>
 
-                <DayAvailabilityList
-                  availability={afternoonAvailability}
-                  selectedAvailabilityHour={selectedAvailabilityHour}
-                  handlePressAvailabilityHour={handlePressAvailabilityHour}
-                />
-              </AvailabilityContainer>
-            </>
-          )
-        }
-      </ScheduleContainer>
+                  <DayAvailabilityList
+                    availability={afternoonAvailability}
+                    selectedAvailabilityHour={selectedAvailabilityHour}
+                    handlePressAvailabilityHour={handlePressAvailabilityHour}
+                  />
+                </AvailabilityContainer>
+              </>
+            )
+          }
+        </ScheduleContainer>
 
-      <CreateAppointmentContent>
-        <Title>Escolha o tipo</Title>
-      </CreateAppointmentContent>
+        <CreateAppointmentContent>
+          <Title>Select a type</Title>
+        </CreateAppointmentContent>
 
-      <AppointmentTypeList
-        selectedAppointmentType={selectedAppointmentType}
-        handlePressAppointmentType={handlePressAppointmentType}
-      />
+        <AppointmentTypeList
+          selectedAppointmentType={selectedAppointmentType}
+          handlePressAppointmentType={handlePressAppointmentType}
+        />
 
-      <CreateAppointmentFooter>
-        <Button
-          loading={loading}
-          enabled={shouldEnableButton}
-          onPress={handleCreateAppointment}
-        >
-          Agendar
-        </Button>
-      </CreateAppointmentFooter>
-    </ScreenContainer>
+        <CreateAppointmentFooter>
+          <Button
+            loading={loading}
+            enabled={shouldEnableButton}
+            onPress={handleCreateAppointment}
+          >
+            Schedule
+          </Button>
+        </CreateAppointmentFooter>
+      </ScreenContainer>
+    </>
   );
 };
 

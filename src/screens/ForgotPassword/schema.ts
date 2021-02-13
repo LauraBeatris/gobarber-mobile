@@ -1,7 +1,9 @@
-import * as yup from "yup";
+import * as Yup from "yup";
 
-const forgotPasswordSchema = yup.object().shape({
-  email: yup.string().email()
+const forgotPasswordSchema = Yup.object().shape({
+  email: Yup
+    .string()
+    .email()
     .required(),
 });
 

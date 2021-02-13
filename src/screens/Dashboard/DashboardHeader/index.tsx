@@ -1,6 +1,6 @@
 import React from "react";
 
-import Header from "~/components/Layout/AppHeader";
+import AvatarHeader from "~/components/Layout/Header/AvatarHeader";
 import { useAuth } from "~/contexts/auth/AuthContext";
 import {
   HeaderInfo,
@@ -12,7 +12,7 @@ const DashboardHeader: React.FC = () => {
   const { user } = useAuth();
 
   return (
-    <Header>
+    <AvatarHeader>
       <HeaderInfo>
         <GreetingsText>
           Welcome,
@@ -24,7 +24,7 @@ const DashboardHeader: React.FC = () => {
           {user.name}
         </UserNameText>
       </HeaderInfo>
-    </Header>
+    </AvatarHeader>
   );
 };
 

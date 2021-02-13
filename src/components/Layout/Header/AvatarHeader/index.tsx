@@ -1,15 +1,17 @@
 import React from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { useAuth } from "~/contexts/auth/AuthContext";
 import useNavigate from "~/hooks/useNavigate";
 import { PROFILE_ROUTE } from "~/router/routes";
+import HeaderContainer from "~/components/Layout/Header/HeaderContainer";
 
-import { HeaderContainer, HeaderUserAvatar } from "./styles";
-import { AppHeaderProps } from "./types";
+import { HeaderUserAvatar } from "./styles";
+import { AvatarHeaderProps } from "./types";
 
-const AppHeader: React.FC<AppHeaderProps> = ({ children, ...rest }) => {
-  const { user } = useAuth();
+const AvatarHeader: React.FC<AvatarHeaderProps> = ({
+  children,
+  ...rest
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -17,10 +19,10 @@ const AppHeader: React.FC<AppHeaderProps> = ({ children, ...rest }) => {
       {children}
 
       <TouchableOpacity onPress={navigate(PROFILE_ROUTE)}>
-        <HeaderUserAvatar user={user} />
+        <HeaderUserAvatar />
       </TouchableOpacity>
     </HeaderContainer>
   );
 };
 
-export default AppHeader;
+export default AvatarHeader;

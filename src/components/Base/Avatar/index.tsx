@@ -2,14 +2,14 @@ import React from "react";
 import { Image } from "react-native";
 
 import useUserAvatarURI from "~/hooks/useUserAvatarURI";
+import { useAuth } from "~/contexts/auth/AuthContext";
 
-import { AvatarProps } from "./types";
-
-const Avatar: React.FC<AvatarProps> = ({ user, ...rest }) => {
-  const userAvatarURI = useUserAvatarURI(user);
+const Avatar: React.FC = (props) => {
+  const { user: { name, avatar_url } } = useAuth();
+  const userAvatarURI = useUserAvatarURI({ name, avatar_url });
 
   return (
-    <Image source={userAvatarURI} {...rest} />
+    <Image source={userAvatarURI} {...props} />
   );
 };
 

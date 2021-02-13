@@ -39,7 +39,7 @@ SSH URLs provide access to a Git repository via SSH, a secure protocol. If you h
 
 ```yarn install```
 
-Create your enviroment variables based on the examples of ```.env.example```
+Create your environment variables based on the examples of ```.env.example```
 
 ```cp .env.example .env```
 
@@ -65,13 +65,13 @@ Run the following command in order to start the application in a development env
 
 # :postbox: Faq
 
-**Question:** What are the tecnologies used in this project?
+**Question:** What are the technologies used in this project?
 
 **Answer:** The technologies used in this project are [React Native](https://reactnative.dev/) + [Styled Components](https://styled-components.com/) to handle scoped CSS.
 
 # :bug: Issues
 
-Feel free to **file a new issue** with a respective title and description on the the [GoBarber Mobile](https://github.com/LauraBeatris/gobarber-mobile/issues) repository. If you already found a solution to your problem, **i would love to review your pull request**! Have a look at our [contribution guidelines](https://github.com/LauraBeatris/gobarber-mobile/blob/master/CONTRIBUTING.md) to find out about the coding standards.
+Feel free to **file a new issue** with a respective title and description on the the [GoBarber Mobile](https://github.com/LauraBeatris/gobarber-mobile/issues) repository. If you already found a solution to your problem, **I would love to review your pull request**! Have a look at our [contribution guidelines](https://github.com/LauraBeatris/gobarber-mobile/blob/master/CONTRIBUTING.md) to find out about the coding standards.
 
 # :tada: Contributing
 
