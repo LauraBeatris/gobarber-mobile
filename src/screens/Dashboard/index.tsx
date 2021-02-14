@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { RefreshControl } from "react-native";
 import { useTheme } from "styled-components";
 
-import useProviders from "~/hooks/useProviders";
+import useProviders from "~/hooks/api/queries/useProviders";
 import { ScreenContainer } from "~/styles/components";
 
 import DashboardHeader from "./DashboardHeader";

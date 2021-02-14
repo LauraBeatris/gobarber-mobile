@@ -1,3 +1,5 @@
+export type Token = string;
+
 export type User = {
   id: number;
   name: string;
@@ -8,4 +10,9 @@ export type User = {
 export type DayAvailability = {
   hour: number;
   available: boolean;
+}
+
+export type Session = {
+  user: User;
+  token: Token;
 }

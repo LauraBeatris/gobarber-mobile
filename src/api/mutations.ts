@@ -1,9 +1,12 @@
 import api from "~/config/api";
 
 import {
+  CreateUserMutationData,
+  CreateSessionMutationData,
   UpdateProfileMutationData,
   UpdateUserAvatarMutationData,
   CreateAppointmentMutationData,
+  CreateRecoverPasswordRequestMutationData,
 } from "./types";
 
 export const createAppointmentMutation = async ({
@@ -40,6 +43,29 @@ export const updateUserAvatarMutation = async ({
   });
 
   const { data } = await api.patch("/users/avatar", formData);
+
+  return data;
+};
+
+export const createUserMutation = async (userData: CreateUserMutationData) => {
+  const { data } = await api.post("/users", {
+    ...userData,
+    is_provider: false,
+  });
+
+  return data;
+};
+
+export const createSessionMutation = async (sessionData: CreateSessionMutationData) => {
+  const { data } = await api.post("sessions", sessionData);
+
+  return data;
+};
+
+export const createRecoverPasswordRequest = async (
+  recoverPasswordRequestData: CreateRecoverPasswordRequestMutationData,
+) => {
+  const { data } = await api.post("/password/recover-request", recoverPasswordRequestData);
 
   return data;
 };

@@ -9,9 +9,9 @@ import Button from "~/components/Base/Button";
 import { ScreenContainer, Title } from "~/styles/components";
 import BackButton from "~/components/Base/Button/BackButton";
 import { HeaderTitleText } from "~/components/Layout/Header/TitleHeader/styles";
-import useProviders from "~/hooks/useProviders";
-import useDayAvailability from "~/hooks/useDayAvailability";
-import { useCreateAppointment } from "~/hooks/useCreateAppointment";
+import useProviders from "~/hooks/api/queries/useProviders";
+import useDayAvailability from "~/hooks/api/queries/useDayAvailability";
+import { useCreateAppointment } from "~/hooks/api/mutations/useCreateAppointment";
 import { APPOINTMENT_TYPES_LIST, AppointmentType } from "~/constants/appointments";
 import { User } from "~/shared/types/apiSchema";
 

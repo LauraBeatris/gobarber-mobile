@@ -10,31 +10,25 @@ import {
   TOKEN_STORAGE_KEY,
   USER_STORAGE_KEY,
 } from "~/constants/asyncStorage";
-import api, { assignDefaultAuthToken } from "~/config/api";
+import { assignDefaultAuthToken } from "~/config/api";
 import { User } from "~/shared/types/apiSchema";
+import useCreateSession from "~/hooks/api/mutations/useCreateSession";
+import { CreateSessionMutationData } from "~/api/types";
+
 import { AuthProvider } from "./AuthContext";
-import { SignInCredentials, AuthState } from "./types";
+import { AuthState } from "./types";
 
 const AuthContainer: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>({} as AuthState);
-  const [loading, setLoading] = useState(true);
+  const { mutate: createSession, isLoading } = useCreateSession({
+    onSuccess: ({ user, token }) => setData({ user, token }),
+  });
 
-  const signIn = useCallback(async (credentials: SignInCredentials): Promise<
+  const signIn = useCallback(async (credentials: CreateSessionMutationData): Promise<
     void
   > => {
-    const response = await api.post<AuthState>("sessions", credentials);
-
-    const { user, token } = response.data;
-
-    assignDefaultAuthToken(token);
-
-    AsyncStorage.multiSet([
-      [USER_STORAGE_KEY, JSON.stringify(user)],
-      [TOKEN_STORAGE_KEY, token],
-    ]);
-
-    setData({ user, token });
-  }, []);
+    createSession(credentials);
+  }, [createSession]);
 
   const signOut = useCallback(async (): Promise<void> => {
     AsyncStorage.multiRemove([TOKEN_STORAGE_KEY, USER_STORAGE_KEY]);
@@ -51,8 +45,6 @@ const AuthContainer: React.FC = ({ children }) => {
 
       setData({ token, user: JSON.parse(user) });
     }
-
-    setLoading(false);
   }, []);
 
   const updateUser = useCallback(async (newUserData: Partial<User>) => {
@@ -81,14 +73,14 @@ const AuthContainer: React.FC = ({ children }) => {
       user: data?.user,
       signIn,
       signOut,
-      loading,
+      isLoading,
       updateUser,
     }),
     [
       data,
       signIn,
       signOut,
-      loading,
+      isLoading,
       updateUser,
     ],
   );

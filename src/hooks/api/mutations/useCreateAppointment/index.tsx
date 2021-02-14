@@ -6,6 +6,9 @@ import { CREATE_APPOINTMENT_SUCCESS_ROUTE } from "~/router/routes";
 
 import { createAppointmentMutation } from "~/api/mutations";
 
+/**
+ * Handles mutation to create appointment
+ */
 export const useCreateAppointment = (providerName: string) => {
   const { navigate } = useNavigation();
 

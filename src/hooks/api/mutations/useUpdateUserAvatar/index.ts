@@ -6,6 +6,9 @@ import { useMutation } from "react-query";
 import { useAuth } from "~/contexts/auth/AuthContext";
 import { updateUserAvatarMutation } from "~/api/mutations";
 
+/**
+ *  Updates user avatar on the server and AsyncStorage
+ */
 export const useUpdateUserAvatar = () => {
   const { updateUser } = useAuth();
 

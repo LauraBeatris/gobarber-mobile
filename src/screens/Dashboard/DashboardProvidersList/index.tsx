@@ -5,7 +5,7 @@ import { useTheme } from "styled-components";
 
 import { keyExtractorId } from "~/constants/flatLists";
 import { daysInWeekBusinessIntervalText, hoursInDayBusinessIntervalText } from "~/constants/appointments";
-import useUserAvatarURI from "~/hooks/useUserAvatarURI";
+import useUserAvatarURI from "~/hooks/api/queries/useUserAvatarURI";
 import useNavigate from "~/hooks/useNavigate";
 import { Title } from "~/styles/components";
 import { User } from "~/shared/types/apiSchema";

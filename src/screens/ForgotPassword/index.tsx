@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import { Alert } from "react-native";
 import { FormHandles } from "@unform/core";
 import { Form } from "@unform/mobile";
 import { useNavigation } from "@react-navigation/native";
@@ -9,12 +8,14 @@ import Input from "~/components/Base/Input";
 
 import AuthScreenLayout from "~/components/Layout/AuthScreenLayout";
 import performSchemaValidation from "~/utils/performSchemaValidation";
-import api from "~/config/api";
+import { useCreateRecoverPasswordRequest } from "~/hooks/api/mutations/useCreateRecoverPasswordRequest";
+import { CreateRecoverPasswordRequestMutationData } from "~/api/types";
+
 import schema from "./schema";
-import { ForgotPasswordFormData } from "./types";
 
 const ForgotPassword: React.FC = () => {
   const navigation = useNavigation();
+  const { isLoading, mutate: createRecoverPasswordRequest } = useCreateRecoverPasswordRequest();
 
   const formRef = useRef<FormHandles>(null);
 
@@ -23,25 +24,14 @@ const ForgotPassword: React.FC = () => {
   };
 
   const handleForgotPasswordRequest = async (
-    data: ForgotPasswordFormData,
+    data: CreateRecoverPasswordRequestMutationData,
   ) => {
     performSchemaValidation({
       formRef,
       schema,
       data,
     })
-      .then(() => (
-        api.post("/password/recover-request", data)
-          .then(() => {
-            Alert.alert(
-              "Recover request email successfully sent",
-            );
-          })
-          .catch(() => Alert.alert(
-            "An error occured while sending the forgot password request",
-            "Please, verify your email and try it again",
-          ))
-      ));
+      .then(() => createRecoverPasswordRequest(data));
   };
 
   return (
@@ -63,7 +53,13 @@ const ForgotPassword: React.FC = () => {
           onSubmitEditing={handleSubmit}
         />
 
-        <Button onPress={handleSubmit}>Create</Button>
+        <Button
+          enabled={!isLoading}
+          loading={isLoading}
+          onPress={handleSubmit}
+        >
+          Create
+        </Button>
       </Form>
     </AuthScreenLayout>
   );

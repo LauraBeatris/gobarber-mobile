@@ -18,12 +18,12 @@ import SignOutButton from "~/components/Base/Button/SignOutButton";
 import performSchemaValidation from "~/utils/performSchemaValidation";
 
 import noop from "~/utils/noop";
-import useUpdateProfile from "~/hooks/useUpdateProfile";
+import useUpdateProfile from "~/hooks/api/mutations/useUpdateProfile";
 import { useAuth } from "~/contexts/auth/AuthContext";
-
-import { useUpdateUserAvatar } from "~/hooks/useUpdateUserAvatar";
+import { useUpdateUserAvatar } from "~/hooks/api/mutations/useUpdateUserAvatar";
 import Loading from "~/components/Base/Loading";
 import { UpdateProfileMutationData } from "~/api/types";
+
 import {
   Content,
   Container,
@@ -32,6 +32,7 @@ import {
   ProfileFormContainer,
   ProfileAvatarContainer,
 } from "./styles";
+
 import schema from "./schema";
 
 const Profile: React.FC = () => {
@@ -83,7 +84,7 @@ const Profile: React.FC = () => {
     passwordConfirmationInputRef.current?.focus();
   };
 
-  const { name, email } = user;
+  const { name, avatar_url, email } = user;
   const initialData = { name, email };
 
   return (
@@ -103,7 +104,10 @@ const Profile: React.FC = () => {
         <ScrollView keyboardShouldPersistTaps="handled">
           <Content>
             <ProfileAvatarContainer>
-              <ProfileAvatar />
+              <ProfileAvatar
+                name={name}
+                avatar_url={avatar_url}
+              />
 
               <ProfileAvatarButton onPress={updateUserAvatar}>
                 {

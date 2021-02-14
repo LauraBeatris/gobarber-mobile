@@ -1,6 +1,6 @@
 import { RectButtonProperties } from "react-native-gesture-handler";
 
-import { FormattedDayAvailability } from "~/hooks/useDayAvailability/types";
+import { FormattedDayAvailability } from "~/hooks/api/queries/useDayAvailability/types";
 import { DayAvailability } from "~/shared/types/apiSchema";
 import { HorizontalFlatListItemProps } from "screens/CreateAppointment/types";
 
