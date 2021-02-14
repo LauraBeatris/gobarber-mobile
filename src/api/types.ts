@@ -21,9 +21,23 @@ export type UpdateUserAvatarMutationData = Pick<ImagePickerResponse, "uri" | "ty
   name: ImagePickerResponse["fileName"];
 }
 
+export type CreateUserMutationData = {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export type CreateSessionMutationData = {
+  email: string;
+  password: string;
+}
+
+export type CreateRecoverPasswordRequestMutationData = {
+  email: string;
+}
+
 // Query Data
 export type GetDayAvailabilityQueryData = {
   provider_id: User["id"];
   appointmentDate: Date;
 }
-
