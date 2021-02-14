@@ -14,17 +14,17 @@ const queryClient = new QueryClient();
 const App: React.FC = () => (
   <NavigationContainer>
     <ThemeProvider theme={theme}>
-      <AuthContainer>
-        <StatusBar
-          translucent
-          barStyle="light-content"
-          backgroundColor="#312e38"
-        />
+      <StatusBar
+        translucent
+        barStyle="light-content"
+        backgroundColor="#312e38"
+      />
 
-        <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <AuthContainer>
           <Routes />
-        </QueryClientProvider>
-      </AuthContainer>
+        </AuthContainer>
+      </QueryClientProvider>
     </ThemeProvider>
   </NavigationContainer>
 );
