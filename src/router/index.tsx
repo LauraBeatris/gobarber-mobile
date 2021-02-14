@@ -7,9 +7,9 @@ import AppRouter from "./app.routes";
 import AuthRouter from "./auth.routes";
 
 const Router: React.FC = () => {
-  const { user, loading } = useAuth();
+  const { user, isLoading } = useAuth();
 
-  if (loading) {
+  if (isLoading) {
     return <Loading />;
   }
 

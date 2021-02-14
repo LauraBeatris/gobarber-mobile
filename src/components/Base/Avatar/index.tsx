@@ -1,7 +1,7 @@
 import React from "react";
 import { Image } from "react-native";
 
-import useUserAvatarURI from "~/hooks/useUserAvatarURI";
+import useUserAvatarURI from "~/hooks/api/queries/useUserAvatarURI";
 
 import { AvatarProps } from "./types";
 

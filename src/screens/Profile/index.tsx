@@ -18,12 +18,12 @@ import SignOutButton from "~/components/Base/Button/SignOutButton";
 import performSchemaValidation from "~/utils/performSchemaValidation";
 
 import noop from "~/utils/noop";
-import useUpdateProfile from "~/hooks/useUpdateProfile";
+import useUpdateProfile from "~/hooks/api/mutations/useUpdateProfile";
 import { useAuth } from "~/contexts/auth/AuthContext";
-
-import { useUpdateUserAvatar } from "~/hooks/useUpdateUserAvatar";
+import { useUpdateUserAvatar } from "~/hooks/api/mutations/useUpdateUserAvatar";
 import Loading from "~/components/Base/Loading";
 import { UpdateProfileMutationData } from "~/api/types";
+
 import {
   Content,
   Container,
@@ -32,6 +32,7 @@ import {
   ProfileFormContainer,
   ProfileAvatarContainer,
 } from "./styles";
+
 import schema from "./schema";
 
 const Profile: React.FC = () => {

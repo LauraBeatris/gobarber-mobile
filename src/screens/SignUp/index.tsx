@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import AuthScreenLayout from "~/components/Layout/AuthScreenLayout";
 import performSchemaValidation from "~/utils/performSchemaValidation";
 import { CreateUserMutationData } from "~/api/types";
-import useCreateUser from "~/hooks/useCreateUser";
+import useCreateUser from "~/hooks/api/mutations/useCreateUser";
 
 import schema from "./schema";
 

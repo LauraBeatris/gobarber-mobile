@@ -8,14 +8,14 @@ import Input from "~/components/Base/Input";
 
 import AuthScreenLayout from "~/components/Layout/AuthScreenLayout";
 import performSchemaValidation from "~/utils/performSchemaValidation";
-import { useRecoverPasswordRequest } from "~/hooks/useRecoverPasswordRequest";
+import { useCreateRecoverPasswordRequest } from "~/hooks/api/mutations/useCreateRecoverPasswordRequest";
 import { CreateRecoverPasswordRequestMutationData } from "~/api/types";
 
 import schema from "./schema";
 
 const ForgotPassword: React.FC = () => {
   const navigation = useNavigation();
-  const { isLoading, mutate: createRecoverPasswordRequest } = useRecoverPasswordRequest();
+  const { isLoading, mutate: createRecoverPasswordRequest } = useCreateRecoverPasswordRequest();
 
   const formRef = useRef<FormHandles>(null);
 

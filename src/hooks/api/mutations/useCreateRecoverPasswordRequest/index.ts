@@ -3,7 +3,7 @@ import { useMutation } from "react-query";
 
 import { createRecoverPasswordRequest } from "~/api/mutations";
 
-export const useRecoverPasswordRequest = () => {
+export const useCreateRecoverPasswordRequest = () => {
   const payload = useMutation(createRecoverPasswordRequest, {
     onSuccess: () => Alert.alert(
       "Recover request email successfully sent",

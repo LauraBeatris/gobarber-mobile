@@ -12,7 +12,7 @@ import {
 } from "~/constants/asyncStorage";
 import { assignDefaultAuthToken } from "~/config/api";
 import { User } from "~/shared/types/apiSchema";
-import useCreateSession from "~/hooks/useCreateSession";
+import useCreateSession from "~/hooks/api/mutations/useCreateSession";
 import { CreateSessionMutationData } from "~/api/types";
 
 import { AuthProvider } from "./AuthContext";
