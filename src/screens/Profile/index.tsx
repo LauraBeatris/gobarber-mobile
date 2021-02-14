@@ -83,7 +83,7 @@ const Profile: React.FC = () => {
     passwordConfirmationInputRef.current?.focus();
   };
 
-  const { name, email } = user;
+  const { name, avatar_url, email } = user;
   const initialData = { name, email };
 
   return (
@@ -103,7 +103,10 @@ const Profile: React.FC = () => {
         <ScrollView keyboardShouldPersistTaps="handled">
           <Content>
             <ProfileAvatarContainer>
-              <ProfileAvatar />
+              <ProfileAvatar
+                name={name}
+                avatar_url={avatar_url}
+              />
 
               <ProfileAvatarButton onPress={updateUserAvatar}>
                 {

@@ -17,12 +17,18 @@ const HorizontalProvidersList: React.FC<HorizontalProvidersListProps> = ({
     renderItem={({ item }) => {
       const isSelected = item.id === selectedProviderId;
 
+      const { name, avatar_url } = item;
+
       return (
         <ProviderFlatListItem
           onPress={handlePressProvider(item)}
           isSelected={isSelected}
         >
-          <HorizontalFlatListItemAvatar />
+          <HorizontalFlatListItemAvatar
+            name={name}
+            avatar_url={avatar_url}
+          />
+
           <HorizontalFlatListItemText
             isSelected={isSelected}
             numberOfLines={1}

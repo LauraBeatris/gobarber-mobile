@@ -1,9 +1,5 @@
+import { CreateSessionMutationData } from "~/api/types";
 import { User } from "~/shared/types/apiSchema";
-
-export type SignInCredentials = {
-  email: string;
-  password: string;
-}
 
 export type AuthState = {
   user: User;
@@ -12,8 +8,8 @@ export type AuthState = {
 
 export type AuthContextData = {
   user: User;
-  signIn: (credentials: SignInCredentials) => Promise<void>;
+  signIn: (credentials: CreateSessionMutationData) => Promise<void>;
   signOut: () => void;
-  loading: boolean;
+  isLoading: boolean;
   updateUser: (user: Partial<User>) => Promise<void>;
 }

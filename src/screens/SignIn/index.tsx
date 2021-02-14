@@ -15,7 +15,7 @@ import schema from "./schema";
 import { SignInFormData } from "./types";
 
 const SignIn: React.FC = () => {
-  const { signIn } = useAuth();
+  const { isLoading, signIn } = useAuth();
 
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null);
@@ -77,7 +77,11 @@ const SignIn: React.FC = () => {
         />
       </Form>
 
-      <Button onPress={handleSubmit}>
+      <Button
+        enabled={!isLoading}
+        loading={isLoading}
+        onPress={handleSubmit}
+      >
         Login
       </Button>
     </AuthScreen>

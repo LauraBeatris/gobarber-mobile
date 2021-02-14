@@ -1,7 +1,6 @@
 import React from "react";
 import { FlatList } from "react-native";
 
-import { keyExtractorId } from "~/constants/flatLists";
 import { APPOINTMENT_TYPES_LIST } from "~/constants/appointments";
 import { HorizontalFlatListItemText, BaseHorizontalFlatListItem } from "~/screens/CreateAppointment/styles";
 
@@ -30,7 +29,7 @@ const AppointmentTypeList: React.FC<AppointmentTypeListProps> = ({
       );
     }}
     horizontal
-    keyExtractor={keyExtractorId}
+    keyExtractor={(item) => item.text}
     showsHorizontalScrollIndicator={false}
     contentContainerStyle={{ paddingHorizontal: 24 }}
   />
