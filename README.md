@@ -1,5 +1,5 @@
 <p align="left">
-   <img src=".github/logo-docs.gif" width="300"/>
+   <img src=".github/docs/images/logo-docs.gif" width="300"/>
 </p>
 
 # GoBarber Mobile
@@ -12,6 +12,12 @@
 [![Contributors](https://img.shields.io/github/contributors/LauraBeatris/gobarber-mobile?color=AD1256&style=flat-square)](https://github.com/LauraBeatris/gobarber-mobile/graphs/contributors)
 
 > Provide to users an easy and fast way to schedule appointments in barber shops
+
+<p align="center">
+   <img src=".github/docs/images/home.png" width="400" style="margin-right: 10px; margin-bottom: 5rem"/>
+   <img src=".github/docs/images/create-appointment.gif" width="400"/>
+    <img src=".github/docs/images/profile.png" width="400"/>
+</p>
 
 ---
 
